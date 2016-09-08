@@ -48,6 +48,7 @@ A user can submit this report any time they are logged in. This report consists 
 4. Location of water (manually entered. using any kind of location services or gps is extra credit).
 5. Type of water (Bottled, Well, Stream, Lake, Spring, Other)
 6. Condition of water (Waste, Treatable-Clear, Treatable-Muddy, Potable)
+
 ## Water availability
 This report is just a google map display with a pin in each location that water has been reported. Clicking on a pin will give you the Type and Condition of the water (for example "Bottled / Potable" or "Stream / Treatable-Clear".
 
