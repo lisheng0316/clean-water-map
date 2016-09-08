@@ -61,6 +61,6 @@ A real water report would need to address multiple bacteria/virus and chemical c
 5. Overall Condition (Safe / Treatable / Unsafe)
 6. Virus PPM
 7. Contaminant PPM
+
 ## Historical Report
 The manager should enter a location, either virus or contaminant, and a year. The system will then display an XY graph where the X axis is the month and the Y axis is the PPM. Each month's data point can be an average of the reports for that month if there are more than one.
-
