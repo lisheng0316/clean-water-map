@@ -1,5 +1,6 @@
 package controller;
 
+import fxapp.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -21,12 +22,15 @@ public class AppViewController implements Initializable {
     private Button logout;
 
     private WebEngine engine;
+    private Main application;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         engine = webView.getEngine();
     }
-
+    public void setApp(Main application){
+        this.application = application;
+    }
     public void btn1(ActionEvent e) {
         engine.load("https://maps.google.com");
     }
