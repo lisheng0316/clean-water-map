@@ -11,14 +11,13 @@ public class User {
 
     private String id;
 
-
-    private static final Map<String, User> USERS = new HashMap<String, User>();
+    private static final Map<String, User> userList = new HashMap<String, User>();
 
     public static User of(String id) {
-        User user = USERS.get(id);
+        User user = userList.get(id);
         if (user == null) {
             user = new User(id);
-            USERS.put(id, user);
+            userList.put(id, user);
         }
         return user;
     }
