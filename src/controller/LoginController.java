@@ -91,6 +91,4 @@ public class LoginController extends AnchorPane implements Initializable {
             errorMessage.setVisible(true);
         }
     }
-
-
 }

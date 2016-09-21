@@ -1,5 +1,6 @@
 package fxapp;
 
+import controller.AppViewController;
 import model.Authenticator;
 import controller.LoginController;
 import controller.WelcomeController;
@@ -22,7 +23,7 @@ public class Main extends Application {
     private Stage stage;
     private User loggedUser;
     private final double MINIMUM_WINDOW_WIDTH = 800.0;
-    private final double MINIMUM_WINDOW_HEIGHT = 600.;
+    private final double MINIMUM_WINDOW_HEIGHT = 600.0;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -40,7 +41,7 @@ public class Main extends Application {
     }
     public User getLoggedUser() {return loggedUser;}
 
-    private void gotoWelcome() throws Exception {
+    private void gotoWelcome() {
         try {
             WelcomeController welcome = (WelcomeController) replaceSceneContent("../view/welcome.fxml");
             welcome.setApp(this);
@@ -49,12 +50,26 @@ public class Main extends Application {
         }
     }
 
-    public boolean userLogging(String userId){
+    private void gotoApp() {
+        try {
+            AppViewController appview = (AppViewController) replaceSceneContent("../view/appview.fxml");
+            appview.setApp(this);
+        } catch (Exception ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
-            loggedUser = User.of(userId);
+    public boolean userLogging(String userId) {
+        loggedUser = User.of(userId);
         System.out.println("here");
-            //gotoProfile();
-            return true;
+        gotoApp();
+        return true;
+    }
+
+    public boolean userLogout() {
+        loggedUser = null;
+        gotoWelcome();
+        return true;
     }
 
 

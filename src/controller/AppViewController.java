@@ -34,4 +34,9 @@ public class AppViewController implements Initializable {
     public void btn1(ActionEvent e) {
         engine.load("https://maps.google.com");
     }
+
+    @FXML
+    private void logoutPressed() {
+        application.userLogout();
+    }
 }
