@@ -11,9 +11,12 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import fxapp.Main;
+import javafx.stage.Stage;
 
 
 public class LoginController extends AnchorPane implements Initializable {
+    private Stage dialogStage;
+    private boolean confirmLogin;
     @FXML
     private TextField userId;
     @FXML
@@ -29,10 +32,6 @@ public class LoginController extends AnchorPane implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        errorMessage.setText("");
-        userId.setPromptText("demo");
-        password.setPromptText("demo");
-
     }
 
     public void processLogin(ActionEvent event) {
@@ -47,5 +46,52 @@ public class LoginController extends AnchorPane implements Initializable {
         }
     }
 
+    /**
+     * Called when the user clicks cancel.
+     */
+    @FXML
+    private void loginCancelPressed() {
+        dialogStage.close();
+    }
+
+    /**
+     * Sets the stage of this dialog.
+     *
+     * @param dialogStage the stage for this dialog
+     */
+    public void setDialogStage(Stage dialogStage) {
+        this.dialogStage = dialogStage;
+    }
+
+    /**
+     * Returns true if the user clicked OK, false otherwise.
+     *
+     * @return  true if the user clicked the OK button
+     */
+    public boolean confirmLoginClicked() {
+        return confirmLogin;
+    }
+
+    /**
+     * Called when the user clicks ok.
+     */
+    @FXML
+    private void handleOKPressed() {
+        //First validate the data to insure it is at least reasonable
+        if (validator()) {
+            //if the data is reasonable, then remember the the student data in the window
+            //signal success and close this dialog window.
+            confirmLogin = true;
+            dialogStage.close();
+        }
+    }
+
+    /**
+     * Validate user input
+     * @return true if input is valid.
+     */
+    private boolean validator() {
+        return true;
+    }
 
 }
