@@ -1,5 +1,6 @@
 package fxapp;
 
+import controller.AppViewController;
 import model.Authenticator;
 import controller.LoginController;
 import controller.WelcomeController;
@@ -40,7 +41,7 @@ public class Main extends Application {
     }
     public User getLoggedUser() {return loggedUser;}
 
-    private void gotoWelcome() throws Exception {
+    private void gotoWelcome() {
         try {
             WelcomeController welcome = (WelcomeController) replaceSceneContent("../view/welcome.fxml");
             welcome.setApp(this);
@@ -48,13 +49,25 @@ public class Main extends Application {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    public boolean userLogging(String userId){
+    private void gotoApp() {
+        try {
+            AppViewController appView = (AppViewController) replaceSceneContent("../view/appview.fxml");
+            appView.setApp(this);
+        } catch (Exception ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public boolean userLogging(String userId) {
 
             loggedUser = User.of(userId);
         System.out.println("here");
-            //gotoProfile();
+            gotoApp();
             return true;
+    }
+    public boolean userLogout() {
+        loggedUser = null;
+        gotoWelcome();
+        return true;
     }
 
 
