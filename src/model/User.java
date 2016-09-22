@@ -10,14 +10,29 @@ import java.util.Map;
 public class User {
 
     private String id;
+    private String fname;
+    private String lname;
+    private String email;
+    private String rank;
 
-    private static final Map<String, User> userList = new HashMap<String, User>();
+    public static final Map<String, User> userList = new HashMap<String, User>();
 
+    public User (String id, String fname, String lname, String email, String rank) {
+        this.id = id;
+        this.fname = fname;
+        this.lname = lname;
+        this.email = email;
+        this.rank = rank;
+    }
     public static User of(String id) {
         User user = userList.get(id);
         if (user == null) {
             user = new User(id);
             userList.put(id, user);
+        }
+
+        for (String key : Authenticator.USERS.keySet()) {
+            System.out.println(key + " = " + Authenticator.USERS.get(key));
         }
         return user;
     }
@@ -25,7 +40,23 @@ public class User {
         this.id = id;
     }
 
-    public String getId() {
+    public Map<String, User> getUserList() {
+        return userList;
+    }
+    public String toString() {
         return id;
     }
+    public String getFname() {
+        return fname;
+    }
+    public String getLname() {
+        return lname;
+    }
+    public String getEmail() {
+        return email;
+    }
+    public String getRank() {
+        return rank;
+    }
+
 }
