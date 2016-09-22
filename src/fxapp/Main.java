@@ -23,7 +23,7 @@ public class Main extends Application {
     private Stage stage;
     private User loggedUser;
     private final double MINIMUM_WINDOW_WIDTH = 800.0;
-    private final double MINIMUM_WINDOW_HEIGHT = 600.0;
+    private final double MINIMUM_WINDOW_HEIGHT = 600.;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -49,23 +49,21 @@ public class Main extends Application {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
     private void gotoApp() {
         try {
-            AppViewController appview = (AppViewController) replaceSceneContent("../view/appview.fxml");
-            appview.setApp(this);
+            AppViewController appView = (AppViewController) replaceSceneContent("../view/appview.fxml");
+            appView.setApp(this);
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
     public boolean userLogging(String userId) {
+
         loggedUser = User.of(userId);
         System.out.println("here");
         gotoApp();
         return true;
     }
-
     public boolean userLogout() {
         loggedUser = null;
         gotoWelcome();

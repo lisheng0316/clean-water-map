@@ -86,6 +86,7 @@ public class LoginController extends AnchorPane implements Initializable {
 
             application.userLogging(userId.getText());
             confirmLogin = true;
+//            application.gotoApp();
             dialogStage.close();
         } else {
             errorMessage.setVisible(true);
