@@ -39,5 +39,4 @@ public class AppViewController implements Initializable {
     private void logoutPressed() {
         application.userLogout();
     }
-
 }
