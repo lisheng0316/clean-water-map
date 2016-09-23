@@ -55,7 +55,8 @@ public class RegistrationController extends AnchorPane implements Initializable 
                 || !lastname.getText().matches("[a-zA-Z]+")
                 || firstname.getText().length() < 1
                 || lastname.getText().length() < 1) {
-            errorMessage.setText("Name fields are required and is restricted to letters only");
+            errorMessage.setText("Name fields are required and" +
+                    " is restricted to letters only");
         } else if (!validateID()) {
             errorMessage.setText("Username is already taken");
         } else if (!email.getText().matches(emailRegex)) {
