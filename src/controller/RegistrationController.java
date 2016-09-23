@@ -62,11 +62,11 @@ public class RegistrationController extends AnchorPane implements Initializable 
             errorMessage.setText("Invalid email address");
         } else if (!email.getText().equals(emailConfirm.getText())) {
             errorMessage.setText("Email confirmation does not match your email address");
-        } else if(!password.getText().equals(passwordConfirm.getText())) {
-            errorMessage.setText("Password confirmation does not match your password");
         } else if (password.getText().length() < 6
                 || !password.getText().matches("[a-zA-Z0-9]*")) {
             errorMessage.setText("Password must be more than 6 alphanumeric characters");
+        } else if(!password.getText().equals(passwordConfirm.getText())) {
+            errorMessage.setText("Password confirmation does not match your password");
         } else {
             return true;
         }
