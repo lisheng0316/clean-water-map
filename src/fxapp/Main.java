@@ -2,6 +2,7 @@ package fxapp;
 
 import controller.AppViewController;
 import controller.RegistrationController;
+import model.Account;
 import model.Authenticator;
 import controller.LoginController;
 import controller.WelcomeController;
@@ -22,7 +23,7 @@ import java.io.IOException;
 public class Main extends Application {
     /** the main container for the application window */
     private Stage stage;
-    private User loggedUser;
+    private Account loggedAccount;
     private final double MINIMUM_WINDOW_WIDTH = 800.0;
     private final double MINIMUM_WINDOW_HEIGHT = 600.;
 
@@ -40,7 +41,7 @@ public class Main extends Application {
         }
 
     }
-    public User getLoggedUser() {return loggedUser;}
+    public Account getLoggedAccount() { return loggedAccount;}
 
     private void gotoWelcome() {
         try {
@@ -68,13 +69,13 @@ public class Main extends Application {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public boolean userLogging(String userId) {
-        loggedUser = User.of(userId);
+    public boolean accountLogging(String userId) {
+        loggedAccount = Account.of(userId);
         gotoApp();
         return true;
     }
     public boolean userLogout() {
-        loggedUser = null;
+        loggedAccount = null;
         gotoWelcome();
         return true;
     }

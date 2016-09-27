@@ -32,7 +32,7 @@ public class AppViewController implements Initializable {
         this.application = application;
         engine = webView.getEngine();
         engine.load("https://maps.google.com");
-        welcomeUser.setText("Welcome, " + application.getLoggedUser());
+        welcomeUser.setText("Welcome, " + application.getLoggedAccount());
     }
 
     @FXML
