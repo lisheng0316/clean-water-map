@@ -44,7 +44,7 @@ public class Main extends Application {
 
     private void gotoWelcome() {
         try {
-            WelcomeController welcome = (WelcomeController) replaceSceneContent("../view/welcome.fxml");
+            WelcomeController welcome = (WelcomeController) replaceSceneContent("../view/WelcomePage.fxml");
             welcome.setApp(this);
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -103,7 +103,7 @@ public class Main extends Application {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("../view/login.fxml"));
+            loader.setLocation(Main.class.getResource("../view/LoginPage.fxml"));
             AnchorPane page = loader.load();
 
             // Create the dialog Stage.
