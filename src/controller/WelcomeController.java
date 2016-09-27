@@ -13,15 +13,12 @@ import javafx.scene.layout.AnchorPane;
  */
 public class WelcomeController extends AnchorPane implements Initializable {
 
-
     private Main application;
 
     public void setApp(Main application){ this.application = application;
     }
 
-
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.print("call initialize from WelcomeController");
     }
 
     @FXML
@@ -31,7 +28,7 @@ public class WelcomeController extends AnchorPane implements Initializable {
 
     @FXML
     private void registrationPressed() {
-        //switch scene to registration
+        application.gotoRegistration();
     }
 
     @FXML
