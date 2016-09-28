@@ -44,31 +44,31 @@ public class RegistrationController extends AnchorPane implements Initializable 
     private final ObservableList<AccountType> accountTypeList = FXCollections.observableArrayList(AccountType.values());
 
 
-    public void setApp(Main application){ this.application = application;
-    }
+    public void setApp(Main application){ this.application = application; }
 
     public void initialize(URL location, ResourceBundle resources) {
-//        accountTypeBox.setValue(AccountType.USER);
+        accountTypeBox.setItems(accountTypeList);
+        System.out.println(AccountType.values().toString());
     }
 
     /**
      * Sets the  to be edited in the dialog.
      *
-     * @param student  the student who will be edited
+     * @param account the  who will be edited
      */
-    public void setAccountType(Account account) {
-        //remember the current student
-        this.account = account;
-        accountTypeBox.setItems(accountTypeList);
-
-        if (account == null) System.out.println("Account was null in registration!");
-
-        //make the data show up in the gui fields
-//        nameField.setText(_student.getName());
-//        majorField.setText(_student.getMajor());
-
-
-    }
+//    public void setAccount(Account account) {
+//        //remember the current student
+//        this.account = account;
+//        accountTypeBox.setItems(accountTypeList);
+//
+//        if (account == null) System.out.println("Account was null in registration!");
+//
+//        //make the data show up in the gui fields
+////        nameField.setText(_student.getName());
+////        majorField.setText(_student.getMajor());
+//
+//
+//    }
     @FXML
     private boolean validateID() {
         return Authenticator.validateID(id.getText());
@@ -104,7 +104,13 @@ public class RegistrationController extends AnchorPane implements Initializable 
     @FXML
     private void registerPressed() {
         if (validator()) {
-            account = new Account(id.getText(), firstname.getText(), lastname.getText(), email.getText(), "rank");
+//            account = new Account(id.getText(), firstname.getText(), lastname.getText(), email.getText(), a);
+            account.setId(id.getText());
+            account.setFname(firstname.getText());
+            account.setLname(lastname.getText());
+            account.setEmail(email.getText());
+            account.setType(accountTypeBox.getValue());
+
             Authenticator.addAccount(account, password.getText());
             application.accountLogging(account.toString());
         } else {

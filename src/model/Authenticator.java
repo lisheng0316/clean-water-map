@@ -8,7 +8,7 @@ import java.util.Map;
 public class Authenticator {
     public static Map<String, String> ACCOUNTS = new HashMap<>();
     static {
-        Account bangpham = new Account("bang", "bang", "pham", "bangpham@gmail.com", "rank");
+        Account bangpham = new Account("bang", "bang", "pham", "bangpham@gmail.com", AccountType.Admin);
         ACCOUNTS.put(bangpham.toString(), "pass");
     }
 

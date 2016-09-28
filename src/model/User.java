@@ -19,8 +19,8 @@ public class User extends Account {
 //        this.email = email;
 //        this.rank = rank;
 //    }
-    public User(String id, String fname, String lname, String email, String rank) {
-        super(id, fname, lname, email, rank);
+    public User(String id, String fname, String lname, String email, AccountType type) {
+        super(id, fname, lname, email, type);
     }
 //    public static User of(String id) {
 //        User user = userList.get(id);

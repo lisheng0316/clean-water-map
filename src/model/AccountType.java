@@ -6,9 +6,9 @@ package model;
  * This enumeration represents all the account type in registration
  */
 public enum AccountType {
-    USER,
-    WORKER,
-    MANAGER,
-    ADMIN;
+    User,
+    Worker,
+    Manager,
+    Admin;
 
 }

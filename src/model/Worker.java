@@ -5,8 +5,8 @@ package model;
  */
 public class Worker extends User {
     // this it not correct, just place holder
-    public Worker(String id, String fname, String lname, String email, String rank) {
-        super(id, fname, lname, email, rank);
+    public Worker(String id, String fname, String lname, String email, AccountType type) {
+        super(id, fname, lname, email, type);
     }
 
 }
