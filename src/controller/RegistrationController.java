@@ -6,7 +6,8 @@ import javafx.fxml.Initializable;
 import fxapp.Main;
 import java.net.URL;
 import java.util.ResourceBundle;
-
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -44,7 +45,10 @@ public class RegistrationController extends AnchorPane implements Initializable 
     private final ObservableList<AccountType> accountTypeList = FXCollections.observableArrayList(AccountType.values());
 
 
-    public void setApp(Main application){ this.application = application; }
+    public void setApp(Main application) {
+        this.application = application;
+
+    }
 
     public void initialize(URL location, ResourceBundle resources) {
         accountTypeBox.setItems(accountTypeList);
@@ -118,7 +122,10 @@ public class RegistrationController extends AnchorPane implements Initializable 
             System.out.println("visible");
         }
     }
+    public void backPressed() {
 
+        application.userLogout();
+    }
 
     @FXML
     private void handleCloseMenu() {

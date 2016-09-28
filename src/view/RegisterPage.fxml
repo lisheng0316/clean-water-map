@@ -40,7 +40,7 @@
          <font>
             <Font size="16.0" />
          </font></Label>
-      <Button layoutX="321.0" layoutY="431.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="67.0" text="Back" />
+      <Button layoutX="321.0" layoutY="431.0" mnemonicParsing="false" onAction="#backPressed" prefHeight="26.0" prefWidth="67.0" text="Back" />
       <Button layoutX="401.0" layoutY="431.0" mnemonicParsing="false" onAction="#registerPressed" text="Register" />
       <Label fx:id="errorMessage" layoutX="316.0" layoutY="168.0" text="Username is already taken" textFill="#d02424" visible="false" />
    </children>
