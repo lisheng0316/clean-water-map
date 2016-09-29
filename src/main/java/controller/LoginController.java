@@ -1,24 +1,24 @@
 package controller;
 
+import model.Authenticator;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import fxapp.Main;
 import javafx.stage.Stage;
-import model.Authenticator;
+
 
 public class LoginController extends AnchorPane implements Initializable {
     private Stage dialogStage;
     private boolean confirmLogin;
     @FXML
-    private TextField userId;
+    private TextField accountId;
     @FXML
     private PasswordField password;
     @FXML
@@ -26,7 +26,7 @@ public class LoginController extends AnchorPane implements Initializable {
 
     private Main application;
 
-    public void setApp(Main application) {this.application = application;}
+    public void setApp(Main application) { this.application = application;}
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -34,9 +34,9 @@ public class LoginController extends AnchorPane implements Initializable {
 
     public void processLogin(ActionEvent event) {
         if (application == null){
-            errorMessage.setText("Hello " + userId.getText());
+            errorMessage.setText("Hello " + accountId.getText());
         } else {
-            if (!application.userLogging(userId.getText())){
+            if (!application.accountLogging(accountId.getText())){
                 errorMessage.setText("Username/Password is incorrect");
             }
         }
@@ -75,8 +75,8 @@ public class LoginController extends AnchorPane implements Initializable {
     private void handleOKPressed() {
 
 
-        if (Authenticator.validatePassword(userId.getText(), password.getText())) {
-            application.userLogging(userId.getText());
+        if (Authenticator.validatePassword(accountId.getText(), password.getText())) {
+            application.accountLogging(accountId.getText());
             confirmLogin = true;
             dialogStage.close();
         } else {

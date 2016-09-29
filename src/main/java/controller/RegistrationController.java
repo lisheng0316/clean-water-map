@@ -1,22 +1,27 @@
 package controller;
+import fxapp.Main;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import fxapp.Main;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import model.AccountType;
 import model.Authenticator;
-import model.User;
+import model.Account;
 
 /**
  * Created by Sheng on 9/19/16.
  */
 public class RegistrationController extends AnchorPane implements Initializable {
-    private User user;
+    private Account account;
     private Main application;
     @FXML
     private TextField id;
@@ -34,13 +39,40 @@ public class RegistrationController extends AnchorPane implements Initializable 
     private PasswordField passwordConfirm;
     @FXML
     private Label errorMessage;
+    @FXML
+    private ComboBox<AccountType> accountTypeBox;
 
-    public void setApp(Main application){ this.application = application;
+    private final ObservableList<AccountType> accountTypeList = FXCollections.observableArrayList(AccountType.values());
+
+
+    public void setApp(Main application) {
+        this.application = application;
+
     }
 
     public void initialize(URL location, ResourceBundle resources) {
+        accountTypeBox.setItems(accountTypeList);
+
     }
 
+    /**
+     * Sets the  to be edited in the dialog.
+     *
+     * @param account the  who will be edited
+     */
+//    public void setAccount(Account account) {
+//        //remember the current student
+//        this.account = account;
+//        accountTypeBox.setItems(accountTypeList);
+//
+//        if (account == null) System.out.println("Account was null in registration!");
+//
+//        //make the data show up in the gui fields
+////        nameField.setText(_student.getName());
+////        majorField.setText(_student.getMajor());
+//
+//
+//    }
     @FXML
     private boolean validateID() {
         return Authenticator.validateID(id.getText());
@@ -65,7 +97,7 @@ public class RegistrationController extends AnchorPane implements Initializable 
         } else if (password.getText().length() < 6
                 || !password.getText().matches("[a-zA-Z0-9]*")) {
             errorMessage.setText("Password must be more than 6 alphanumeric characters");
-        } else if(!password.getText().equals(passwordConfirm.getText())) {
+        } else if (!password.getText().equals(passwordConfirm.getText())) {
             errorMessage.setText("Password confirmation does not match your password");
         } else {
             return true;
@@ -76,15 +108,27 @@ public class RegistrationController extends AnchorPane implements Initializable 
     @FXML
     private void registerPressed() {
         if (validator()) {
-            user = new User(id.getText(), firstname.getText(), lastname.getText(), email.getText(), "rank");
-            Authenticator.addUser(user,password.getText());
-            application.userLogging(user.toString());
+            account = new Account(id.getText(), firstname.getText(), lastname.getText(), email.getText(), accountTypeBox.getValue());
+//            account.setId(id.getText());
+//            account.setFname(firstname.getText());
+//            account.setLname(lastname.getText());
+//            account.setEmail(email.getText());
+//            account.setType(accountTypeBox.getValue());
+//            System.out.println("account list: " + account.getAccountList().values());
+            Authenticator.addAccount(account, password.getText());
+            application.registrationLogging(account.toString());
+
         } else {
             errorMessage.setVisible(true);
             System.out.println("visible");
         }
     }
 
+    @FXML
+    private void backPressed() {
+
+        application.accountLogout();
+    }
 
     @FXML
     private void handleCloseMenu() {

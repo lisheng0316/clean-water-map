@@ -1,9 +1,12 @@
 package fxapp;
 
+
 import controller.AppViewController;
+
+
 import controller.RegistrationController;
-import model.Authenticator;
-import controller.LoginController;
+import model.Account;
+import controller.*;
 import controller.WelcomeController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -12,22 +15,24 @@ import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import model.User;
+
 import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.stage.Modality;
 import java.io.IOException;
 
+
 public class Main extends Application {
     /** the main container for the application window */
     private Stage stage;
-    private User loggedUser;
+    private Account loggedAccount;
     private final double MINIMUM_WINDOW_WIDTH = 800.0;
-    private final double MINIMUM_WINDOW_HEIGHT = 600.;
+    private final double MINIMUM_WINDOW_HEIGHT = 600.0;
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
+
         try {
             stage = primaryStage;
             stage.setTitle("CWC");
@@ -40,11 +45,12 @@ public class Main extends Application {
         }
 
     }
-    public User getLoggedUser() {return loggedUser;}
+
+    public Account getLoggedAccount() { return loggedAccount;}
 
     private void gotoWelcome() {
         try {
-            WelcomeController welcome = (WelcomeController) replaceSceneContent("../view/welcome.fxml");
+            WelcomeController welcome = (WelcomeController) replaceSceneContent("../view/WelcomePage.fxml");
             welcome.setApp(this);
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -59,7 +65,14 @@ public class Main extends Application {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    private void gotoProfile() {
+        try {
+            ProfileController profile = (ProfileController) replaceSceneContent("../view/ProfilePage.fxml");
+            profile.setApp(this);
+        } catch (Exception ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     private void gotoApp() {
         try {
             AppViewController appView = (AppViewController) replaceSceneContent("../view/appview.fxml");
@@ -68,13 +81,18 @@ public class Main extends Application {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public boolean userLogging(String userId) {
-        loggedUser = User.of(userId);
+    public boolean accountLogging(String userId) {
+        loggedAccount = Account.of(userId);
         gotoApp();
         return true;
     }
-    public boolean userLogout() {
-        loggedUser = null;
+    public boolean registrationLogging(String userId) {
+        loggedAccount = Account.of(userId);
+        gotoProfile();
+        return true;
+    }
+    public boolean accountLogout() {
+        loggedAccount = null;
         gotoWelcome();
         return true;
     }
@@ -103,7 +121,7 @@ public class Main extends Application {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("../view/login.fxml"));
+            loader.setLocation(Main.class.getResource("../view/LoginPage.fxml"));
             AnchorPane page = loader.load();
 
             // Create the dialog Stage.
@@ -131,6 +149,10 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
+
+
+
+
         launch(args);
     }
 }
