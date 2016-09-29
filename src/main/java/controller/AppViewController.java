@@ -35,6 +35,6 @@ public class AppViewController implements Initializable {
 
     @FXML
     private void logoutPressed() {
-        application.userLogout();
+        application.accountLogout();
     }
 }

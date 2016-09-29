@@ -116,17 +116,18 @@ public class RegistrationController extends AnchorPane implements Initializable 
 //            account.setType(accountTypeBox.getValue());
 //            System.out.println("account list: " + account.getAccountList().values());
             Authenticator.addAccount(account, password.getText());
-            application.accountLogging(account.toString());
+            application.registrationLogging(account.toString());
+
         } else {
             errorMessage.setVisible(true);
             System.out.println("visible");
         }
     }
 
+    @FXML
+    private void backPressed() {
 
-    public void backPressed() {
-
-        application.userLogout();
+        application.accountLogout();
     }
 
     @FXML

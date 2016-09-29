@@ -20,8 +20,9 @@ public class Account {
     private String id;
     private String fname;
     private String lname;
-    private String email;
-    private String type;
+    private String email = "";
+    private String address = "";
+    private String phone = "";
     private final StringProperty _id = new SimpleStringProperty();
     private final StringProperty _fname = new SimpleStringProperty();
     private final StringProperty _lname = new SimpleStringProperty();
@@ -38,16 +39,34 @@ public class Account {
     public void setLname(String lname) { _lname.set(lname); }
     public String getEmail() {return _email.get();}
     public void setEmail(String email) { _email.set(email); }
+
+
+
     public AccountType getType() {return _type.get();}
+
     public void setType(AccountType type) { _type.set(type); }
 
     public ObjectProperty getAccountTypeProperty() { return _type; }
 
 
 
+
     public static final Map<String, Account> accountList = new HashMap<String, Account>();
 
     public Account(String id, String fname, String lname, String email, AccountType type) {
+//        this.id = id;
+//        this.fname = fname;
+//        this.lname = lname;
+//        this.email = email;
+//        this.type = type;
+        _id.set(id);
+        _fname.set(fname);
+        _lname.set(lname);
+        _email.set(email);
+        _type.set(type);
+
+    }
+    public Account(String id, String fname, String lname, String email, AccountType type, String phone, String address) {
 //        this.id = id;
 //        this.fname = fname;
 //        this.lname = lname;
@@ -86,20 +105,53 @@ public class Account {
     public String toString() {
         return _id.get();
     }
-//    public String getFname() {
-//        return fname;
-//    }
-//    public String getLname() {
-//        return lname;
-//    }
+    /**
+     * @return the email
+     */
 //    public String getEmail() {
 //        return email;
 //    }
-//    public String getType() {
-//        return type;
+
+    /**
+     * @param email the email to set
+     */
+//    public void setEmail(String email) {
+//        this.email = email;
 //    }
 
+    /**
+     * @return the phone
+     */
+    public String getPhone() {
+        return phone;
+    }
 
-//    public AccountType getAccountType() { return }
+    /**
+     * @param phone the phone to set
+     */
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+
+
+    /**
+     * @return the address
+     */
+    public String getAddress() {
+        return address;
+    }
+
+    /**
+     * @param address the address to set
+     */
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    /**
+     * @return the account type
+     */
+//    public AccountType getAccountType() { return getType(); }
 
 }

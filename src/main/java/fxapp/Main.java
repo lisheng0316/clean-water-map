@@ -6,7 +6,7 @@ import controller.AppViewController;
 
 import controller.RegistrationController;
 import model.Account;
-import controller.LoginController;
+import controller.*;
 import controller.WelcomeController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -65,7 +65,14 @@ public class Main extends Application {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    private void gotoProfile() {
+        try {
+            ProfileController profile = (ProfileController) replaceSceneContent("../view/ProfilePage.fxml");
+            profile.setApp(this);
+        } catch (Exception ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     private void gotoApp() {
         try {
             AppViewController appView = (AppViewController) replaceSceneContent("../view/appview.fxml");
@@ -79,7 +86,12 @@ public class Main extends Application {
         gotoApp();
         return true;
     }
-    public boolean userLogout() {
+    public boolean registrationLogging(String userId) {
+        loggedAccount = Account.of(userId);
+        gotoProfile();
+        return true;
+    }
+    public boolean accountLogout() {
         loggedAccount = null;
         gotoWelcome();
         return true;
