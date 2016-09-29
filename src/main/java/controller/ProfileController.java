@@ -25,19 +25,17 @@ public class ProfileController extends AnchorPane implements Initializable{
     @FXML
     private TextField user;
     @FXML
-    private TextField name;
+    private TextField fname;
+    @FXML
+    private TextField lname;
     @FXML
     private TextField email;
     @FXML
     private TextField phone;
     @FXML
     private TextArea address;
-
     @FXML
-    private Button save;
-
-    @FXML
-    private Label success;
+    private Label message;
 
     private Main application;
 
@@ -46,43 +44,41 @@ public class ProfileController extends AnchorPane implements Initializable{
         Account loggedAccount = application.getLoggedAccount();
         accountType.setText(loggedAccount.getType().name());
         user.setText(loggedAccount.getId());
-        name.setText(loggedAccount.getFname() + " " + loggedAccount.getLname());
+        fname.setText(loggedAccount.getFname());
+        lname.setText(loggedAccount.getLname());
         email.setText(loggedAccount.getEmail());
         phone.setText(loggedAccount.getPhone());
         if (loggedAccount.getAddress() != null) {
             address.setText(loggedAccount.getAddress());
         }
-//        subscribed.setSelected(loggedAccount.isSubscribed());
-        success.setOpacity(0);
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
     @FXML
     private void savePressed(ActionEvent event) {
-        if (application == null){
-            // We are running in isolated FXML, possibly in Scene Builder.
-            // NO-OP.
-            animateMessage();
-            return;
-        }
         Account loggedAccount = application.getLoggedAccount();
-        loggedAccount.setEmail(email.getText());
+        String emailRegex = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)" +
+                "*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+        if (!email.getText().matches(emailRegex)) {
+            message.setText("Invalid email address");
+        } else if (!email.getText().matches(emailRegex)) {
+            message.setText("Invalid email address");
+        } else {
+            loggedAccount.setEmail(email.getText());
+            message.setText("profile updated");
+        }
+        loggedAccount.setFname(fname.getText());
+        loggedAccount.setLname(lname.getText());
+
         loggedAccount.setPhone(phone.getText());
         loggedAccount.setAddress(address.getText());
-
-        animateMessage();
-        application.accountLogging(loggedAccount.toString());
+        message.setVisible(true);
     }
+
     @FXML
     private void backToRegPressed() {
-        application.gotoRegistration();
-    }
-    private void animateMessage() {
-        FadeTransition ft = new FadeTransition(Duration.millis(1000), success);
-        ft.setFromValue(0.0);
-        ft.setToValue(1);
-        ft.play();
+        application.gotoApp();
     }
 
 }

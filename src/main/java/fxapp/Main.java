@@ -49,15 +49,8 @@ public class Main extends Application {
 
     }
 
-    /**
-     * A method to get the account of the user who logged in
-     * @return the account of the user who logged in
-     */
     public Account getLoggedAccount() { return loggedAccount;}
 
-    /**
-     * a method to send the app to the welcome screen
-     */
     private void gotoWelcome() {
         try {
             WelcomeController welcome = (WelcomeController) replaceSceneContent("../view/WelcomePage.fxml");
@@ -67,9 +60,6 @@ public class Main extends Application {
         }
     }
 
-    /**
-     * a method to send the app to the registration page
-     */
     public void gotoRegistration() {
         try {
             RegistrationController registration = (RegistrationController) replaceSceneContent("../view/RegisterPage.fxml");
@@ -78,11 +68,7 @@ public class Main extends Application {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    /**
-     * a method to send the app to the profile page
-     */
-    private void gotoProfile() {
+    public void gotoProfile() {
         try {
             ProfileController profile = (ProfileController) replaceSceneContent("../view/ProfilePage.fxml");
             profile.setApp(this);
@@ -90,11 +76,7 @@ public class Main extends Application {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    /**
-     * a method to send the app to the map page
-     */
-    private void gotoApp() {
+    public void gotoApp() {
         try {
             AppViewController appView = (AppViewController) replaceSceneContent("../view/appview.fxml");
             appView.setApp(this);
@@ -102,46 +84,24 @@ public class Main extends Application {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    /**
-     * a method to check if the user logged into the app
-     * @param userId the user trying to log in
-     * @return whether the user logged in or not
-     */
     public boolean accountLogging(String userId) {
         loggedAccount = Account.of(userId);
         gotoApp();
         return true;
     }
 
-    /**
-     * a method to check if the user updated their information on the
-     * registration page of the app
-     * @param userId the user that is logged in
-     * @return whether or not the data was updated
-     */
     public boolean registrationLogging(String userId) {
         loggedAccount = Account.of(userId);
-        gotoProfile();
+        gotoApp();
         return true;
     }
-
-    /**
-     * a method to confirm that the user has logged out of the app
-     * @return whether or not the user has logged out of the app
-     */
     public boolean accountLogout() {
         loggedAccount = null;
         gotoWelcome();
         return true;
     }
 
-    /**
-     * a method to initialize the page passed from the fxml
-     * @param fxml the fxml files used with the app page
-     * @return the controller of the page the app is currently on
-     * @throws Exception if the loading happened multiple times
-     */
+
     private Initializable replaceSceneContent(String fxml) throws Exception {
         FXMLLoader loader = new FXMLLoader();
         InputStream in = Main.class.getResourceAsStream(fxml);
@@ -161,10 +121,6 @@ public class Main extends Application {
         return (Initializable) loader.getController();
     }
 
-    /**
-     * a method to show the dialog for login
-     * @return whether or not the dialog was shown
-     */
     public boolean showLoginDialog() {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
@@ -196,15 +152,7 @@ public class Main extends Application {
         }
     }
 
-    /**
-     * the method to starts the application
-     * @param args any arguments that may be applied to the program
-     */
     public static void main(String[] args) {
-
-
-
-
         launch(args);
     }
 }
