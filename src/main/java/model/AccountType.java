@@ -10,5 +10,4 @@ public enum AccountType {
     Worker,
     Manager,
     Admin;
-
 }

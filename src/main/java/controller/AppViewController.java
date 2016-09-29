@@ -18,7 +18,9 @@ public class AppViewController implements Initializable {
     @FXML
     private WebView webView;
     @FXML
-    private Label welcomeUser;
+    private Label welcome;
+    @FXML
+    private Label username;
 
     private WebEngine engine;
     private Main application;
@@ -30,11 +32,16 @@ public class AppViewController implements Initializable {
         this.application = application;
         engine = webView.getEngine();
         engine.load("https://maps.google.com");
-        welcomeUser.setText("Welcome, " + application.getLoggedAccount());
+        username.setText("" + application.getLoggedAccount());
     }
 
     @FXML
     private void logoutPressed() {
         application.accountLogout();
     }
+
+    @FXML
+    private void usernamePressed() {
+        application.gotoProfile();
+    };
 }
