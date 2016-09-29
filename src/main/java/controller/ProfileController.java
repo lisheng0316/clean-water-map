@@ -41,6 +41,10 @@ public class ProfileController extends AnchorPane implements Initializable{
 
     private Main application;
 
+    /**
+     * Sets up the application for profile
+     * @param application the main application of the profile
+     */
     public void setApp(Main application){
         this.application = application;
         Account loggedAccount = application.getLoggedAccount();
@@ -58,6 +62,11 @@ public class ProfileController extends AnchorPane implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
+
+    /**
+     * It updates the validated information
+     * @param event
+     */
     @FXML
     private void savePressed(ActionEvent event) {
         if (application == null){
@@ -74,10 +83,18 @@ public class ProfileController extends AnchorPane implements Initializable{
         animateMessage();
         application.accountLogging(loggedAccount.toString());
     }
+
+    /**
+     * Called when the register is pressed
+     */
     @FXML
     private void backToRegPressed() {
         application.gotoRegistration();
     }
+
+    /**
+     *  Creates an animation effect
+     */
     private void animateMessage() {
         FadeTransition ft = new FadeTransition(Duration.millis(1000), success);
         ft.setFromValue(0.0);

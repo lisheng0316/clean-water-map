@@ -13,7 +13,9 @@ import javafx.scene.layout.AnchorPane;
 import fxapp.Main;
 import javafx.stage.Stage;
 
-
+/**
+ * Controls the functionality of the login page
+ */
 public class LoginController extends AnchorPane implements Initializable {
     private Stage dialogStage;
     private boolean confirmLogin;
@@ -26,12 +28,20 @@ public class LoginController extends AnchorPane implements Initializable {
 
     private Main application;
 
+    /**
+     * Sets up the login page
+     * @param application the main application of the login page
+     */
     public void setApp(Main application) { this.application = application;}
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
 
+    /**
+     * checks if the account login is correct and display error message
+     * @param event the login event entered
+     */
     public void processLogin(ActionEvent event) {
         if (application == null){
             errorMessage.setText("Hello " + accountId.getText());

@@ -44,12 +44,20 @@ public class RegistrationController extends AnchorPane implements Initializable 
 
     private final ObservableList<AccountType> accountTypeList = FXCollections.observableArrayList(AccountType.values());
 
-
+    /**
+     * Sets the main application
+     * @param application the main application for registration
+     */
     public void setApp(Main application) {
         this.application = application;
 
     }
 
+    /**
+     * Initialize location and and resources
+     * @param location the relative location or null if location not known
+     * @param resources the resources to be used
+     */
     public void initialize(URL location, ResourceBundle resources) {
         accountTypeBox.setItems(accountTypeList);
 
@@ -73,11 +81,20 @@ public class RegistrationController extends AnchorPane implements Initializable 
 //
 //
 //    }
+
+    /**
+     * checks validation for id
+     * @return true if validate id matches
+     */
     @FXML
     private boolean validateID() {
         return Authenticator.validateID(id.getText());
     }
 
+    /**
+     * Creates a restriction to password, username, email, Name
+     * @return true if the all the conditions are true else an error message
+     */
     private boolean validator() {
         String emailRegex = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)" +
                 "*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
@@ -105,6 +122,9 @@ public class RegistrationController extends AnchorPane implements Initializable 
         return false;
     }
 
+    /**
+     * called when the user clicks th register
+     */
     @FXML
     private void registerPressed() {
         if (validator()) {
@@ -124,12 +144,18 @@ public class RegistrationController extends AnchorPane implements Initializable 
         }
     }
 
+    /**
+     * Called when the user clicks back.
+     */
     @FXML
     private void backPressed() {
 
         application.accountLogout();
     }
 
+    /**
+     * Called when the user clicks close.
+     */
     @FXML
     private void handleCloseMenu() {
         System.exit(0);

@@ -26,6 +26,11 @@ public class AppViewController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
+
+    /**
+     * Sets up the up view
+     * @param application the main application of th app view
+     */
     public void setApp(Main application){
         this.application = application;
         engine = webView.getEngine();
@@ -33,6 +38,9 @@ public class AppViewController implements Initializable {
         welcomeUser.setText("Welcome, " + application.getLoggedAccount());
     }
 
+    /**
+     * Called when the user presses logout
+     */
     @FXML
     private void logoutPressed() {
         application.accountLogout();
