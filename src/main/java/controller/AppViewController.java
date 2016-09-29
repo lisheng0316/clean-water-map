@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 
 /**
  * Created by Sheng on 9/19/16.
+ * A controller for the app view
  */
 public class AppViewController implements Initializable {
     @FXML
@@ -41,13 +42,16 @@ public class AppViewController implements Initializable {
     }
 
     /**
-     * Called when the user presses logout
+     * Logs out the user from the app
      */
     @FXML
     private void logoutPressed() {
         application.accountLogout();
     }
 
+    /**
+     * Activates the username is pressed
+     */
     @FXML
     private void usernamePressed() {
         application.gotoProfile();

@@ -53,7 +53,7 @@ public class LoginController extends AnchorPane implements Initializable {
     }
 
     /**
-     * Called when the user clicks cancel.
+     * Becomes active when is cancel is clicked at the login page
      */
     @FXML
     private void loginCancelPressed() {
@@ -79,7 +79,7 @@ public class LoginController extends AnchorPane implements Initializable {
     }
 
     /**
-     * Called when the user clicks ok.
+     * Becomes active when ok is pressed in the login page.
      */
     @FXML
     private void handleOKPressed() {
