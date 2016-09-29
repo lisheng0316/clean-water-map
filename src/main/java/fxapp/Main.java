@@ -82,7 +82,7 @@ public class Main extends Application {
     /**
      * a method to send the app to the profile page
      */
-    private void gotoProfile() {
+    public void gotoProfile() {
         try {
             ProfileController profile = (ProfileController) replaceSceneContent("../view/ProfilePage.fxml");
             profile.setApp(this);
@@ -94,7 +94,7 @@ public class Main extends Application {
     /**
      * a method to send the app to the map page
      */
-    private void gotoApp() {
+    public void gotoApp() {
         try {
             AppViewController appView = (AppViewController) replaceSceneContent("../view/appview.fxml");
             appView.setApp(this);
