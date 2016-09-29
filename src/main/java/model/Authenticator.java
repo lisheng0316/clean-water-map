@@ -12,17 +12,34 @@ public class Authenticator {
 //        ACCOUNTS.put(bangpham.toString(), "pass");
 //    }
 
+    /**
+     * a method to add an account to the backing data structure
+     * @param account the account of the user
+     * @param password the password of the user
+     */
     public static void addAccount(Account account, String password) {
         ACCOUNTS.put(account.toString(), password);
         Account.accountList.put(account.toString(), account);
     }
 
+    /**
+     * a method to validate the password upon trying to login
+     * @param id the ID of the user
+     * @param password the password of the user to be compared
+     * @return whether or not the password was validated
+     */
     public static boolean validatePassword(String id, String password){
         String validAccountPassword = ACCOUNTS.get(id);
         System.out.println(validAccountPassword != null && validAccountPassword.equals(password));
         return validAccountPassword != null && validAccountPassword.equals(password);
     }
 
+    /**
+     * a method to validate the ID of the user which will tell whether or not
+     * the ID the current user is trying to pass has already been used in the system
+     * @param id the ID of the user to check
+     * @return whether or not the ID was not taken
+     */
     public static boolean validateID(String id){
         if (Account.accountList.get(id) != null) {
             String validAccountName = Account.accountList.get(id).toString();
