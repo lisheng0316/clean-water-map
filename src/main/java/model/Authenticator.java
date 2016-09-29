@@ -6,19 +6,16 @@ import java.util.Map;
  * Created by Sheng on 9/20/16.
  */
 public class Authenticator {
-    /**
-     *
-     */
     public static Map<String, String> ACCOUNTS = new HashMap<>();
-//    static {
-//        Account bangpham = new Account("bang", "bang", "pham", "bangpham@gmail.com", AccountType.Admin);
-//        ACCOUNTS.put(bangpham.toString(), "pass");
-//    }
+    static {
+        Account bangpham = new Account("bang", "bang", "pham", "bangpham@gmail.com", AccountType.Admin);
+        ACCOUNTS.put(bangpham.toString(), "pass");
+    }
 
     /**
-     * Creates an account using an account and password
-     * @param account the account to be added
-     * @param password the password to be added
+     * a method to add an account to the backing data structure
+     * @param account the account of the user
+     * @param password the password of the user
      */
     public static void addAccount(Account account, String password) {
         ACCOUNTS.put(account.toString(), password);
@@ -26,10 +23,10 @@ public class Authenticator {
     }
 
     /**
-     * Checks if the password and id is matches
-     * @param id validates the id
-     * @param password the password that is going be validated
-     * @return true if the password and the id matches
+     * a method to validate the password upon trying to login
+     * @param id the ID of the user
+     * @param password the password of the user to be compared
+     * @return whether or not the password was validated
      */
     public static boolean validatePassword(String id, String password){
         String validAccountPassword = ACCOUNTS.get(id);
@@ -38,9 +35,10 @@ public class Authenticator {
     }
 
     /**
-     *  checks if the is matches with the user input
-     * @param id the id that is going to validated
-     * @return true if the id matches
+     * a method to validate the ID of the user which will tell whether or not
+     * the ID the current user is trying to pass has already been used in the system
+     * @param id the ID of the user to check
+     * @return whether or not the ID was not taken
      */
     public static boolean validateID(String id){
         if (Account.accountList.get(id) != null) {

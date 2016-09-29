@@ -44,69 +44,36 @@ public class RegistrationController extends AnchorPane implements Initializable 
 
     private final ObservableList<AccountType> accountTypeList = FXCollections.observableArrayList(AccountType.values());
 
-    /**
-     * Sets the main application
-     * @param application the main application for registration
-     */
+
     public void setApp(Main application) {
         this.application = application;
 
     }
 
-    /**
-     * Initialize location and and resources
-     * @param location the relative location or null if location not known
-     * @param resources the resources to be used
-     */
     public void initialize(URL location, ResourceBundle resources) {
         accountTypeBox.setItems(accountTypeList);
-
     }
 
-    /**
-     * Sets the  to be edited in the dialog.
-     *
-     * @param account the  who will be edited
-     */
-//    public void setAccount(Account account) {
-//        //remember the current student
-//        this.account = account;
-//        accountTypeBox.setItems(accountTypeList);
-//
-//        if (account == null) System.out.println("Account was null in registration!");
-//
-//        //make the data show up in the gui fields
-////        nameField.setText(_student.getName());
-////        majorField.setText(_student.getMajor());
-//
-//
-//    }
-
-    /**
-     * checks validation for id
-     * @return true if validate id matches
-     */
+    //DO WE NEED THIS???
     @FXML
     private boolean validateID() {
         return Authenticator.validateID(id.getText());
     }
 
-    /**
-     * Creates a restriction to password, username, email, Name
-     * @return true if the all the conditions are true else an error message
-     */
     private boolean validator() {
         String emailRegex = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)" +
                 "*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
         if (id.getText() == null || id.getText().length() < 2) {
             errorMessage.setText("Username has to be at least 2 characters");
+        } else if (accountTypeBox.getValue() == null) {
+            errorMessage.setText("Please select an account type");
         } else if (!firstname.getText().matches("[a-zA-Z]+")
                 || !lastname.getText().matches("[a-zA-Z]+")
                 || firstname.getText().length() < 1
                 || lastname.getText().length() < 1) {
             errorMessage.setText("Name fields are required and is restricted to letters only");
-        } else if (!validateID()) {
-            errorMessage.setText("Username is already taken");
+        } else if (!email.getText().matches(emailRegex)) {
+            errorMessage.setText("Invalid email address");
         } else if (!email.getText().matches(emailRegex)) {
             errorMessage.setText("Invalid email address");
         } else if (!email.getText().equals(emailConfirm.getText())) {
@@ -122,9 +89,6 @@ public class RegistrationController extends AnchorPane implements Initializable 
         return false;
     }
 
-    /**
-     * called when the user clicks th register
-     */
     @FXML
     private void registerPressed() {
         if (validator()) {
@@ -144,18 +108,12 @@ public class RegistrationController extends AnchorPane implements Initializable 
         }
     }
 
-    /**
-     * Called when the user clicks back.
-     */
     @FXML
     private void backPressed() {
 
         application.accountLogout();
     }
 
-    /**
-     * Called when the user clicks close.
-     */
     @FXML
     private void handleCloseMenu() {
         System.exit(0);
