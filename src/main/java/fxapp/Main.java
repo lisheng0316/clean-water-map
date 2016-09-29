@@ -22,7 +22,10 @@ import java.util.logging.Logger;
 import javafx.stage.Modality;
 import java.io.IOException;
 
-
+/**
+ * the main method of the application that deals with the creation of windows
+ * and handling of the interactions between the views and the controllers
+ */
 public class Main extends Application {
     /** the main container for the application window */
     private Stage stage;
