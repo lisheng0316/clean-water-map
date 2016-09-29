@@ -65,7 +65,7 @@ public class Main extends Application {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    private void gotoProfile() {
+    public void gotoProfile() {
         try {
             ProfileController profile = (ProfileController) replaceSceneContent("../view/ProfilePage.fxml");
             profile.setApp(this);
@@ -73,7 +73,7 @@ public class Main extends Application {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    private void gotoApp() {
+    public void gotoApp() {
         try {
             AppViewController appView = (AppViewController) replaceSceneContent("../view/appview.fxml");
             appView.setApp(this);
@@ -86,9 +86,10 @@ public class Main extends Application {
         gotoApp();
         return true;
     }
+
     public boolean registrationLogging(String userId) {
         loggedAccount = Account.of(userId);
-        gotoProfile();
+        gotoApp();
         return true;
     }
     public boolean accountLogout() {
@@ -149,10 +150,6 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-
-
-
-
         launch(args);
     }
 }

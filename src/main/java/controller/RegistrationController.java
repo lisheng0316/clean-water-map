@@ -52,27 +52,9 @@ public class RegistrationController extends AnchorPane implements Initializable 
 
     public void initialize(URL location, ResourceBundle resources) {
         accountTypeBox.setItems(accountTypeList);
-
     }
 
-    /**
-     * Sets the  to be edited in the dialog.
-     *
-     * @param account the  who will be edited
-     */
-//    public void setAccount(Account account) {
-//        //remember the current student
-//        this.account = account;
-//        accountTypeBox.setItems(accountTypeList);
-//
-//        if (account == null) System.out.println("Account was null in registration!");
-//
-//        //make the data show up in the gui fields
-////        nameField.setText(_student.getName());
-////        majorField.setText(_student.getMajor());
-//
-//
-//    }
+    //DO WE NEED THIS???
     @FXML
     private boolean validateID() {
         return Authenticator.validateID(id.getText());
@@ -83,13 +65,15 @@ public class RegistrationController extends AnchorPane implements Initializable 
                 "*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
         if (id.getText() == null || id.getText().length() < 2) {
             errorMessage.setText("Username has to be at least 2 characters");
+        } else if (accountTypeBox.getValue() == null) {
+            errorMessage.setText("Please select an account type");
         } else if (!firstname.getText().matches("[a-zA-Z]+")
                 || !lastname.getText().matches("[a-zA-Z]+")
                 || firstname.getText().length() < 1
                 || lastname.getText().length() < 1) {
             errorMessage.setText("Name fields are required and is restricted to letters only");
-        } else if (!validateID()) {
-            errorMessage.setText("Username is already taken");
+        } else if (!email.getText().matches(emailRegex)) {
+            errorMessage.setText("Invalid email address");
         } else if (!email.getText().matches(emailRegex)) {
             errorMessage.setText("Invalid email address");
         } else if (!email.getText().equals(emailConfirm.getText())) {
