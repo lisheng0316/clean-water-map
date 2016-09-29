@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 
 /**
  * Created by Sheng on 9/19/16.
+ * A controller for the app view
  */
 public class AppViewController implements Initializable {
     @FXML
@@ -28,6 +29,11 @@ public class AppViewController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
+
+    /**
+     * Sets up the up view
+     * @param application the main application of th app view
+     */
     public void setApp(Main application){
         this.application = application;
         engine = webView.getEngine();
@@ -35,11 +41,17 @@ public class AppViewController implements Initializable {
         username.setText("" + application.getLoggedAccount());
     }
 
+    /**
+     * Logs out the user from the app
+     */
     @FXML
     private void logoutPressed() {
         application.accountLogout();
     }
 
+    /**
+     * Activates the username is pressed
+     */
     @FXML
     private void usernamePressed() {
         application.gotoProfile();

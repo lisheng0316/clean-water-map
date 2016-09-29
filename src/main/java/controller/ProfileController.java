@@ -17,6 +17,7 @@ import model.Account;
 
 /**
  * Created by Sheng on 9/29/16.
+ * A controller for the profile page
  */
 public class ProfileController extends AnchorPane implements Initializable{
 
@@ -39,6 +40,10 @@ public class ProfileController extends AnchorPane implements Initializable{
 
     private Main application;
 
+    /**
+     * sets the Registration page
+     * @param application the main application of welcome page
+     */
     public void setApp(Main application){
         this.application = application;
         Account loggedAccount = application.getLoggedAccount();
@@ -55,6 +60,11 @@ public class ProfileController extends AnchorPane implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
+
+    /**
+     * Saves the account and name when save is pressed in the profile display
+     * @param event the instance to be saved
+     */
     @FXML
     private void savePressed(ActionEvent event) {
         Account loggedAccount = application.getLoggedAccount();
@@ -76,6 +86,9 @@ public class ProfileController extends AnchorPane implements Initializable{
         message.setVisible(true);
     }
 
+    /**
+     * Goes back to the previous page when the back button is pressed
+     */
     @FXML
     private void backToRegPressed() {
         application.gotoApp();

@@ -19,6 +19,7 @@ import model.Account;
 
 /**
  * Created by Sheng on 9/19/16.
+ * Controls the registration display functionality
  */
 public class RegistrationController extends AnchorPane implements Initializable {
     private Account account;
@@ -44,22 +45,33 @@ public class RegistrationController extends AnchorPane implements Initializable 
 
     private final ObservableList<AccountType> accountTypeList = FXCollections.observableArrayList(AccountType.values());
 
-
+    /**
+     * Setup the main application link so we can call methods there
+     * @param application the reference to the FX Application instance
+     */
     public void setApp(Main application) {
         this.application = application;
 
     }
-
+    @Override
     public void initialize(URL location, ResourceBundle resources) {
         accountTypeBox.setItems(accountTypeList);
     }
 
-    //DO WE NEED THIS???
+    /**
+     * Validates the id and returns true if it is valid
+     * @return true if the id valid
+     */
     @FXML
     private boolean validateID() {
         return Authenticator.validateID(id.getText());
     }
 
+    /**
+     * Validates the requirements to register for the user
+     * @return true or false if the password and the username meets all the
+     * requirements
+     */
     private boolean validator() {
         String emailRegex = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)" +
                 "*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
@@ -89,6 +101,10 @@ public class RegistrationController extends AnchorPane implements Initializable 
         return false;
     }
 
+    /**
+     * Becomes active when the registration is presses and it creates a new
+     * account
+     */
     @FXML
     private void registerPressed() {
         if (validator()) {
@@ -108,12 +124,17 @@ public class RegistrationController extends AnchorPane implements Initializable 
         }
     }
 
+    /**
+     * Goes to the previous page when the button clicked
+     */
     @FXML
     private void backPressed() {
-
         application.accountLogout();
     }
 
+    /**
+     * Closes when the registration display is closed
+     */
     @FXML
     private void handleCloseMenu() {
         System.exit(0);
