@@ -4,13 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 /**
  * Created by Sheng on 9/20/16.
+ * Authenticator to verify the username and password
  */
 public class Authenticator {
     public static Map<String, String> ACCOUNTS = new HashMap<>();
-    static {
-        Account bangpham = new Account("bang", "bang", "pham", "bangpham@gmail.com", AccountType.Admin);
-        ACCOUNTS.put(bangpham.toString(), "pass");
-    }
+//    static {
+//        Account bangpham = new Account("bang", "bang", "pham", "bangpham@gmail.com", AccountType.Admin);
+//        ACCOUNTS.put(bangpham.toString(), "pass");
+//    }
 
     /**
      * a method to add an account to the backing data structure
