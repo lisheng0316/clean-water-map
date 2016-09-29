@@ -27,6 +27,8 @@ public class Account {
     private final StringProperty _fname = new SimpleStringProperty();
     private final StringProperty _lname = new SimpleStringProperty();
     private final StringProperty _email = new SimpleStringProperty();
+    private final StringProperty _phone = new SimpleStringProperty();
+    private final StringProperty _address = new SimpleStringProperty();
     private final ObjectProperty<AccountType> _type = new SimpleObjectProperty<>();
 
 
@@ -111,11 +113,7 @@ public class Account {
 //        this.lname = lname;
 //        this.email = email;
 //        this.type = type;
-        _id.set(id);
-        _fname.set(fname);
-        _lname.set(lname);
-        _email.set(email);
-        _type.set(type);
+     this(id, fname, lname, email, type, "", "");
 
     }
     /**
@@ -133,6 +131,9 @@ public class Account {
         _lname.set(lname);
         _email.set(email);
         _type.set(type);
+        _phone.set(phone);
+        _address.set(address);
+
 
 
     }
