@@ -105,8 +105,9 @@ public class Account {
      * A map to hold all of the accounts
      */
     public static final Map<String, Account> accountList = new HashMap<String, Account>();
-
-    //the default constructor of the user
+    /**
+     * A  the default constructor of the user
+     */
     public Account(String id, String fname, String lname, String email, AccountType type) {
 //        this.id = id;
 //        this.fname = fname;

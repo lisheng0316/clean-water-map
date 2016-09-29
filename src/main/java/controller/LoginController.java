@@ -38,19 +38,19 @@ public class LoginController extends AnchorPane implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
     }
 
-    /**
-     * checks if the account login is correct and display error message
-     * @param event the login event entered
-     */
-    public void processLogin(ActionEvent event) {
-        if (application == null){
-            errorMessage.setText("Hello " + accountId.getText());
-        } else {
-            if (!application.accountLogging(accountId.getText())){
-                errorMessage.setText("Username/Password is incorrect");
-            }
-        }
-    }
+//    /**
+//     * checks if the account login is correct and display error message
+//     * @param event the login event entered
+//     */
+//    public void processLogin(ActionEvent event) {
+//        if (application == null){
+//            errorMessage.setText("Hello " + accountId.getText());
+//        } else {
+//            if (!application.accountLogging(accountId.getText())){
+//                errorMessage.setText("Username/Password is incorrect");
+//            }
+//        }
+//    }
 
     /**
      * Becomes active when is cancel is clicked at the login page

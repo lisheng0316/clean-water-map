@@ -2,6 +2,7 @@ package model;
 
 /**
  * Created by Sheng on 9/13/16.
+ * User to implement the required functionality
  */
 public class User extends Account {
 
