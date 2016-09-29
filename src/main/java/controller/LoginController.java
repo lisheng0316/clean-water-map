@@ -74,7 +74,6 @@ public class LoginController extends AnchorPane implements Initializable {
     @FXML
     private void handleOKPressed() {
 
-
         if (Authenticator.validatePassword(accountId.getText(), password.getText())) {
             application.accountLogging(accountId.getText());
             confirmLogin = true;

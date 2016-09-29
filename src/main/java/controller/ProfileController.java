@@ -63,7 +63,7 @@ public class ProfileController extends AnchorPane implements Initializable{
         if (application == null){
             // We are running in isolated FXML, possibly in Scene Builder.
             // NO-OP.
-            animateMessage();
+
             return;
         }
         Account loggedAccount = application.getLoggedAccount();
@@ -71,18 +71,15 @@ public class ProfileController extends AnchorPane implements Initializable{
         loggedAccount.setPhone(phone.getText());
         loggedAccount.setAddress(address.getText());
 
-        animateMessage();
         application.accountLogging(loggedAccount.toString());
+        System.out.println(loggedAccount.getAccountList());
+
     }
     @FXML
     private void backToRegPressed() {
         application.gotoRegistration();
     }
-    private void animateMessage() {
-        FadeTransition ft = new FadeTransition(Duration.millis(1000), success);
-        ft.setFromValue(0.0);
-        ft.setToValue(1);
-        ft.play();
-    }
+
+
 
 }

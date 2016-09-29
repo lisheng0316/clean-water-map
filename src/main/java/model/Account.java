@@ -27,7 +27,10 @@ public class Account {
     private final StringProperty _fname = new SimpleStringProperty();
     private final StringProperty _lname = new SimpleStringProperty();
     private final StringProperty _email = new SimpleStringProperty();
+    private final StringProperty _phone = new SimpleStringProperty();
+    private final StringProperty _address = new SimpleStringProperty();
     private final ObjectProperty<AccountType> _type = new SimpleObjectProperty<>();
+
 
 
 
@@ -48,36 +51,24 @@ public class Account {
 
     public ObjectProperty getAccountTypeProperty() { return _type; }
 
-
-
-
     public static final Map<String, Account> accountList = new HashMap<String, Account>();
 
     public Account(String id, String fname, String lname, String email, AccountType type) {
-//        this.id = id;
-//        this.fname = fname;
-//        this.lname = lname;
-//        this.email = email;
-//        this.type = type;
-        _id.set(id);
-        _fname.set(fname);
-        _lname.set(lname);
-        _email.set(email);
-        _type.set(type);
+
+        this(id, fname, lname, email, type, "", "");
+
 
     }
+
     public Account(String id, String fname, String lname, String email, AccountType type, String phone, String address) {
-//        this.id = id;
-//        this.fname = fname;
-//        this.lname = lname;
-//        this.email = email;
-//        this.type = type;
+
         _id.set(id);
         _fname.set(fname);
         _lname.set(lname);
         _email.set(email);
         _type.set(type);
-
+        _phone.set(phone);
+        _address.set(address);
 
     }
 
