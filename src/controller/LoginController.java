@@ -14,7 +14,6 @@ import fxapp.Main;
 import javafx.stage.Stage;
 import model.Authenticator;
 
-
 public class LoginController extends AnchorPane implements Initializable {
     private Stage dialogStage;
     private boolean confirmLogin;
@@ -22,8 +21,6 @@ public class LoginController extends AnchorPane implements Initializable {
     private TextField userId;
     @FXML
     private PasswordField password;
-    @FXML
-    private Button login;
     @FXML
     private Label errorMessage;
 
@@ -37,8 +34,6 @@ public class LoginController extends AnchorPane implements Initializable {
 
     public void processLogin(ActionEvent event) {
         if (application == null){
-            // We are running in isolated FXML, possibly in Scene Builder.
-            // NO-OP.
             errorMessage.setText("Hello " + userId.getText());
         } else {
             if (!application.userLogging(userId.getText())){
@@ -79,14 +74,10 @@ public class LoginController extends AnchorPane implements Initializable {
     @FXML
     private void handleOKPressed() {
 
-        //First validate the data to insure it is at least reasonable
-        if (Authenticator.validate(userId.getText(), password.getText())) {
-            //if the data is reasonable, then remember the the student data in Main
-            //signal success and close this dialog window.
 
+        if (Authenticator.validatePassword(userId.getText(), password.getText())) {
             application.userLogging(userId.getText());
             confirmLogin = true;
-//            application.gotoApp();
             dialogStage.close();
         } else {
             errorMessage.setVisible(true);

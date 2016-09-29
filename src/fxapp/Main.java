@@ -1,6 +1,7 @@
 package fxapp;
 
 import controller.AppViewController;
+import controller.RegistrationController;
 import model.Authenticator;
 import controller.LoginController;
 import controller.WelcomeController;
@@ -49,6 +50,16 @@ public class Main extends Application {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public void gotoRegistration() {
+        try {
+            RegistrationController registration = (RegistrationController) replaceSceneContent("../view/RegisterPage.fxml");
+            registration.setApp(this);
+        } catch (Exception ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     private void gotoApp() {
         try {
             AppViewController appView = (AppViewController) replaceSceneContent("../view/appview.fxml");
@@ -58,9 +69,7 @@ public class Main extends Application {
         }
     }
     public boolean userLogging(String userId) {
-
         loggedUser = User.of(userId);
-        System.out.println("here");
         gotoApp();
         return true;
     }
