@@ -1,0 +1,31 @@
+apply plugin: 'java'
+apply plugin: "application"
+defaultTasks 'jar'
+
+mainClassName = "fxapp.Main"
+
+dependencies {
+    compile files("libs/mysql-connector-java-5.1.13.jar")
+    compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.13'
+}
+
+repositories {
+
+    flatDir {
+        dirs "./lib"
+    }
+    mavenCentral()
+
+}
+sourceSets.main.resources.srcDir 'src/main/java'
+
+jar {
+    from("src/main/java") {
+        include "**/*.fxml"
+    }
+    manifest {
+        attributes(
+                "Main-Class": 'fxapp.Main'
+        )
+    }
+}
