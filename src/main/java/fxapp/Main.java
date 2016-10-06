@@ -60,7 +60,7 @@ public class Main extends Application {
      */
     private void gotoWelcome() {
         try {
-            WelcomeController welcome = (WelcomeController) replaceSceneContent("../view/WelcomePage.fxml");
+            WelcomeController welcome = (WelcomeController) replaceSceneContent("/view/WelcomePage.fxml");
             welcome.setApp(this);
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -72,7 +72,7 @@ public class Main extends Application {
      */
     public void gotoRegistration() {
         try {
-            RegistrationController registration = (RegistrationController) replaceSceneContent("../view/RegisterPage.fxml");
+            RegistrationController registration = (RegistrationController) replaceSceneContent("/view/RegisterPage.fxml");
             registration.setApp(this);
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -84,7 +84,7 @@ public class Main extends Application {
      */
     public void gotoProfile() {
         try {
-            ProfileController profile = (ProfileController) replaceSceneContent("../view/ProfilePage.fxml");
+            ProfileController profile = (ProfileController) replaceSceneContent("/view/ProfilePage.fxml");
             profile.setApp(this);
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -96,7 +96,7 @@ public class Main extends Application {
      */
     public void gotoApp() {
         try {
-            AppViewController appView = (AppViewController) replaceSceneContent("../view/appview.fxml");
+            AppViewController appView = (AppViewController) replaceSceneContent("/view/appview.fxml");
             appView.setApp(this);
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -169,7 +169,7 @@ public class Main extends Application {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("../view/LoginPage.fxml"));
+            loader.setLocation(Main.class.getResource("/view/LoginPage.fxml"));
             AnchorPane page = loader.load();
 
             // Create the dialog Stage.
@@ -201,9 +201,6 @@ public class Main extends Application {
      * @param args any arguments that may be applied to the program
      */
     public static void main(String[] args) {
-
-
-
 
         launch(args);
     }
