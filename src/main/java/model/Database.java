@@ -16,6 +16,8 @@ public class Database {
     private static final String USER = "root";
     private static final String PASSWORD = "pass";
 
+
+
     public void connectToDatabase(){
 
         //declare connection, statement and resultSet objects
