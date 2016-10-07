@@ -109,11 +109,7 @@ public class Account {
      * A  the default constructor of the user
      */
     public Account(String id, String fname, String lname, String email, AccountType type) {
-//        this.id = id;
-//        this.fname = fname;
-//        this.lname = lname;
-//        this.email = email;
-//        this.type = type;
+
      this(id, fname, lname, email, type, "", "");
 
     }
@@ -122,11 +118,7 @@ public class Account {
      * and address
      */
     public Account(String id, String fname, String lname, String email, AccountType type, String phone, String address) {
-//        this.id = id;
-//        this.fname = fname;
-//        this.lname = lname;
-//        this.email = email;
-//        this.type = type;
+
         _id.set(id);
         _fname.set(fname);
         _lname.set(lname);

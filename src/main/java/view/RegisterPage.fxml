@@ -31,14 +31,14 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField fx:id="id" layoutX="10.0" layoutY="101.0" onInputMethodTextChanged="#validateID" promptText="Username" />
             <ComboBox fx:id="accountTypeBox" prefHeight="26.0" prefWidth="195.0" promptText="Select Account Type" GridPane.columnIndex="2" />
-            <TextField fx:id="firstname" promptText="First name" GridPane.rowIndex="1" />
-            <TextField fx:id="lastname" layoutX="90.0" layoutY="37.0" promptText="Last name" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <TextField fx:id="email" promptText="Email address" GridPane.rowIndex="2" />
-            <TextField fx:id="emailConfirm" promptText="Confirm email" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <PasswordField fx:id="password" prefHeight="0.0" prefWidth="174.0" promptText="Password" GridPane.rowIndex="3" />
-            <PasswordField fx:id="passwordConfirm" promptText="Confirm password" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <TextField fx:id="firstname" promptText="First name" text="Chau" GridPane.rowIndex="1" />
+            <TextField fx:id="lastname" layoutX="90.0" layoutY="37.0" promptText="Last name" text="Phan" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <TextField fx:id="email" promptText="Email address" text="a@gmail.com" GridPane.rowIndex="2" />
+            <TextField fx:id="emailConfirm" promptText="Confirm email" text="a@gmail.com" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <PasswordField fx:id="password" prefHeight="0.0" prefWidth="174.0" promptText="Password" text="111111" GridPane.rowIndex="3" />
+            <PasswordField fx:id="passwordConfirm" promptText="Confirm password" text="111111" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <TextField fx:id="id" layoutX="10.0" layoutY="101.0" onInputMethodTextChanged="#validateID" promptText="Username" />
          </children>
       </GridPane>
       <Button layoutX="321.0" layoutY="431.0" mnemonicParsing="false" onAction="#backPressed" prefHeight="26.0" prefWidth="67.0" text="Back" />

@@ -3,6 +3,12 @@ package fxapp;
 
 import controller.AppViewController;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+
+// dsfadf
 
 import controller.RegistrationController;
 import model.Account;
@@ -20,6 +26,8 @@ import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.stage.Modality;
+import model.Database;
+
 import java.io.IOException;
 
 /**
@@ -35,6 +43,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+
+        Database db = new Database();
+        db.connectToDatabase();
 
         try {
             stage = primaryStage;
@@ -122,7 +133,7 @@ public class Main extends Application {
      */
     public boolean registrationLogging(String userId) {
         loggedAccount = Account.of(userId);
-        gotoProfile();
+        gotoApp();
         return true;
     }
 
