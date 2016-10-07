@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.PreparedStatement;
 
 /**
@@ -17,61 +16,104 @@ public class Database {
     private static final String PASSWORD = "pass";
 
     //declare connection, statement and resultSet objects
-    public static Connection connection = null;
-    public static Statement statement = null;
-    public static ResultSet resultSet = null;
+    private static Connection connection = null;
+    private static PreparedStatement stmt = null;
+    private static ResultSet rs = null;
 
 
-    public static void addUser(String id, String fname
-            , String lname, String email, AccountType type
-            , String phone, String address) {
+    
 
 
-        ResultSet rs = null;
-        PreparedStatement stmt = null;
+    public static boolean login(String username, String password) {
 
         try {
-            String query = "INSERT INTO `schema`.`test` (`id`, `username`, `password`)"
-                    + " VALUES (null, ?, ?)";
+            if (username != null && password != null) {
+                String SQL = "SELECT * FROM user WHERE username= ? AND password= ?";
+                stmt = connection.prepareStatement(SQL);
+                stmt.setString(1,username);
+                stmt.setString(2,password);
+                rs = stmt.executeQuery();
+
+                if (rs.next()) {
+                    return true;
+                }
+            }
+
+        } catch (SQLException error) {
+            System.out.println(error.getMessage());
+        }
+        return false;
+    }
+
+
+    public static boolean validateUsername(String username) {
+
+        try {
+            String SQL = "SELECT `username` FROM `schema`.user WHERE username = ?";
+            stmt = connection.prepareStatement(SQL);
+            stmt.setString(1,username);
+            rs = stmt.executeQuery();
+
+            if (!rs.next()) {
+                return true;
+            }
+        }
+        catch (SQLException ex){
+            System.out.println(ex.getErrorCode());
+        }
+        finally {
+            if (rs != null) {
+                try {
+                  rs.close();
+                } catch (SQLException sqlEx) { } // ignore
+            }
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException sqlEx) { } // ignore
+            }
+        }
+        return false;
+    }
+    public static void addUser(String username, String password, String fname
+            , String lname, String email, AccountType type) {
+
+        try {
+            String query = "INSERT INTO `schema`.`user` (`id`, `username`, `password`" +
+                    ", `fname`, `lname`, `email`, `type`)"
+                    + " VALUES (null, ?, ?, ?, ?, ?, ?)";
 
             stmt = connection.prepareStatement(query);
- //           String SQL = "INSERT INTO `schema`.`test` (`id`, `username`, `password`)" +
- //                   " VALUES (null, 'Chau', 'Phan');";
-            //         String SQL = "DELETE FROM `schema`.`test` WHERE id = 3;";
-            //       String SQL = "INSERT INTO `schema`.`test` (`id`, `username`, `password`) VALUES (null, 'Chau', 'Phan');";
-            stmt.setString (1, id);
-            stmt.setString   (2, email);
+            stmt.setString (1, username);
+            stmt.setString (2, password);
+            stmt.setString (3, fname);
+            stmt.setString (4, lname);
+            stmt.setString (5, email);
+            stmt.setString (6, type.toString());
             stmt.executeUpdate();
 
 
-
             //display
-            rs = stmt.executeQuery("SELECT * FROM test");
+            rs = stmt.executeQuery("SELECT * FROM user");
             while (rs.next())
             {
                 String foo = rs.getString(1);
                 System.out.println("id:"+ foo);
             }
-            connection.close();
         }
         catch (SQLException ex){
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
+            System.out.println(ex.getMessage());
         }
         finally {
             if (rs != null) {
                 try {
                     rs.close();
                 } catch (SQLException sqlEx) { } // ignore
-
-                rs = null;
             }
             if (stmt != null) {
                 try {
                     stmt.close();
                 } catch (SQLException sqlEx) { } // ignore
-                stmt = null;
             }
         }
     }
@@ -92,7 +134,6 @@ public class Database {
         } catch (SQLException e) {
             System.out.println("Unable to connect to database");
         }
-
         return null;
     }
 }

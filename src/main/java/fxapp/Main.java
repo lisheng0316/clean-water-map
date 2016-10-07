@@ -1,14 +1,10 @@
 package fxapp;
 
-
 import controller.AppViewController;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
-
-// dsfadf
 
 import controller.RegistrationController;
 import model.Account;

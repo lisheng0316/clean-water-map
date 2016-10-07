@@ -7,18 +7,19 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.scene.layout.AnchorPane;
 
+
 /**
  * Created by Sheng on 9/19/16.
  * A controller for the the welcome page
  */
-public class WelcomeController extends AnchorPane implements Initializable {
+                                           public class WelcomeController extends AnchorPane implements Initializable {
 
-    private Main application;
+        private Main application;
 
-    /**
-     * sets the welcome page
-     * @param application the main application of welcome page
-     */
+        /**
+         * sets the welcome page
+         * @param application the main application of welcome page
+         */
     public void setApp(Main application){ this.application = application;
     }
 

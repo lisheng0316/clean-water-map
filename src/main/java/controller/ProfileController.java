@@ -47,7 +47,7 @@ public class ProfileController extends AnchorPane implements Initializable{
     public void setApp(Main application){
         this.application = application;
         Account loggedAccount = application.getLoggedAccount();
-        accountType.setText(loggedAccount.getType().name());
+        accountType.setText(loggedAccount.getType().toString());
         user.setText(loggedAccount.getId());
         fname.setText(loggedAccount.getFname());
         lname.setText(loggedAccount.getLname());
@@ -78,9 +78,11 @@ public class ProfileController extends AnchorPane implements Initializable{
             loggedAccount.setEmail(email.getText());
             message.setText("profile updated");
         }
+
+        //database.getAccount(username)
+
         loggedAccount.setFname(fname.getText());
         loggedAccount.setLname(lname.getText());
-
         loggedAccount.setPhone(phone.getText());
         loggedAccount.setAddress(address.getText());
         message.setVisible(true);

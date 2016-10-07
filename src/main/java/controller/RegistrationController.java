@@ -12,10 +12,13 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import model.AccountType;
-import model.Authenticator;
 import model.Account;
+
+import model.Database;
 
 /**
  * Created by Sheng on 9/19/16.
@@ -24,6 +27,8 @@ import model.Account;
 public class RegistrationController extends AnchorPane implements Initializable {
     private Account account;
     private Main application;
+
+
     @FXML
     private TextField id;
     @FXML
@@ -43,7 +48,8 @@ public class RegistrationController extends AnchorPane implements Initializable 
     @FXML
     private ComboBox<AccountType> accountTypeBox;
 
-    private final ObservableList<AccountType> accountTypeList = FXCollections.observableArrayList(AccountType.values());
+    private final ObservableList<AccountType> accountTypeList
+            = FXCollections.observableArrayList(AccountType.User,  AccountType.Worker, AccountType.Manager);
 
     /**
      * Setup the main application link so we can call methods there
@@ -58,14 +64,6 @@ public class RegistrationController extends AnchorPane implements Initializable 
         accountTypeBox.setItems(accountTypeList);
     }
 
-    /**
-     * Validates the id and returns true if it is valid
-     * @return true if the id valid
-     */
-    @FXML
-    private boolean validateID() {
-        return Authenticator.validateID(id.getText());
-    }
 
     /**
      * Validates the requirements to register for the user
@@ -73,6 +71,7 @@ public class RegistrationController extends AnchorPane implements Initializable 
      * requirements
      */
     private boolean validator() {
+
         String emailRegex = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)" +
                 "*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
         if (id.getText() == null || id.getText().length() < 2) {
@@ -98,6 +97,7 @@ public class RegistrationController extends AnchorPane implements Initializable 
         } else {
             return true;
         }
+        System.out.println("bangdeptrai");
         return false;
     }
 
@@ -107,20 +107,27 @@ public class RegistrationController extends AnchorPane implements Initializable 
      */
     @FXML
     private void registerPressed() {
-        if (validator()) {
+        if (validator() && Database.validateUsername(id.getText())) {
+            Database.addUser(id.getText(),
+                    password.getText(),
+                    firstname.getText(),
+                    lastname.getText(),
+                    email.getText(),
+                    accountTypeBox.getValue());
+
+
             account = new Account(id.getText(), firstname.getText(), lastname.getText(), email.getText(), accountTypeBox.getValue());
-//            account.setId(id.getText());
-//            account.setFname(firstname.getText());
-//            account.setLname(lastname.getText());
-//            account.setEmail(email.getText());
-//            account.setType(accountTypeBox.getValue());
-//            System.out.println("account list: " + account.getAccountList().values());
-            Authenticator.addAccount(account, password.getText());
             application.registrationLogging(account.toString());
 
         } else {
             errorMessage.setVisible(true);
-            System.out.println("visible");
+        }
+    }
+
+    @FXML
+    public void enterPressed(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            registerPressed();
         }
     }
 

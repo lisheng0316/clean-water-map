@@ -1,6 +1,5 @@
 package controller;
 
-import model.Authenticator;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -9,15 +8,20 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import fxapp.Main;
 import javafx.stage.Stage;
+import model.Database;
+
 
 /**
  * Controls the functionality of the login page
  */
 public class LoginController extends AnchorPane implements Initializable {
     private Stage dialogStage;
+
     private boolean confirmLogin;
     @FXML
     private TextField accountId;
@@ -38,19 +42,6 @@ public class LoginController extends AnchorPane implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
     }
 
-//    /**
-//     * checks if the account login is correct and display error message
-//     * @param event the login event entered
-//     */
-//    public void processLogin(ActionEvent event) {
-//        if (application == null){
-//            errorMessage.setText("Hello " + accountId.getText());
-//        } else {
-//            if (!application.accountLogging(accountId.getText())){
-//                errorMessage.setText("Username/Password is incorrect");
-//            }
-//        }
-//    }
 
     /**
      * Becomes active when is cancel is clicked at the login page
@@ -78,13 +69,20 @@ public class LoginController extends AnchorPane implements Initializable {
         return confirmLogin;
     }
 
+    @FXML
+    public void enterPressed(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            OKPressed();
+        }
+    }
+
     /**
      * Becomes active when ok is pressed in the login page.
      */
     @FXML
-    private void handleOKPressed() {
+    private void OKPressed() {
 
-        if (Authenticator.validatePassword(accountId.getText(), password.getText())) {
+        if (Database.login(accountId.getText(), password.getText())) {
             application.accountLogging(accountId.getText());
             confirmLogin = true;
             dialogStage.close();
