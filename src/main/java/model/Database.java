@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.PreparedStatement;
 import java.sql.Statement;
 
 
@@ -12,18 +13,165 @@ import java.sql.Statement;
  */
 public class Database {
     private static final String DRIVER = "com.mysql.jdbc.Driver";
-    private static final String URL = "jdbc:mysql://localhost:3306/database_name";
+    private static final String URL = "jdbc:mysql://localhost:3306/schema";
     private static final String USER = "root";
     private static final String PASSWORD = "pass";
 
+    //declare connection, statement and resultSet objects
+    private static Connection connection = null;
+    private static PreparedStatement stmt = null;
+    private static ResultSet rs = null;
+
+    public static void updateAccount(String fname,
+                                     String lname,
+                                     String email,
+                                     String phone, String address, String username) {
+
+        try {
+            String SQL = "UPDATE user SET fname = ?, lname = ?, email = ? , phone = ?, address = ? where username = ?";
+            stmt = connection.prepareStatement(SQL);
+            stmt.setString (1, fname);
+            stmt.setString (2, lname);
+            stmt.setString (3, email);
+            stmt.setString (4, phone);
+            stmt.setString (5, address);
+            stmt.setString (6, username);
+            stmt.executeUpdate();
+        }
+        catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+        finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException sqlEx) { } // ignore
+            }
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException sqlEx) { } // ignore
+            }
+        }
+    }
+
+    public static Account getAccount(String username) {
+        String query = "SELECT * FROM user";
+        Account account = null;
+
+        try {
+            String SQL = "SELECT * FROM user WHERE username= ?";
+            stmt = connection.prepareStatement(SQL);
+            stmt.setString(1,username);
+            rs = stmt.executeQuery();
+
+            while (rs.next())
+            {
+                String username_ = rs.getString("username");
+                String firstName = rs.getString("fname");
+                String lastName = rs.getString("lname");
+                String email = rs.getString("email");
+                String type = rs.getString("type");
+                String phone = rs.getString("phone") + "";
+                String address = rs.getString("address");
+
+                account = new Account(username, firstName, lastName, email, AccountType.valueOf(type), phone, address);
+            }
+            stmt.close();
+
+        } catch (SQLException error) {
+            System.out.println(error.getMessage());
+        }
+
+        return account;
+    }
+
+    public static boolean login(String username, String password) {
+
+        try {
+            if (username != null && password != null) {
+                String SQL = "SELECT * FROM user WHERE username= ? AND password= ?";
+                stmt = connection.prepareStatement(SQL);
+                stmt.setString(1,username);
+                stmt.setString(2,password);
+                rs = stmt.executeQuery();
+
+                if (rs.next()) {
+                    return true;
+                }
+            }
+
+        } catch (SQLException error) {
+            System.out.println(error.getMessage());
+        }
+        return false;
+    }
 
 
-    public void connectToDatabase(){
+    public static boolean validateUsername(String username) {
 
-        //declare connection, statement and resultSet objects
-        Connection connection = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
+        try {
+            String SQL = "SELECT `username` FROM `schema`.user WHERE username = ?";
+            stmt = connection.prepareStatement(SQL);
+            stmt.setString(1,username);
+            rs = stmt.executeQuery();
+
+            if (!rs.next()) {
+                return true;
+            }
+        }
+        catch (SQLException ex){
+            System.out.println(ex.getErrorCode());
+        }
+        finally {
+            if (rs != null) {
+                try {
+                  rs.close();
+                } catch (SQLException sqlEx) { } // ignore
+            }
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException sqlEx) { } // ignore
+            }
+        }
+        return false;
+    }
+    public static void addUser(String username, String password, String fname
+            , String lname, String email, AccountType type) {
+
+        try {
+            String query = "INSERT INTO `schema`.`user` (`id`, `username`, `password`" +
+                    ", `fname`, `lname`, `email`, `type`)"
+                    + " VALUES (null, ?, ?, ?, ?, ?, ?)";
+
+            stmt = connection.prepareStatement(query);
+            stmt.setString (1, username);
+            stmt.setString (2, password);
+            stmt.setString (3, fname);
+            stmt.setString (4, lname);
+            stmt.setString (5, email);
+            stmt.setString (6, type.toString());
+            stmt.executeUpdate();
+        }
+        catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+        finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException sqlEx) { } // ignore
+            }
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException sqlEx) { } // ignore
+            }
+        }
+    }
+
+    public static Database connectToDatabase(){
 
         //load jdbc driver for mysql database
         try {
@@ -34,47 +182,11 @@ public class Database {
 
         //Establish connection using DriverManager
         try {
-            connection = DriverManager.getConnection(DRIVER, USER, PASSWORD);
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/schema?" +
+                    "user=root&password=pass");
         } catch (SQLException e) {
             System.out.println("Unable to connect to database");
         }
-
-        //if connection is successfully established, create statement
-        if(connection != null) {
-            try {
-                statement = connection.createStatement();
-            } catch (SQLException e) {
-                System.out.println("Unable to create statement");
-            }
-        }
-
-        //if statement is created successfully, execute query and get results
-        if(statement != null) {
-            try {
-                resultSet = statement.executeQuery("SELECT * FROM orders");
-            } catch (SQLException e) {
-                System.out.println("Unable to create statement");
-            }
-        }
-
-        //if resultset is received and is not empty,
-        // iterate over resultset to get values
-        if(resultSet != null) {
-            try {
-                while(resultSet.next()) {
-                    System.out.println("Value in 1st column "+resultSet.getString(1));
-                }
-            } catch (SQLException e) {
-                System.out.println("Unable to iterate over resultset");
-            }
-        }
-
-        try {
-            resultSet.close();
-            statement.close();
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        return null;
     }
 }
