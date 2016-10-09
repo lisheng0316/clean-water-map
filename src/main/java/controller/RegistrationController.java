@@ -25,7 +25,6 @@ import model.Database;
  * Controls the registration display functionality
  */
 public class RegistrationController extends AnchorPane implements Initializable {
-    private Account account;
     private Main application;
 
 
@@ -114,10 +113,7 @@ public class RegistrationController extends AnchorPane implements Initializable 
                     lastname.getText(),
                     email.getText(),
                     accountTypeBox.getValue());
-
-
-            account = new Account(id.getText(), firstname.getText(), lastname.getText(), email.getText(), accountTypeBox.getValue());
-            application.registrationLogging(account.toString());
+            application.registrationLogging(id.getText());
 
         } else {
             errorMessage.setVisible(true);

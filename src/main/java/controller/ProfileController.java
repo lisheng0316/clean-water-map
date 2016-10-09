@@ -14,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 import model.Account;
+import model.Database;
 
 /**
  * Created by Sheng on 9/29/16.
@@ -74,18 +75,16 @@ public class ProfileController extends AnchorPane implements Initializable{
             message.setText("Invalid email address");
         } else if (!email.getText().matches(emailRegex)) {
             message.setText("Invalid email address");
+        } else if (!phone.getText().matches("[0-9]+")) {
+            message.setText("Please provide digit only for phone number");
         } else {
             loggedAccount.setEmail(email.getText());
             message.setText("profile updated");
+            Database.updateAccount(fname.getText(),
+            lname.getText(), email.getText(),
+            phone.getText(), address.getText(), loggedAccount.getId());
+            message.setVisible(true);
         }
-
-        //database.getAccount(username)
-
-        loggedAccount.setFname(fname.getText());
-        loggedAccount.setLname(lname.getText());
-        loggedAccount.setPhone(phone.getText());
-        loggedAccount.setAddress(address.getText());
-        message.setVisible(true);
     }
 
     /**
@@ -93,7 +92,7 @@ public class ProfileController extends AnchorPane implements Initializable{
      */
     @FXML
     private void backToRegPressed() {
-        application.gotoApp();
+        application.accountLogging(application.getLoggedAccount().getId());
     }
 
 }
