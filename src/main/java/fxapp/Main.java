@@ -2,10 +2,6 @@ package fxapp;
 
 import controller.AppViewController;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-
 import controller.RegistrationController;
 import model.Account;
 import controller.*;
@@ -17,6 +13,8 @@ import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
+
 
 import java.io.InputStream;
 import java.util.logging.Level;
@@ -46,8 +44,11 @@ public class Main extends Application {
         try {
             stage = primaryStage;
             stage.setTitle("CWC");
+            stage.getIcons().add(new Image("file:resources/menu.png"));
             stage.setMinWidth(MINIMUM_WINDOW_WIDTH);
             stage.setMinHeight(MINIMUM_WINDOW_HEIGHT);
+            stage.setMaxWidth(MINIMUM_WINDOW_WIDTH);
+            stage.setMaxHeight(MINIMUM_WINDOW_HEIGHT);
             gotoWelcome();
             primaryStage.show();
         } catch (Exception ex) {
@@ -116,7 +117,7 @@ public class Main extends Application {
      * @return whether the user logged in or not
      */
     public boolean accountLogging(String userId) {
-        loggedAccount = Account.of(userId);
+        loggedAccount = Database.getAccount(userId);
         gotoApp();
         return true;
     }
@@ -128,7 +129,7 @@ public class Main extends Application {
      * @return whether or not the data was updated
      */
     public boolean registrationLogging(String userId) {
-        loggedAccount = Account.of(userId);
+        loggedAccount = Database.getAccount(userId);;
         gotoApp();
         return true;
     }
@@ -163,6 +164,8 @@ public class Main extends Application {
             in.close();
         }
         Scene scene = new Scene(page, MINIMUM_WINDOW_WIDTH, MINIMUM_WINDOW_HEIGHT);
+        String css = AppViewController.class.getResource("/fxapp/stylesheet.css").toExternalForm();
+        scene.getStylesheets().add(css);
         stage.setScene(scene);
         stage.sizeToScene();
         return (Initializable) loader.getController();

@@ -93,6 +93,19 @@ public class Account {
     public void setType(AccountType type) { _type.set(type); }
 
     /**
+     * @return the address
+     */
+    public String getAddress() {
+        return _address.get();
+    }
+
+    /**
+     * @return the phone number
+     */
+    public String getPhone() {
+        return _phone.get();
+    }
+    /**
      * a method to we haven't used yet
      * @return the type from the combo box in M3
      */
@@ -159,12 +172,6 @@ public class Account {
         return _id.get();
     }
 
-    /**
-     * @return the phone
-     */
-    public String getPhone() {
-        return phone;
-    }
 
     /**
      * @param phone the phone to set
@@ -173,14 +180,6 @@ public class Account {
         this.phone = phone;
     }
 
-
-
-    /**
-     * @return the address
-     */
-    public String getAddress() {
-        return address;
-    }
 
     /**
      * @param address the address to set

@@ -29,12 +29,12 @@
             <RowConstraints maxHeight="119.0" minHeight="10.0" prefHeight="38.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <TextField fx:id="accountId" maxWidth="250.0" prefHeight="26.0" prefWidth="300.0" promptText="Username" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <TextField fx:id="accountId" maxWidth="250.0" prefHeight="26.0" prefWidth="300.0" promptText="Username" text="Sean123" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <GridPane.margin>
                         <Insets />
                     </GridPane.margin>
                 </TextField>
-                <PasswordField fx:id="password" maxWidth="250.0" promptText="Password" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                <PasswordField fx:id="password" maxWidth="250.0" promptText="Password" text="111111" GridPane.columnIndex="1" GridPane.rowIndex="2">
                     <GridPane.margin>
                         <Insets />
                     </GridPane.margin>

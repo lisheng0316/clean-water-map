@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
+import java.sql.Statement;
+
 
 /**
  * Created by Bang on 10/6/16.
@@ -20,9 +22,69 @@ public class Database {
     private static PreparedStatement stmt = null;
     private static ResultSet rs = null;
 
+    public static void updateAccount(String fname,
+                                     String lname,
+                                     String email,
+                                     String phone, String address, String username) {
 
-    
+        try {
+            String SQL = "UPDATE user SET fname = ?, lname = ?, email = ? , phone = ?, address = ? where username = ?";
+            stmt = connection.prepareStatement(SQL);
+            stmt.setString (1, fname);
+            stmt.setString (2, lname);
+            stmt.setString (3, email);
+            stmt.setString (4, phone);
+            stmt.setString (5, address);
+            stmt.setString (6, username);
+            stmt.executeUpdate();
+        }
+        catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+        finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException sqlEx) { } // ignore
+            }
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException sqlEx) { } // ignore
+            }
+        }
+    }
 
+    public static Account getAccount(String username) {
+        String query = "SELECT * FROM user";
+        Account account = null;
+
+        try {
+            String SQL = "SELECT * FROM user WHERE username= ?";
+            stmt = connection.prepareStatement(SQL);
+            stmt.setString(1,username);
+            rs = stmt.executeQuery();
+
+            while (rs.next())
+            {
+                String username_ = rs.getString("username");
+                String firstName = rs.getString("fname");
+                String lastName = rs.getString("lname");
+                String email = rs.getString("email");
+                String type = rs.getString("type");
+                String phone = rs.getString("phone") + "";
+                String address = rs.getString("address");
+
+                account = new Account(username, firstName, lastName, email, AccountType.valueOf(type), phone, address);
+            }
+            stmt.close();
+
+        } catch (SQLException error) {
+            System.out.println(error.getMessage());
+        }
+
+        return account;
+    }
 
     public static boolean login(String username, String password) {
 
@@ -91,15 +153,6 @@ public class Database {
             stmt.setString (5, email);
             stmt.setString (6, type.toString());
             stmt.executeUpdate();
-
-
-            //display
-            rs = stmt.executeQuery("SELECT * FROM user");
-            while (rs.next())
-            {
-                String foo = rs.getString(1);
-                System.out.println("id:"+ foo);
-            }
         }
         catch (SQLException ex){
             System.out.println(ex.getMessage());

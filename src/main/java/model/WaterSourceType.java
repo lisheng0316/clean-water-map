@@ -7,12 +7,5 @@ package model;
  * an easier way to identify what it is they are looking for
  */
 public enum WaterSourceType {
-    Lake,
-    River,
-    Creek,
-    Well,
-    Stream,
-    Pond,
-    Oasis,
-    Spout;
+    Bottled, Well, Stream, Lake, Spring, Other
 }

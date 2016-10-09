@@ -28,8 +28,8 @@
          <children>
             <TextField fx:id="id" layoutX="10.0" layoutY="101.0" promptText="Username" text="Username" />
             <ComboBox fx:id="accountTypeBox" prefHeight="26.0" prefWidth="195.0" promptText="Select Account Type" GridPane.columnIndex="2" />
-            <TextField fx:id="firstname" promptText="First name" text="Chau" GridPane.rowIndex="1" />
-            <TextField fx:id="lastname" layoutX="90.0" layoutY="37.0" promptText="Last name" text="Phan" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <TextField fx:id="firstname" promptText="First name" text="Sean" GridPane.rowIndex="1" />
+            <TextField fx:id="lastname" layoutX="90.0" layoutY="37.0" promptText="Last name" text="McManus" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <TextField fx:id="email" promptText="Email address" text="a@gmail.com" GridPane.rowIndex="2" />
             <TextField fx:id="emailConfirm" promptText="Confirm email" text="a@gmail.com" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             <PasswordField fx:id="password" prefHeight="0.0" prefWidth="174.0" promptText="Password" text="111111" GridPane.rowIndex="3" />

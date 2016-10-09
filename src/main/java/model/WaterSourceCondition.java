@@ -6,7 +6,7 @@ package model;
  */
 public enum WaterSourceCondition {
     Clear,
-    Muddy,
+    Treatable,
     Portable,
     Waste;
 }
