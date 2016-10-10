@@ -15,8 +15,8 @@ import java.time.LocalDate;
 import java.util.Locale;
 
 import javafx.scene.layout.AnchorPane;
-import model.WaterSourceCondition;
-import model.WaterSourceType;
+import model.WaterCondition;
+import model.WaterType;
 
 import javax.jnlp.UnavailableServiceException;
 import javax.xml.stream.XMLReporter;
@@ -57,20 +57,20 @@ public class AppViewController implements Initializable {
     private TitledPane formCollapse;
 
     @FXML
-    private ComboBox<WaterSourceType> waterType;
+    private ComboBox<WaterType> waterType;
 
     @FXML
-    private ComboBox<WaterSourceCondition> waterCondition;
+    private ComboBox<WaterCondition> waterCondition;
 
     @FXML
     private ComboBox<String> reportType;
 
 
-    private final ObservableList<WaterSourceType> waterTypeList
-            = FXCollections.observableArrayList(WaterSourceType.values());
+    private final ObservableList<WaterType> waterTypeList
+            = FXCollections.observableArrayList(WaterType.values());
 
-    private final ObservableList<WaterSourceCondition> waterConditionList
-            = FXCollections.observableArrayList(WaterSourceCondition.values());
+    private final ObservableList<WaterCondition> waterConditionList
+            = FXCollections.observableArrayList(WaterCondition.values());
 
     private final ObservableList<String> reportTypeList
             = FXCollections.observableArrayList("Source report", "Purity report");
@@ -176,7 +176,7 @@ public class AppViewController implements Initializable {
 
     @FXML
     private void reportTypeSelected() {
-        System.out.println(reportType.getValue());
+
         if (reportType.getValue().equals("Source report")) {
             isSourceReport = true;
         } else if (reportType.getValue().equals("Purity report")) {

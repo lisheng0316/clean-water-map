@@ -68,6 +68,7 @@
 
 #menu:hover {
     -fx-opacity: .6 ;
+    -fx-cursor: hand;
 }
 
 #menu {
