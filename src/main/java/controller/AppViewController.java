@@ -6,7 +6,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -18,7 +17,7 @@ import javafx.scene.layout.AnchorPane;
 import model.WaterCondition;
 import model.WaterType;
 
-import javax.jnlp.UnavailableServiceException;
+//import javax.jnlp.UnavailableServiceException;
 import javax.xml.stream.XMLReporter;
 import javax.xml.transform.Source;
 import java.net.URL;
