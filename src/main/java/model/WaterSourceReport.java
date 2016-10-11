@@ -1,33 +1,53 @@
 package model;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Sean on 10/6/2016.
  * A class to hold the information for the water source report
  */
 public class WaterSourceReport {
-    private double longitude;
-    private double latitude;
+    private String longitude;
+    private String latitude;
     private WaterSourceType type;
     private String user;
     private WaterSourceCondition condition;
-    private Date date;
+    private String date;
+    private String time;
     private int reportNumber;
     private static int totalReports;
+    public static Map<String, WaterSourceReport> reportList = new HashMap<>();
 
-    public WaterSourceReport() {
-        date = new Date();
+    public WaterSourceReport(String theUser, String theDate,
+                             String theTime, String longi, String lati,
+                             WaterSourceType theType, WaterSourceCondition condi) {
+        user = theUser;
+        date = theDate;
+        time = theTime;
         totalReports++;
         reportNumber = totalReports;
+        condition = condi;
+        type = theType;
+        longitude = longi;
+        latitude = lati;
     }
 
     /**
      * a method to get the date of the report
      * @return the date of the report
      */
-    public Date getDate() {
+    public String getDate() {
         return date;
+    }
+
+    /**
+     * a method to get the time of the report
+     * @return the time the report was placed.
+     */
+    public String getTime() {
+        return time;
     }
 
     /**
@@ -42,7 +62,7 @@ public class WaterSourceReport {
      * a method to get the longitude of the report
      * @return the longitude
      */
-    public double getLongitude() {
+    public String getLongitude() {
         return longitude;
     }
 
@@ -50,7 +70,7 @@ public class WaterSourceReport {
      * a method to ge the latitude of the report
      * @return the latitude
      */
-    public double getLatitude() {
+    public String getLatitude() {
         return latitude;
     }
 
