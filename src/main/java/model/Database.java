@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 
 /**
@@ -209,6 +210,39 @@ public class Database {
             }
         }
     }
+
+
+//    public ArrayList<WaterSourceReport> getWaterSourceReports() {
+//        String query = "SELECT * FROM WaterSourceReport";
+//        Account account = null;
+//
+//        try {
+//            String SQL = "SELECT * FROM user WHERE username= ?";
+//            stmt = connection.prepareStatement(SQL);
+//            stmt.setString(1, username);
+//            rs = stmt.executeQuery();
+//
+//            while (rs.next())
+//            {
+//                String username_ = rs.getString("username");
+//                String firstName = rs.getString("fname");
+//                String lastName = rs.getString("lname");
+//                String email = rs.getString("email");
+//                String type = rs.getString("type");
+//                String phone = rs.getString("phone") + "";
+//                String address = rs.getString("address");
+//
+//                account = new Account(username, firstName, lastName, email, AccountType.valueOf(type), phone, address);
+//            }
+//            stmt.close();
+//
+//        } catch (SQLException error) {
+//            System.out.println(error.getMessage());
+//        }
+//
+//        return account;
+//    }
+
 
 
 

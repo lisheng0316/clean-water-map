@@ -11,6 +11,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
@@ -22,7 +24,7 @@ import model.Database;
 import model.WaterSourceCondition;
 import model.WaterSourceReport;
 import model.WaterSourceType;
-
+import java.sql.Timestamp;
 import java.net.URL;
 import java.util.Locale;
 import java.util.Optional;
@@ -33,56 +35,30 @@ import java.util.ResourceBundle;
  * A controller for the app view
  */
 public class ReportViewController implements Initializable {
-    @FXML
-    private WebView webView;
+
     @FXML
     private Label welcome;
     @FXML
     private Label username;
     @FXML
     private AnchorPane reportForm;
-    @FXML
-    private VBox form;
 
     @FXML
-    private TextField virusPPM;
-
+    private Label reportNumber;
     @FXML
-    private TextField contaminantPPM;
-
+    private Label reporter;
     @FXML
-    private TextField longitude;
-
+    private Label longitude;
     @FXML
-    private TextField latitude;
-
+    private Label latitude;
     @FXML
-    private TitledPane formCollapse;
-
+    private Label waterType;
     @FXML
-    private ComboBox<WaterSourceType> waterType;
-
+    private Label waterCondition;
     @FXML
-    private ComboBox<WaterSourceCondition> waterCondition;
+    private Label dateCreated;
 
-    @FXML
-    private ComboBox<String> reportType;
 
-    @FXML
-    private ListView<WaterSourceReport> reportList;
-
-    private final ObservableList<WaterSourceType> waterTypeList
-            = FXCollections.observableArrayList(WaterSourceType.values());
-
-    private final ObservableList<WaterSourceCondition> waterConditionList
-            = FXCollections.observableArrayList(WaterSourceCondition.values());
-
-    private final ObservableList<String> reportTypeList
-            = FXCollections.observableArrayList("Source report", "Purity report");
-
-    private DatePicker reportDate;
-
-    private WebEngine engine;
     private Main application;
     private boolean reportExpand = true;
     private static boolean isSourceReport = false;
@@ -91,9 +67,7 @@ public class ReportViewController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Locale.setDefault(Locale.US);
-        waterType.setItems(waterTypeList);
-        waterCondition.setItems(waterConditionList);
-        reportType.setItems(reportTypeList);
+
         alert = new Alert(Alert.AlertType.CONFIRMATION);
     }
 
@@ -104,106 +78,48 @@ public class ReportViewController implements Initializable {
     public void setApp(Main application){
         this.application = application;
 
-        engine = webView.getEngine();
-        engine.load("https://maps.google.com");
         username.setText("" + application.getLoggedAccount());
     }
 
     /**
-     * Activates the username is pressed
+     * Back to
      */
-    @FXML
-    private void usernamePressed() {
-        application.gotoProfile();
-    };
-
-    @FXML
-    private void cancelFormPressed() {
-        alert.setTitle("Form Cancellation");
-        alert.setHeaderText("Are you sure to cancel the current report?");
-        alert.setContentText("Hit OK to void your submission");
-        Optional<ButtonType> result = alert.showAndWait();
-
-        if (result.get() == ButtonType.OK){
-            reportType.setValue("Report Type");
-            waterCondition.setValue(null);
-            contaminantPPM.clear();
-            virusPPM.clear();
-            longitude.clear();
-            latitude.clear();
-        }
+    public void setReportNumber(int number) {
+        reportNumber.setText("" + number);
     }
 
-    @FXML
-    private void submitFormPressed() {
-
-        alert.setTitle("Form Submission");
-        alert.setHeaderText("You are about to submit the current report");
-        alert.setContentText("Proceed your submission?");
-        Optional<ButtonType> result = alert.showAndWait();
-
-        if (result.get() == ButtonType.OK){
-            WaterSourceReport report = new WaterSourceReport();
-            Account loggedAccount = application.getLoggedAccount();
-
-            Database.addWaterSourceReport(report.getReportNumber(), loggedAccount.getFname(),
-                    loggedAccount.getLname(), longitude.getText(), latitude.getText(),
-                    waterType.getValue(), waterCondition.getValue(), report.getDate());
-
-
-        }
-
-
+    public void setReporter(String name) {
+        reporter.setText(name);
     }
 
+    public void setDateCreated(Timestamp date) {
+        dateCreated.setText("" + date);
+    }
 
+    public void setLongitude(double longi) {
+        longitude.setText("" + longi);
+    }
 
+    public void setLatitude(double lati) {
+        latitude.setText("" + lati);
+    }
 
+    public void setWaterType(WaterSourceType type) {
+        waterType.setText("" + type);
+    }
+
+    public void setWaterCondition(WaterSourceCondition condition) {
+        waterCondition.setText("" + condition);
+    }
 
     @FXML
     private void menuPressed(){
-        toggleMenu();
     }
 
     @FXML
-    private void accountSettingPressed() {
-        application.gotoProfile();
+    private void backToAppPressed() {
+        application.gotoApp();
     }
 
-    @FXML
-    private void signoutPressed() {
-        application.accountLogout();
-    }
-
-
-    private void toggleMenu() {
-        if (!reportExpand) {
-            webView.setMinWidth(800);
-            webView.setMaxWidth(800);
-            reportForm.setMinWidth(0);
-            reportForm.setMaxWidth(0);
-            reportExpand = true;
-        }
-        else {
-            webView.setMinWidth(600);
-            webView.setMaxWidth(600);
-            reportForm.setMinWidth(200);
-            reportForm.setMaxWidth(200);
-            reportExpand = false;
-        }
-    }
-
-    @FXML
-    private void reportTypeSelected() {
-        System.out.println(reportType.getValue());
-        if (reportType.getValue().equals("Source report")) {
-            isSourceReport = true;
-        } else if (reportType.getValue().equals("Purity report")) {
-            isSourceReport = false;
-        }
-        virusPPM.setDisable(isSourceReport);
-        contaminantPPM.setDisable(isSourceReport);
-        waterType.setDisable(!isSourceReport);
-    }
 
 }

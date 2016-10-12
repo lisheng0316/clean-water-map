@@ -151,7 +151,9 @@ public class AppViewController implements Initializable {
             Database.addWaterSourceReport(report.getReportNumber(), loggedAccount.getFname(),
                     loggedAccount.getLname(), longitude.getText(), latitude.getText(),
                     waterType.getValue(), waterCondition.getValue(), report.getDate());
-            reportList.setItems(sourceReportList); // SET A observablelist
+
+
+//            reportList.setItems(sourceReportList.get(0)); // SET A observablelist
 
         }
 

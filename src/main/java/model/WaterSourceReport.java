@@ -21,11 +21,32 @@ public class WaterSourceReport {
     public static WaterSourceReport getInstance() {return instance;}
 
 
+
     public WaterSourceReport() {
         date = new Timestamp(Calendar.getInstance().getTime().getTime());
         totalReports++;
         reportNumber = totalReports;
     }
+
+    public WaterSourceReport(int reportNumber, String user, double longitude, double latitude, WaterSourceType type,
+                             WaterSourceCondition condition, Timestamp date) {
+        date = new Timestamp(Calendar.getInstance().getTime().getTime());
+        totalReports++;
+        reportNumber = totalReports;
+        this.user = user;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.type = type;
+        this.condition = condition;
+    }
+
+    /**
+     * a method to get the user who made the report
+     * @return the creator of the report
+     */
+//    public User getUser() {return user;}
+
+    public void setUser() {this.user = user;}
 
     /**
      * a method to get the date of the report
