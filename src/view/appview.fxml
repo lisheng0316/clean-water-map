@@ -159,7 +159,7 @@
                      <graphic>
                         <ImageView id="menu" fx:id="menu" fitHeight="12.0" fitWidth="20.0" nodeOrientation="INHERIT" onMouseClicked="#menuPressed" onTouchPressed="#menuPressed" opacity="0.54" styleClass="menu">
                            <image>
-                              <Image url="@../../../../build/resources/image/menu.png" />
+                              <Image url="@image/menu.png" />
                            </image>
                            <cursor>
                               <Cursor fx:constant="HAND" />
