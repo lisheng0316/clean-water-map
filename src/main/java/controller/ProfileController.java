@@ -2,6 +2,8 @@ package controller;
 
 import fxapp.Main;
 import javafx.fxml.Initializable;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import java.util.ResourceBundle;
 import javafx.animation.FadeTransition;

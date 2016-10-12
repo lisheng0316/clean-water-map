@@ -1,5 +1,7 @@
 package controller;
 
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import model.Authenticator;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -90,6 +92,16 @@ public class LoginController extends AnchorPane implements Initializable {
             dialogStage.close();
         } else {
             errorMessage.setVisible(true);
+        }
+    }
+    /**
+     * Becomes active when the login key pressed
+     * @param event the event when ENTER is pressed
+     */
+    @FXML
+    private void isKeyPressed(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            handleOKPressed();
         }
     }
 }

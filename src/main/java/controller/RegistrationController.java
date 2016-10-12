@@ -12,6 +12,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import model.AccountType;
 import model.Authenticator;
@@ -43,7 +45,7 @@ public class RegistrationController extends AnchorPane implements Initializable 
     @FXML
     private ComboBox<AccountType> accountTypeBox;
 
-    private final ObservableList<AccountType> accountTypeList = FXCollections.observableArrayList(AccountType.values());
+    private final ObservableList<AccountType> accountTypeList = FXCollections.observableArrayList(AccountType.User, AccountType.Worker, AccountType.Manager);
 
     /**
      * Setup the main application link so we can call methods there
@@ -121,6 +123,16 @@ public class RegistrationController extends AnchorPane implements Initializable 
         } else {
             errorMessage.setVisible(true);
             System.out.println("visible");
+        }
+    }
+    /**
+     * It becomes active when the register key is pressed
+     * @param event the event of the key pressed
+     */
+    @FXML
+    private void registerEntered(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            registerPressed();
         }
     }
 

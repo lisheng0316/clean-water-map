@@ -82,7 +82,7 @@
          </children>
       </VBox>
       <Button fx:id="backToReg" layoutX="327.0" layoutY="462.0" mnemonicParsing="false" onAction="#backToRegPressed" prefHeight="26.0" prefWidth="67.0" text="Back" />
-      <Button layoutX="407.0" layoutY="462.0" mnemonicParsing="false" onAction="#savePressed" prefHeight="27.0" prefWidth="67.0" text="Save" />
+      <Button layoutX="407.0" layoutY="462.0" mnemonicParsing="false" onAction="#savePressed" onKeyPressed="#saveEntered" prefHeight="27.0" prefWidth="67.0" text="Save" />
       <Label fx:id="message" alignment="CENTER" contentDisplay="CENTER" layoutX="202.0" layoutY="421.0" prefHeight="20.0" prefWidth="397.0" text="Profile updated" textFill="#d32020" visible="false">
          <font>
             <Font size="14.0" fx:id="x2" />
