@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import model.WaterSourceReport;
 
 import java.net.URL;
@@ -39,10 +40,11 @@ public class WSRViewerController extends AnchorPane implements Initializable {
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Iterator<WaterSourceReport> reportIterator = reports.values().iterator();
-        while (reportIterator.hasNext()) {
-            WSRList.setContent(new HBox(new Label(reportIterator.next().toString())));
+        VBox theVBox = new VBox();
+        for(Integer key : reports.keySet()) {
+            theVBox.getChildren().addAll(new HBox(new Label(reports.get(key).toString())));
         }
+        WSRList.setContent(theVBox);
 
     }
 
