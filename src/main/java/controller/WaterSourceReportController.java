@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import model.*;
 
@@ -31,17 +32,21 @@ public class WaterSourceReportController extends AnchorPane implements Initializ
     @FXML
     private Label time;
     @FXML
-    private Label location;
-    @FXML
     private Label number;
     @FXML
-    private ComboBox type;
+    private ComboBox<WaterSourceType> type;
     @FXML
-    private ComboBox condition;
+    private ComboBox<WaterSourceCondition> condition;
     @FXML
     private Button back;
     @FXML
     private Button submitReport;
+    @FXML
+    private TextField latitude; //initialize all of these field first, set them to "" or something. So if user doesnt fill out , it isnt null at
+    @FXML
+    private TextField longitude; //pre-type your registration fields, so you dont have to do it everytime. For testing purposes. put in password and shit
+    //takes too much extra coding breh. ithats in Scene builder my scene builder doesn't work properly
+
 
     private final ObservableList<WaterSourceCondition> waterSourceConditions = FXCollections.observableArrayList(WaterSourceCondition.values());
     private final ObservableList<WaterSourceType> waterSourceTypes = FXCollections.observableArrayList(WaterSourceType.values());
@@ -49,17 +54,19 @@ public class WaterSourceReportController extends AnchorPane implements Initializ
     public void setApp(Main application) {
         this.application = application;
         Account loggedAccount = application.getLoggedAccount();
-        SimpleDateFormat dateformatter = new SimpleDateFormat("yyyy.MM.dd");
-        SimpleDateFormat timeFormatter = new SimpleDateFormat("H:mm a");
+        SimpleDateFormat dateformatter = new SimpleDateFormat("yyyy/MM/dd");
+        SimpleDateFormat timeFormatter = new SimpleDateFormat("H:mm");
         Date theDate = new Date();
         date.setText(dateformatter.format(theDate));
         time.setText(timeFormatter.format(theDate));
-        username.setText(loggedAccount.getFname());
+        username.setText(loggedAccount.getId());
+        latitude.setText("1");
+        longitude.setText("2");
 
 
     }
 
-    public void initalize (URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle resources) {
         type.setItems(waterSourceTypes);
         condition.setItems(waterSourceConditions);
     }
@@ -75,7 +82,9 @@ public class WaterSourceReportController extends AnchorPane implements Initializ
     @FXML
     private void submitReport () {
         report = new WaterSourceReport(username.getText(), date.getText(),
-                time.getText(), location.getText(), location.getText(),
+                time.getText(), longitude.getText(), latitude.getText(),
                 type.getValue(), condition.getValue());
+        WaterSourceReportHolder.addReport(application.getLoggedAccount().getFname(), report);
+        application.gotoApp();
     }
 }

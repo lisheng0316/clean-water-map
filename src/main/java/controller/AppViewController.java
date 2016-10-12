@@ -56,4 +56,17 @@ public class AppViewController implements Initializable {
     private void usernamePressed() {
         application.gotoProfile();
     };
+
+    @FXML
+    private void createWaterSourceReportClicked() {
+        application.gotoWaterSourceReport();
+    }
+
+    /**
+     * activates when the Reports List is clicked
+     */
+    @FXML
+    private void reportListClicked() {
+        application.gotoWSRViewer();
+    }
 }

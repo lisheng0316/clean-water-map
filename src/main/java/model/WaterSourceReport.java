@@ -89,4 +89,15 @@ public class WaterSourceReport {
     public WaterSourceCondition getCondition() {
         return condition;
     }
+
+    @Override
+    public String toString() {
+        String temp;
+        temp = date + " " + time + " " + user + " " + type + " "
+                + condition + " " + reportNumber;
+        return temp;
+    }
+    public Map<String, WaterSourceReport> getReportList() {
+        return reportList;
+    }
 }

@@ -15,7 +15,10 @@ public class WaterSourceReportHolder {
      * @param nameAndDate the name and date of the user that created the report
      * @param report the report to be inserted into the hashmap
      */
-    public void addReport(String nameAndDate, WaterSourceReport report) {
+    public static void addReport(String nameAndDate, WaterSourceReport report) {
         reports.put(nameAndDate, report);
+        WaterSourceReport.reportList.put(nameAndDate, report);
     }
+
+
 }

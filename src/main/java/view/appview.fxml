@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.web.WebView?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.76-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppViewController">
    <children>
       <GridPane prefHeight="600.0" prefWidth="799.0">
         <columnConstraints>
@@ -30,6 +30,16 @@
             <Label fx:id="username" onMouseClicked="#usernamePressed" prefHeight="18.0" prefWidth="68.0" text="username" GridPane.halignment="LEFT">
                <GridPane.margin>
                   <Insets left="75.0" />
+               </GridPane.margin>
+            </Label>
+            <Label onMouseClicked="#createWaterSourceReportClicked" text="Create Water Source Report" textAlignment="CENTER">
+               <GridPane.margin>
+                  <Insets left="200.0" />
+               </GridPane.margin>
+            </Label>
+            <Label fx:id="ReportList" onMouseClicked="#reportListClicked" text="Report List">
+               <GridPane.margin>
+                  <Insets left="450.0" />
                </GridPane.margin>
             </Label>
          </children>

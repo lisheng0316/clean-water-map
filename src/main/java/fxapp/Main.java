@@ -104,6 +104,30 @@ public class Main extends Application {
     }
 
     /**
+     * a method to direct the program to the water source creation page
+     */
+    public void gotoWaterSourceReport() {
+        try {
+            WaterSourceReportController waterSourceReportController = (WaterSourceReportController) replaceSceneContent("../view/WaterSourceReport.fxml");
+            waterSourceReportController.setApp(this);
+        } catch (Exception ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * a method to send the application to the Water Source Report Viewer page
+     */
+    public void gotoWSRViewer() {
+        try {
+            WSRViewerController WSRViewers = (WSRViewerController) replaceSceneContent("../view/WSRViewer.fxml");
+            WSRViewers.setApp(this);
+        } catch (Exception ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
      * a method to check if the user logged into the app
      * @param userId the user trying to log in
      * @return whether the user logged in or not
