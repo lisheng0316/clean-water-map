@@ -12,16 +12,15 @@ import javafx.scene.layout.AnchorPane;
  * Created by Sheng on 9/19/16.
  * A controller for the the welcome page
  */
-                                           public class WelcomeController extends AnchorPane implements Initializable {
+public class WelcomeController extends AnchorPane implements Initializable {
 
-        private Main application;
+    private Main application;
 
-        /**
-         * sets the welcome page
-         * @param application the main application of welcome page
-         */
-    public void setApp(Main application){ this.application = application;
-    }
+    /**
+     * sets the welcome page
+     * @param application the main application of welcome page
+     */
+    public void setApp(Main application){ this.application = application;}
 
     /**
      * Initialize the location and resources
@@ -29,6 +28,7 @@ import javafx.scene.layout.AnchorPane;
      * @param resources the resources to be used
      */
     public void initialize(URL location, ResourceBundle resources) {
+
     }
 
     /**
@@ -44,15 +44,15 @@ import javafx.scene.layout.AnchorPane;
      */
     @FXML
     private void registrationPressed() {
-        application.gotoRegistration();
-    }
+            application.gotoRegistration();
+        }
 
     /**
      * called when the user closes
      */
     @FXML
     private void handleCloseMenu() {
-        System.exit(0);
-    }
+            System.exit(0);
+        }
 
 }

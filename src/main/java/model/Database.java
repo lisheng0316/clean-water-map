@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.Connection;
+import java.sql.Timestamp;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -137,6 +138,8 @@ public class Database {
         }
         return false;
     }
+
+
     public static void addUser(String username, String password, String fname
             , String lname, String email, AccountType type) {
 
@@ -170,6 +173,44 @@ public class Database {
             }
         }
     }
+
+    public static void addWaterSourceReport(int reportNumber, String fname ,String lname, String longitude
+            , String latitude, WaterSourceType waterType, WaterSourceCondition waterCondition, Timestamp date) {
+
+        try {
+            String query = "INSERT INTO `schema`.`WaterSourceReport` (`ReportNumber`, `Fname`,  `Lname`, `Longitude`" +
+                    ", `Latitude`, `WaterType`, `WaterCondition`, `CreatedDate`)"
+                    + " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+            stmt = connection.prepareStatement(query);
+            stmt.setInt (1, reportNumber);
+            stmt.setString (2, fname);
+            stmt.setString (3, lname);
+            stmt.setString (4, longitude);
+            stmt.setString (5, latitude);
+            stmt.setString (6, waterType.toString());
+            stmt.setString (7, waterCondition.toString());
+            stmt.setString (8, date.toString());
+            stmt.executeUpdate();
+        }
+        catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+        finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException sqlEx) { } // ignore
+            }
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException sqlEx) { } // ignore
+            }
+        }
+    }
+
+
 
     public static Database connectToDatabase(){
 

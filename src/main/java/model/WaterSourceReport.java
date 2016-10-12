@@ -1,7 +1,7 @@
 package model;
 
-import java.util.Date;
-
+import java.sql.Timestamp;
+import java.util.Calendar;
 /**
  * Created by Sean on 10/6/2016.
  * A class to hold the information for the water source report
@@ -12,12 +12,17 @@ public class WaterSourceReport {
     private WaterSourceType type;
     private String user;
     private WaterSourceCondition condition;
-    private Date date;
+    private Timestamp date;
     private int reportNumber;
     private static int totalReports;
 
+    /** Set WaterSourceReport up as a singleton design pattern */
+    private static final WaterSourceReport instance = new WaterSourceReport();
+    public static WaterSourceReport getInstance() {return instance;}
+
+
     public WaterSourceReport() {
-        date = new Date();
+        date = new Timestamp(Calendar.getInstance().getTime().getTime());
         totalReports++;
         reportNumber = totalReports;
     }
@@ -26,7 +31,7 @@ public class WaterSourceReport {
      * a method to get the date of the report
      * @return the date of the report
      */
-    public Date getDate() {
+    public Timestamp getDate() {
         return date;
     }
 

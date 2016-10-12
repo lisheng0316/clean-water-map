@@ -5,27 +5,26 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.util.Locale;
-
-import javafx.scene.layout.AnchorPane;
 import model.Account;
 import model.Database;
 import model.WaterSourceCondition;
 import model.WaterSourceReport;
 import model.WaterSourceType;
 
-import javax.jnlp.UnavailableServiceException;
-import javax.xml.stream.XMLReporter;
-import javax.xml.transform.Source;
 import java.net.URL;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -33,7 +32,7 @@ import java.util.ResourceBundle;
  * Created by Sheng on 9/19/16.
  * A controller for the app view
  */
-public class AppViewController implements Initializable {
+public class ReportViewController implements Initializable {
     @FXML
     private WebView webView;
     @FXML
@@ -72,7 +71,6 @@ public class AppViewController implements Initializable {
     @FXML
     private ListView<WaterSourceReport> reportList;
 
-    private final ObservableList<WaterSourceReport> sourceReportList = FXCollections.observableArrayList(WaterSourceReport.getInstance());
     private final ObservableList<WaterSourceType> waterTypeList
             = FXCollections.observableArrayList(WaterSourceType.values());
 
@@ -151,7 +149,7 @@ public class AppViewController implements Initializable {
             Database.addWaterSourceReport(report.getReportNumber(), loggedAccount.getFname(),
                     loggedAccount.getLname(), longitude.getText(), latitude.getText(),
                     waterType.getValue(), waterCondition.getValue(), report.getDate());
-            reportList.setItems(sourceReportList); // SET A observablelist
+
 
         }
 
