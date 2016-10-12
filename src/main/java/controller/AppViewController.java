@@ -18,9 +18,9 @@ import java.util.Locale;
 import javafx.scene.layout.AnchorPane;
 import model.Account;
 import model.Database;
-import model.WaterSourceCondition;
+import model.WaterCondition;
 import model.WaterSourceReport;
-import model.WaterSourceType;
+import model.WaterType;
 
 import javax.jnlp.UnavailableServiceException;
 import javax.xml.stream.XMLReporter;
@@ -61,10 +61,10 @@ public class AppViewController implements Initializable {
     private TitledPane formCollapse;
 
     @FXML
-    private ComboBox<WaterSourceType> waterType;
+    private ComboBox<WaterType> waterType;
 
     @FXML
-    private ComboBox<WaterSourceCondition> waterCondition;
+    private ComboBox<WaterCondition> waterCondition;
 
     @FXML
     private ComboBox<String> reportType;
@@ -73,11 +73,11 @@ public class AppViewController implements Initializable {
     private ListView<WaterSourceReport> reportList;
 
     private final ObservableList<WaterSourceReport> sourceReportList = FXCollections.observableArrayList(WaterSourceReport.getInstance());
-    private final ObservableList<WaterSourceType> waterTypeList
-            = FXCollections.observableArrayList(WaterSourceType.values());
+    private final ObservableList<WaterType> waterTypeList
+            = FXCollections.observableArrayList(WaterType.values());
 
-    private final ObservableList<WaterSourceCondition> waterConditionList
-            = FXCollections.observableArrayList(WaterSourceCondition.values());
+    private final ObservableList<WaterCondition> waterConditionList
+            = FXCollections.observableArrayList(WaterCondition.values());
 
     private final ObservableList<String> reportTypeList
             = FXCollections.observableArrayList("Source report", "Purity report");

@@ -7,12 +7,10 @@ package model;
  * an easier way to identify what it is they are looking for
  */
 public enum WaterType {
-    Lake,
-    River,
-    Creek,
+    Bottled,
     Well,
     Stream,
-    Pond,
-    Oasis,
-    Spout;
+    Lake,
+    Spring,
+    Other
 }

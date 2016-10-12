@@ -176,7 +176,7 @@ public class Database {
     }
 
     public static void addWaterSourceReport(int reportNumber, String fname ,String lname, String longitude
-            , String latitude, WaterSourceType waterType, WaterSourceCondition waterCondition, Timestamp date) {
+            , String latitude, WaterType waterType, WaterCondition waterCondition, Timestamp date) {
 
         try {
             String query = "INSERT INTO `schema`.`WaterSourceReport` (`ReportNumber`, `Fname`,  `Lname`, `Longitude`" +

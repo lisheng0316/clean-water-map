@@ -9,9 +9,9 @@ import java.util.Calendar;
 public class WaterSourceReport {
     private double longitude;
     private double latitude;
-    private WaterSourceType type;
+    private WaterType type;
     private String user;
-    private WaterSourceCondition condition;
+    private WaterCondition condition;
     private Timestamp date;
     private int reportNumber;
     private static int totalReports;
@@ -28,8 +28,8 @@ public class WaterSourceReport {
         reportNumber = totalReports;
     }
 
-    public WaterSourceReport(int reportNumber, String user, double longitude, double latitude, WaterSourceType type,
-                             WaterSourceCondition condition, Timestamp date) {
+    public WaterSourceReport(int reportNumber, String user, double longitude, double latitude, WaterType type,
+                             WaterCondition condition, Timestamp date) {
         date = new Timestamp(Calendar.getInstance().getTime().getTime());
         totalReports++;
         reportNumber = totalReports;
@@ -84,7 +84,7 @@ public class WaterSourceReport {
      * a method to get the water source type
      * @return the water source type
      */
-    public WaterSourceType getType() {
+    public WaterType getType() {
         return type;
     }
 
@@ -92,7 +92,7 @@ public class WaterSourceReport {
      * a method to get the condition of the water
      * @return the condition of the water
      */
-    public WaterSourceCondition getCondition() {
+    public WaterCondition getCondition() {
         return condition;
     }
 }

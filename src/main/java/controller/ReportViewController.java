@@ -21,9 +21,9 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import model.Account;
 import model.Database;
-import model.WaterSourceCondition;
+import model.WaterCondition;
 import model.WaterSourceReport;
-import model.WaterSourceType;
+import model.WaterType;
 import java.sql.Timestamp;
 import java.net.URL;
 import java.util.Locale;
@@ -104,11 +104,11 @@ public class ReportViewController implements Initializable {
         latitude.setText("" + lati);
     }
 
-    public void setWaterType(WaterSourceType type) {
+    public void setWaterType(WaterType type) {
         waterType.setText("" + type);
     }
 
-    public void setWaterCondition(WaterSourceCondition condition) {
+    public void setWaterCondition(WaterCondition condition) {
         waterCondition.setText("" + condition);
     }
 
