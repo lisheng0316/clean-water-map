@@ -8,16 +8,16 @@ import java.util.Map;
  * A class to hold the Water Source Reports
  */
 public class WaterSourceReportHolder {
-    public static Map<String, WaterSourceReport> reports = new HashMap<>();
+    public static Map<Integer, WaterSourceReport> reports = new HashMap<>();
 
     /**
      * a method to place a report in the hashmap
-     * @param nameAndDate the name and date of the user that created the report
+     * @param reportNumber the number of the created report
      * @param report the report to be inserted into the hashmap
      */
-    public static void addReport(String nameAndDate, WaterSourceReport report) {
-        reports.put(nameAndDate, report);
-        WaterSourceReport.reportList.put(nameAndDate, report);
+    public static void addReport(Integer reportNumber, WaterSourceReport report) {
+        reports.put(reportNumber, report);
+        //WaterSourceReport.reportList.put(nameAndDate, report);
     }
 
 

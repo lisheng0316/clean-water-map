@@ -84,7 +84,7 @@ public class WaterSourceReportController extends AnchorPane implements Initializ
         report = new WaterSourceReport(username.getText(), date.getText(),
                 time.getText(), longitude.getText(), latitude.getText(),
                 type.getValue(), condition.getValue());
-        WaterSourceReportHolder.addReport(application.getLoggedAccount().getFname(), report);
+        WaterSourceReportHolder.addReport(report.getReportNumber(), report);
         application.gotoApp();
     }
 }
