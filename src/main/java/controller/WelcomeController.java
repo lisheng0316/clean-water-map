@@ -28,6 +28,7 @@ public class WelcomeController extends AnchorPane implements Initializable {
      * @param resources the resources to be used
      */
     public void initialize(URL location, ResourceBundle resources) {
+
     }
 
     /**
