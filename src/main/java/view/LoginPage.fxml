@@ -42,12 +42,12 @@
                         <Insets left="20.0" />
                     </GridPane.margin>
                 </Label>
-                <TextField fx:id="accountId" maxWidth="300.0" prefHeight="26.0" prefWidth="300.0" GridPane.columnIndex="1">
+                <TextField fx:id="accountId" maxWidth="300.0" prefHeight="26.0" prefWidth="300.0" text="Sean" GridPane.columnIndex="1">
                     <GridPane.margin>
                         <Insets right="50.0" />
                     </GridPane.margin>
                 </TextField>
-                <PasswordField fx:id="password" maxWidth="300.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <PasswordField fx:id="password" maxWidth="300.0" prefWidth="300.0" text="111111" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <GridPane.margin>
                         <Insets right="50.0" />
                     </GridPane.margin>
