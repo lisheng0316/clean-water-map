@@ -5,7 +5,7 @@ import javafx.scene.input.KeyEvent;
 import model.Authenticator;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -102,6 +102,16 @@ public class LoginController extends AnchorPane implements Initializable {
     private void isKeyPressed(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
             handleOKPressed();
+        }
+    }
+    /**
+     * Closed the screen if cancel key is entered
+     * @param event the event started when the key is pressed
+     */
+    @FXML
+    private void isKeyCanceled(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            dialogStage.close();
         }
     }
 }

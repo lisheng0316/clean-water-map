@@ -143,6 +143,16 @@ public class RegistrationController extends AnchorPane implements Initializable 
     private void backPressed() {
         application.accountLogout();
     }
+    /**
+     * Goes to previous page when the key is entered
+     * @param event the key entered
+     */
+    @FXML
+    private void backKeyPressed(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            backPressed();
+        }
+    }
 
     /**
      * Closes when the registration display is closed

@@ -1,11 +1,14 @@
 package controller;
 
+import fxapp.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import fxapp.Main;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
+
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.scene.layout.AnchorPane;
 
 /**
  * Created by Sheng on 9/19/16.
@@ -55,4 +58,24 @@ public class WelcomeController extends AnchorPane implements Initializable {
         System.exit(0);
     }
 
+    /**
+     * Login when the ENTER is pressed
+     * @param event the key entered
+     */
+    @FXML
+    private void keyLoginPressed(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+          loginPressed();
+        }
+    }
+    /**
+     * Takes to registration page when pressed
+     * @param event the key entered
+     */
+    @FXML
+    private void keyRegistrationPressed(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            registrationPressed();
+        }
+    }
 }
