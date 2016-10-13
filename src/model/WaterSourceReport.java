@@ -12,9 +12,8 @@ public class WaterSourceReport {
     private WaterType type;
     private String user;
     private WaterCondition condition;
-    private Timestamp date;
+    private String date;
     private int reportNumber;
-    private static int totalReports;
 
     /** Set WaterSourceReport up as a singleton design pattern */
     private static final WaterSourceReport instance = new WaterSourceReport();
@@ -23,16 +22,12 @@ public class WaterSourceReport {
 
 
     public WaterSourceReport() {
-        date = new Timestamp(Calendar.getInstance().getTime().getTime());
-        totalReports++;
-        reportNumber = totalReports;
     }
 
     public WaterSourceReport(int reportNumber, String user, double longitude, double latitude, WaterType type,
-                             WaterCondition condition, Timestamp date) {
-        date = new Timestamp(Calendar.getInstance().getTime().getTime());
-        totalReports++;
-        reportNumber = totalReports;
+                             WaterCondition condition, String date) {
+        this.date = date;
+        this.reportNumber = reportNumber;
         this.user = user;
         this.longitude = longitude;
         this.latitude = latitude;
@@ -52,16 +47,8 @@ public class WaterSourceReport {
      * a method to get the date of the report
      * @return the date of the report
      */
-    public Timestamp getDate() {
+    public String getDate() {
         return date;
-    }
-
-    /**
-     * a method to get the report number
-     * @return the report number
-     */
-    public int getReportNumber() {
-        return reportNumber;
     }
 
     /**
@@ -95,4 +82,8 @@ public class WaterSourceReport {
     public WaterCondition getCondition() {
         return condition;
     }
+
+    public String toString(){
+        return "[" + this.reportNumber + "] " + date;
+    };
 }

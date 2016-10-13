@@ -6,14 +6,11 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.util.Locale;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import javafx.scene.layout.AnchorPane;
 import model.Account;
@@ -22,11 +19,8 @@ import model.WaterCondition;
 import model.WaterSourceReport;
 import model.WaterType;
 
-import javax.xml.stream.XMLReporter;
-import javax.xml.transform.Source;
 import java.net.URL;
-import java.util.Optional;
-import java.util.ResourceBundle;
+
 
 /**
  * Created by Sheng on 9/19/16.
@@ -41,8 +35,6 @@ public class AppViewController implements Initializable {
     private Label username;
     @FXML
     private AnchorPane reportForm;
-    @FXML
-    private VBox form;
 
     @FXML
     private TextField virusPPM;
@@ -60,6 +52,9 @@ public class AppViewController implements Initializable {
     private TitledPane formCollapse;
 
     @FXML
+    private TitledPane reportCollapse;
+
+    @FXML
     private ComboBox<WaterType> waterType;
 
     @FXML
@@ -69,9 +64,14 @@ public class AppViewController implements Initializable {
     private ComboBox<String> reportType;
 
     @FXML
-    private ListView<WaterSourceReport> reportList;
+    private ListView<WaterSourceReport> reportListView;
 
-    private final ObservableList<WaterSourceReport> sourceReportList = FXCollections.observableArrayList(WaterSourceReport.getInstance());
+    private ObservableList<WaterSourceReport> waterReportList;
+
+    private List<WaterSourceReport> dataArrayList = null;
+
+    private final ObservableList<WaterSourceReport> sourceReportList
+            = FXCollections.observableArrayList(WaterSourceReport.getInstance());
     private final ObservableList<WaterType> waterTypeList
             = FXCollections.observableArrayList(WaterType.values());
 
@@ -95,9 +95,26 @@ public class AppViewController implements Initializable {
         waterType.setItems(waterTypeList);
         waterCondition.setItems(waterConditionList);
         reportType.setItems(reportTypeList);
+        pullReport();
         alert = new Alert(Alert.AlertType.CONFIRMATION);
+        System.out.println("jklhlkhj");
     }
 
+    private void focusItem() {
+        int index = waterReportList.size() - 1;
+        reportListView.scrollTo(index);
+        reportListView.getFocusModel().focus(index);
+        reportListView.getSelectionModel().select(index);
+    }
+    private void pullReport() {
+        waterReportList = FXCollections.observableArrayList();
+        dataArrayList = Database.getWaterSourceReports();
+        for (WaterSourceReport e : dataArrayList) {
+            waterReportList.add(e);
+        }
+        reportListView.setItems(waterReportList);
+        focusItem();
+    }
     /**
      * Sets up the up view
      * @param application the main application of th app view
@@ -126,13 +143,17 @@ public class AppViewController implements Initializable {
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.get() == ButtonType.OK){
-            reportType.setValue("Report Type");
-            waterCondition.setValue(null);
-            contaminantPPM.clear();
-            virusPPM.clear();
-            longitude.clear();
-            latitude.clear();
+            resetForm();
         }
+    }
+
+    private void resetForm() {
+        reportType.setValue("Report Type");
+        waterCondition.setValue(null);
+        contaminantPPM.clear();
+        virusPPM.clear();
+        longitude.clear();
+        latitude.clear();
     }
 
     @FXML
@@ -147,20 +168,22 @@ public class AppViewController implements Initializable {
             WaterSourceReport report = new WaterSourceReport();
             Account loggedAccount = application.getLoggedAccount();
 
-            Database.addWaterSourceReport(report.getReportNumber(), loggedAccount.getFname(),
-                    loggedAccount.getLname(), longitude.getText(), latitude.getText(),
-                    waterType.getValue(), waterCondition.getValue(), report.getDate());
+            Date tempDate = new Date();
+            SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yy");
+            SimpleDateFormat timeFormatter = new SimpleDateFormat("h:mm a");
+            String date = timeFormatter.format(tempDate) + " on " +dateFormatter.format(tempDate);
 
-//            reportList.setItems(sourceReportList.get(0)); // SET A observablelist
-
+            Database.addWaterSourceReport(loggedAccount.getId(), longitude.getText()
+                    , latitude.getText(),
+                    waterType.getValue(),
+                    waterCondition.getValue(),
+                    date);
+            pullReport();
+            resetForm();
+            formCollapse.setExpanded(false);
+            reportCollapse.setExpanded(true);
         }
-
-
     }
-
-
-
-
 
     @FXML
     private void menuPressed(){
@@ -197,7 +220,6 @@ public class AppViewController implements Initializable {
 
     @FXML
     private void reportTypeSelected() {
-        System.out.println(reportType.getValue());
         if (reportType.getValue().equals("Source report")) {
             isSourceReport = true;
         } else if (reportType.getValue().equals("Purity report")) {
@@ -208,4 +230,13 @@ public class AppViewController implements Initializable {
         waterType.setDisable(!isSourceReport);
     }
 
+    @FXML
+    private void newReportPressed() {
+        reportCollapse.setExpanded(false);
+    }
+
+    @FXML
+    private void viewReportPressed() {
+        formCollapse.setExpanded(false);
+    }
 }
