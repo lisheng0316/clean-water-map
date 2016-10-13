@@ -93,7 +93,7 @@
                                     </AnchorPane>
                                 </content>
                                  <graphic>
-                                    <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="45.0" minHeight="45.0" prefHeight="45.0" prefWidth="154.0" text="New Report" textAlignment="CENTER" />
+                                    <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="45.0" minHeight="45.0" onMouseClicked="#newReportPressed" prefHeight="45.0" prefWidth="154.0" text="New Report" textAlignment="CENTER" />
                                  </graphic>
                               </TitledPane>
                               <Separator prefWidth="200.0" />
@@ -106,7 +106,7 @@
                                     </AnchorPane>
                                  </content>
                                  <graphic>
-                                    <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="45.0" minHeight="45.0" prefHeight="45.0" prefWidth="154.0" text="View Report" textAlignment="CENTER" />
+                                    <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="45.0" minHeight="45.0" onMouseClicked="#viewReportPressed" prefHeight="45.0" prefWidth="154.0" text="View Report" textAlignment="CENTER" />
                                  </graphic>
                               </TitledPane>
                               <Separator prefWidth="200.0" />

@@ -230,4 +230,13 @@ public class AppViewController implements Initializable {
         waterType.setDisable(!isSourceReport);
     }
 
+    @FXML
+    private void newReportPressed() {
+        reportCollapse.setExpanded(false);
+    }
+
+    @FXML
+    private void viewReportPressed() {
+        formCollapse.setExpanded(false);
+    }
 }
