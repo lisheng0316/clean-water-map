@@ -2,6 +2,8 @@ package controller;
 
 import fxapp.Main;
 import javafx.fxml.Initializable;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import java.util.ResourceBundle;
 import javafx.animation.FadeTransition;
@@ -63,10 +65,10 @@ public class ProfileController extends AnchorPane implements Initializable{
 
     /**
      * Saves the account and name when save is pressed in the profile display
-     * @param event the instance to be saved
+     *
      */
     @FXML
-    private void savePressed(ActionEvent event) {
+    private void savePressed() {
         Account loggedAccount = application.getLoggedAccount();
         String emailRegex = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)" +
                 "*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
@@ -92,6 +94,27 @@ public class ProfileController extends AnchorPane implements Initializable{
     @FXML
     private void backToRegPressed() {
         application.gotoApp();
+    }
+
+    /**
+     *
+     * @param event
+     */
+    @FXML
+    private void backKeyPressed(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            backToRegPressed();
+        }
+    }
+    /**
+     *
+     * @param event
+     */
+    @FXML
+    private void saveEntered(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            savePressed();
+        }
     }
 
 }
