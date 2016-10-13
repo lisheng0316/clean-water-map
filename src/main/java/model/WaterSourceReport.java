@@ -93,8 +93,9 @@ public class WaterSourceReport {
     @Override
     public String toString() {
         String temp;
-        temp = date + " " + time + " " + user + " " + type + " "
-                + condition + " " + reportNumber;
+        temp = "Date: " + date + " Time: " + time + " user: " + user + " Type: " + type + " Condition: "
+                + condition + " Report Number: " + reportNumber + " Longitude: " + longitude
+                + " Latitude: " + latitude;
         return temp;
     }
     public Map<String, WaterSourceReport> getReportList() {
