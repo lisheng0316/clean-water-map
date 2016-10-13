@@ -84,8 +84,7 @@ public class WaterSourceReportController extends AnchorPane implements Initializ
     }
 
     /**
-     * a method to submit the report to the server
-     * this creates the new report and then returns to the map view
+     * submits the report to the server
      */
     @FXML
     private void submitReport () {

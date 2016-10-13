@@ -35,7 +35,7 @@ public class WaterSourceReport {
     }
 
     /**
-     * a method to get the date of the report
+     * getter for the date of the report
      * @return the date of the report
      */
     public String getDate() {
@@ -43,7 +43,7 @@ public class WaterSourceReport {
     }
 
     /**
-     * a method to get the time of the report
+     * getter for the time of the report
      * @return the time the report was placed.
      */
     public String getTime() {
@@ -51,7 +51,7 @@ public class WaterSourceReport {
     }
 
     /**
-     * a method to get the report number
+     * getter for the report number
      * @return the report number
      */
     public int getReportNumber() {
@@ -59,7 +59,7 @@ public class WaterSourceReport {
     }
 
     /**
-     * a method to get the longitude of the report
+     * getter for the longitude of the report
      * @return the longitude
      */
     public String getLongitude() {
@@ -67,7 +67,7 @@ public class WaterSourceReport {
     }
 
     /**
-     * a method to ge the latitude of the report
+     * getter for the latitude of the report
      * @return the latitude
      */
     public String getLatitude() {
@@ -75,7 +75,7 @@ public class WaterSourceReport {
     }
 
     /**
-     * a method to get the water source type
+     * getter for the water source type
      * @return the water source type
      */
     public WaterSourceType getType() {
@@ -83,7 +83,7 @@ public class WaterSourceReport {
     }
 
     /**
-     * a method to get the condition of the water
+     * getter for the condition of the water
      * @return the condition of the water
      */
     public WaterSourceCondition getCondition() {
@@ -93,11 +93,21 @@ public class WaterSourceReport {
     @Override
     public String toString() {
         String temp;
-        temp = "Date: " + date + " Time: " + time + " user: " + user + " Type: " + type + " Condition: "
-                + condition + " Report Number: " + reportNumber + " Longitude: " + longitude
+        temp = "Date: " + date
+                + " Time: " + time
+                + " User: " + user
+                + " Type: " + type
+                + " Condition: " + condition
+                + " Report Number: " + reportNumber
+                + " Longitude: " + longitude
                 + " Latitude: " + latitude;
         return temp;
     }
+
+    /**
+     * getter for the backing map
+     * @return the backing map
+     */
     public Map<String, WaterSourceReport> getReportList() {
         return reportList;
     }
