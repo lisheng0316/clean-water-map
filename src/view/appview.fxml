@@ -6,7 +6,6 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
@@ -40,7 +39,7 @@
                            <children>
                               <TitledPane id="newReport" fx:id="formCollapse" alignment="CENTER" contentDisplay="CENTER" expanded="false" focusTraversable="false" minWidth="210.0" prefHeight="45.0" prefWidth="210.0" stylesheets="@../fxapp/stylesheet.css" textAlignment="CENTER" translateX="-1.0">
                                 <content>
-                                  <AnchorPane minHeight="405.0" minWidth="0.0" prefHeight="405.0" prefWidth="205.0">
+                                  <AnchorPane minHeight="358.0" minWidth="0.0" prefHeight="358.0" prefWidth="205.0">
                                        <children>
                                           <VBox fx:id="form" accessibleRole="LIST_ITEM" alignment="CENTER" fillWidth="false" minWidth="200.0" prefHeight="342.0" prefWidth="210.0" spacing="10.0" translateX="-5.0">
                                              <children>
@@ -98,32 +97,14 @@
                                  </graphic>
                               </TitledPane>
                               <Separator prefWidth="200.0" />
-                              <TitledPane animated="false">
-                                <content>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="208.0">
+                              <TitledPane id="newReport" fx:id="reportCollapse" alignment="CENTER" contentDisplay="CENTER" expanded="false" focusTraversable="false" layoutX="10.0" layoutY="10.0" minWidth="210.0" prefHeight="45.0" prefWidth="210.0" stylesheets="@../fxapp/stylesheet.css" textAlignment="CENTER" translateX="-1.0">
+                                 <content>
+                                    <AnchorPane minHeight="360.0" minWidth="0.0" prefHeight="360.0" prefWidth="205.0">
                                        <children>
-                                          <VBox fx:id="form1" accessibleRole="LIST_ITEM" alignment="CENTER" fillWidth="false" minWidth="200.0" prefHeight="342.0" prefWidth="210.0" spacing="10.0">
-                                             <children>
-                                                <ScrollPane prefHeight="200.0" prefWidth="200.0">
-                                                   <content>
-                                                      <ListView fx:id="reportList" prefHeight="200.0" prefWidth="200.0" />
-                                                   </content>
-                                                </ScrollPane>
-                                                <Separator prefHeight="10.0" prefWidth="205.0" />
-                                                <HBox alignment="CENTER" prefHeight="49.0" prefWidth="160.0" spacing="5.0">
-                                                   <children>
-                                                      <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#submitFormPressed" prefHeight="26.0" prefWidth="80.0" text="View" />
-                                                      <Button layoutX="80.0" layoutY="22.0" mnemonicParsing="false" onAction="#cancelFormPressed" prefHeight="26.0" prefWidth="80.0" text="Cancel" />
-                                                   </children>
-                                                   <VBox.margin>
-                                                      <Insets bottom="10.0" />
-                                                   </VBox.margin>
-                                                </HBox>
-                                             </children>
-                                          </VBox>
+                                          <ListView fx:id="reportListView" maxHeight="362.0" prefHeight="362.0" prefWidth="204.0" translateX="-1.0" />
                                        </children>
                                     </AnchorPane>
-                                </content>
+                                 </content>
                                  <graphic>
                                     <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="45.0" minHeight="45.0" prefHeight="45.0" prefWidth="154.0" text="View Report" textAlignment="CENTER" />
                                  </graphic>
