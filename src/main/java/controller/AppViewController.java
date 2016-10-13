@@ -22,7 +22,6 @@ import model.WaterCondition;
 import model.WaterSourceReport;
 import model.WaterType;
 
-import javax.jnlp.UnavailableServiceException;
 import javax.xml.stream.XMLReporter;
 import javax.xml.transform.Source;
 import java.net.URL;
@@ -151,7 +150,6 @@ public class AppViewController implements Initializable {
             Database.addWaterSourceReport(report.getReportNumber(), loggedAccount.getFname(),
                     loggedAccount.getLname(), longitude.getText(), latitude.getText(),
                     waterType.getValue(), waterCondition.getValue(), report.getDate());
-
 
 //            reportList.setItems(sourceReportList.get(0)); // SET A observablelist
 
