@@ -57,6 +57,9 @@ public class AppViewController implements Initializable {
         application.gotoProfile();
     };
 
+    /**
+     * Goes to the water source report creation pation
+     */
     @FXML
     private void createWaterSourceReportClicked() {
         application.gotoWaterSourceReport();

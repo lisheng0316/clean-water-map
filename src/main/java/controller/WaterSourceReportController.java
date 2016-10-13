@@ -42,15 +42,18 @@ public class WaterSourceReportController extends AnchorPane implements Initializ
     @FXML
     private Button submitReport;
     @FXML
-    private TextField latitude; //initialize all of these field first, set them to "" or something. So if user doesnt fill out , it isnt null at
+    private TextField latitude;
     @FXML
-    private TextField longitude; //pre-type your registration fields, so you dont have to do it everytime. For testing purposes. put in password and shit
-    //takes too much extra coding breh. ithats in Scene builder my scene builder doesn't work properly
+    private TextField longitude;
 
 
     private final ObservableList<WaterSourceCondition> waterSourceConditions = FXCollections.observableArrayList(WaterSourceCondition.values());
     private final ObservableList<WaterSourceType> waterSourceTypes = FXCollections.observableArrayList(WaterSourceType.values());
 
+    /**
+     * Setup the main application link so we can call methods there
+     * @param application the reference to the FX Application instance
+     */
     public void setApp(Main application) {
         this.application = application;
         Account loggedAccount = application.getLoggedAccount();
@@ -66,6 +69,7 @@ public class WaterSourceReportController extends AnchorPane implements Initializ
 
     }
 
+    @Override
     public void initialize(URL location, ResourceBundle resources) {
         type.setItems(waterSourceTypes);
         condition.setItems(waterSourceConditions);
@@ -79,6 +83,10 @@ public class WaterSourceReportController extends AnchorPane implements Initializ
         application.gotoApp();
     }
 
+    /**
+     * a method to submit the report to the server
+     * this creates the new report and then returns to the map view
+     */
     @FXML
     private void submitReport () {
         report = new WaterSourceReport(username.getText(), date.getText(),
