@@ -23,7 +23,7 @@
           <RowConstraints maxHeight="258.66668701171875" minHeight="10.0" prefHeight="258.66668701171875" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label alignment="CENTER" prefHeight="47.0" prefWidth="500.0" text="Clean Water Crowdfunding" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+            <Label alignment="CENTER" prefHeight="47.0" prefWidth="500.0" text="Clean Water Map" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
                <font>
                   <Font name="Helvetica" size="41.0" />
                </font>

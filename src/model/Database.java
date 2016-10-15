@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,14 @@ public class Database {
     private static Connection connection = null;
     private static PreparedStatement stmt = null;
     private static ResultSet rs = null;
+    private static Database database;
+
+
+
+    public static Database getDatabase() {
+        return database;
+    }
+
 
     public static void updateAccount(String fname,
                                      String lname,
@@ -222,7 +231,8 @@ public class Database {
                 String type = rs.getString("WaterType");
                 String condition = rs.getString("WaterCondition");
                 String date = rs.getString("Date");
-                WaterSourceReport report = new WaterSourceReport(reportNumber,
+                WaterSourceReport report;
+                report = new WaterSourceReport(reportNumber,
                         username, longitude, latitude, WaterType.valueOf(type),
                         WaterCondition.valueOf(condition), date);
                 reportList.add(report);

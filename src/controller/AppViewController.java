@@ -1,5 +1,22 @@
 package controller;
 
+
+import com.lynden.gmapsfx.GoogleMapView;
+import com.lynden.gmapsfx.MapComponentInitializedListener;
+import com.lynden.gmapsfx.javascript.event.UIEventType;
+import com.lynden.gmapsfx.javascript.object.*;
+import com.lynden.gmapsfx.javascript.object.GoogleMap;
+import com.lynden.gmapsfx.javascript.object.LatLong;
+import com.lynden.gmapsfx.javascript.object.MapOptions;
+import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
+import com.lynden.gmapsfx.javascript.object.Marker;
+import com.lynden.gmapsfx.javascript.object.MarkerOptions;
+import com.lynden.gmapsfx.javascript.object.InfoWindowOptions;
+import com.lynden.gmapsfx.javascript.object.InfoWindow;
+
+
+
+
 import fxapp.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,11 +30,13 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import javafx.scene.layout.AnchorPane;
-import model.Account;
+import javafx.stage.Window;
+import model.*;
 import model.Database;
 import model.WaterCondition;
 import model.WaterSourceReport;
 import model.WaterType;
+import netscape.javascript.JSObject;
 
 import java.net.URL;
 
@@ -26,9 +45,13 @@ import java.net.URL;
  * Created by Sheng on 9/19/16.
  * A controller for the app view
  */
-public class AppViewController implements Initializable {
+public class AppViewController implements Initializable, MapComponentInitializedListener  {
+
     @FXML
-    private WebView webView;
+    private GoogleMapView mapView;
+
+    private GoogleMap map;
+
     @FXML
     private Label welcome;
     @FXML
@@ -68,10 +91,9 @@ public class AppViewController implements Initializable {
 
     private ObservableList<WaterSourceReport> waterReportList;
 
-    private List<WaterSourceReport> dataArrayList = null;
+    private List<WaterSourceReport> dataArrayList;
 
-    private final ObservableList<WaterSourceReport> sourceReportList
-            = FXCollections.observableArrayList(WaterSourceReport.getInstance());
+
     private final ObservableList<WaterType> waterTypeList
             = FXCollections.observableArrayList(WaterType.values());
 
@@ -83,7 +105,7 @@ public class AppViewController implements Initializable {
 
     private DatePicker reportDate;
 
-    private WebEngine engine;
+//    private WebEngine engine;
     private Main application;
     private boolean reportExpand = true;
     private static boolean isSourceReport = false;
@@ -91,6 +113,10 @@ public class AppViewController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+
+        mapView.addMapInializedListener(this);
+
         Locale.setDefault(Locale.US);
         waterType.setItems(waterTypeList);
         waterCondition.setItems(waterConditionList);
@@ -99,6 +125,74 @@ public class AppViewController implements Initializable {
         alert = new Alert(Alert.AlertType.CONFIRMATION);
         System.out.println("jklhlkhj");
     }
+
+
+    @Override
+    public void mapInitialized() {
+        Database db = Database.getDatabase();
+        dataArrayList =db.getWaterSourceReports();
+        System.out.println(dataArrayList.toString());
+
+        WaterSourceReport wsr = dataArrayList.get(0);
+        double longitude = wsr.getLongitude();
+        double latitude = wsr.getLatitude();
+
+        MapOptions options = new MapOptions();
+        //set up the center location for the map
+        LatLong center = new LatLong(latitude, longitude);
+        options.center(center)
+                .zoom(9)
+                .overviewMapControl(false)
+                .panControl(false)
+                .rotateControl(false)
+                .scaleControl(false)
+                .streetViewControl(false)
+                .zoomControl(false)
+                .mapType(MapTypeIdEnum.ROADMAP);
+
+        map = mapView.createMap(options);
+
+
+        /** now we communciate with the model to get all the locations for markers */
+//        Facade fc = Facade.getInstance();
+//        List<WaterSourceReport> locations = fc.getLocations();
+
+        for (WaterSourceReport w: dataArrayList) {
+            MarkerOptions markerOptions = new MarkerOptions();
+            LatLong loc = new LatLong(w.getLatitude(), w.getLongitude());
+
+            markerOptions.position(loc)
+                    .visible(Boolean.TRUE)
+                    .title(w.toString());
+
+            Marker marker = new Marker(markerOptions);
+
+            map.addUIEventHandler(marker,
+                    UIEventType.click,
+                    (JSObject obj) -> {
+                        InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
+//                        infoWindowOptions.content(w.getUser());
+
+                    infoWindowOptions.content("<h2>" + w.toString() + "</h2>"
+                        + "Reporter: " + w.getUser()
+                        + "<br>Location: " + w.getLatitude() + ", " + w.getLongitude()
+                            + "<br>Type: " + w.getType()
+                        + "<br>Condition: " + w.getCondition()
+                        + "<br>Date: " + w.getDate());
+
+                        InfoWindow window = new InfoWindow(infoWindowOptions);
+                        window.open(map, marker);
+                    });
+
+            map.addMarker(marker);
+        }
+
+
+    }
+
+
+
+
 
     private void focusItem() {
         int index = waterReportList.size() - 1;
@@ -122,8 +216,8 @@ public class AppViewController implements Initializable {
     public void setApp(Main application){
         this.application = application;
 
-        engine = webView.getEngine();
-        engine.load("https://maps.google.com");
+//        engine = webView.getEngine();
+//        engine.load("https://maps.google.com");
         username.setText("" + application.getLoggedAccount());
     }
 
@@ -165,7 +259,7 @@ public class AppViewController implements Initializable {
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.get() == ButtonType.OK){
-            WaterSourceReport report = new WaterSourceReport();
+
             Account loggedAccount = application.getLoggedAccount();
 
             Date tempDate = new Date();
@@ -203,15 +297,15 @@ public class AppViewController implements Initializable {
 
     private void toggleMenu() {
         if (!reportExpand) {
-            webView.setMinWidth(800);
-            webView.setMaxWidth(800);
+            mapView.setMinWidth(800);
+            mapView.setMaxWidth(800);
             reportForm.setMinWidth(0);
             reportForm.setMaxWidth(0);
             reportExpand = true;
         }
         else {
-            webView.setMinWidth(600);
-            webView.setMaxWidth(600);
+            mapView.setMinWidth(600);
+            mapView.setMaxWidth(600);
             reportForm.setMinWidth(200);
             reportForm.setMaxWidth(200);
             reportExpand = false;

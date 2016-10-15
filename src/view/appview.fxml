@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.lynden.gmapsfx.GoogleMapView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
@@ -126,7 +127,8 @@
                   </AnchorPane>
                 <AnchorPane maxHeight="570.0" maxWidth="800.0" minHeight="0.0" minWidth="800.0" prefHeight="570.0" prefWidth="800.0">
                      <children>
-                        <WebView fx:id="webView" maxHeight="550.0" maxWidth="804.0" minHeight="550.0" minWidth="800.0" prefHeight="550.0" prefWidth="804.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <GoogleMapView fx:id="mapView" maxHeight="550.0" maxWidth="804.0" minHeight="550.0" minWidth="800.0" prefHeight="550.0" prefWidth="804.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+
                      </children>
                   </AnchorPane>
               </items>
