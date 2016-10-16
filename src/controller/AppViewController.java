@@ -117,14 +117,16 @@ public class AppViewController implements Initializable, MapComponentInitialized
         reportType.setItems(reportTypeList);
         pullReport();
 
+        //listener for Listview, check if item selected;
         reportListView.getSelectionModel().selectedItemProperty().addListener(
                 (ObservableValue<? extends WaterSourceReport> ov, WaterSourceReport oldSelectedItem,
                  WaterSourceReport selectedItem) -> {
-                    displayInfo(selectedItem);
+                    if (selectedItem != null) {
+                        displayInfo(selectedItem);
+                    }
                 });
 
         alert = new Alert(Alert.AlertType.CONFIRMATION);
-        System.out.println("jklhlkhj");
     }
 
 
@@ -295,7 +297,7 @@ public class AppViewController implements Initializable, MapComponentInitialized
             resetForm();
             formCollapse.setExpanded(false);
             reportCollapse.setExpanded(true);
-            mapInitialized();
+            displayPins();
         }
     }
 
