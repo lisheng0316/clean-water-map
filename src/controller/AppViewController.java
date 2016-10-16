@@ -1,6 +1,5 @@
 package controller;
 
-
 import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
@@ -15,17 +14,13 @@ import com.lynden.gmapsfx.javascript.object.InfoWindowOptions;
 import com.lynden.gmapsfx.javascript.object.InfoWindow;
 
 
-
-
 import fxapp.Main;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
-
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -46,7 +41,6 @@ import java.net.URL;
  * A controller for the app view
  */
 public class AppViewController implements Initializable, MapComponentInitializedListener  {
-
     @FXML
     private GoogleMapView mapView;
 
@@ -105,7 +99,7 @@ public class AppViewController implements Initializable, MapComponentInitialized
 
     private DatePicker reportDate;
 
-//    private WebEngine engine;
+    //    private WebEngine engine;
     private Main application;
     private boolean reportExpand = true;
     private static boolean isSourceReport = false;
@@ -122,6 +116,13 @@ public class AppViewController implements Initializable, MapComponentInitialized
         waterCondition.setItems(waterConditionList);
         reportType.setItems(reportTypeList);
         pullReport();
+
+        reportListView.getSelectionModel().selectedItemProperty().addListener(
+                (ObservableValue<? extends WaterSourceReport> ov, WaterSourceReport oldSelectedItem,
+                 WaterSourceReport selectedItem) -> {
+                    displayInfo(selectedItem);
+                });
+
         alert = new Alert(Alert.AlertType.CONFIRMATION);
         System.out.println("jklhlkhj");
     }
@@ -130,7 +131,7 @@ public class AppViewController implements Initializable, MapComponentInitialized
     @Override
     public void mapInitialized() {
         Database db = Database.getDatabase();
-        dataArrayList =db.getWaterSourceReports();
+        dataArrayList = db.getWaterSourceReports();
         System.out.println(dataArrayList.toString());
 
         WaterSourceReport wsr = dataArrayList.get(0);
@@ -141,7 +142,7 @@ public class AppViewController implements Initializable, MapComponentInitialized
         //set up the center location for the map
         LatLong center = new LatLong(latitude, longitude);
         options.center(center)
-                .zoom(9)
+                .zoom(10)
                 .overviewMapControl(false)
                 .panControl(false)
                 .rotateControl(false)
@@ -151,12 +152,16 @@ public class AppViewController implements Initializable, MapComponentInitialized
                 .mapType(MapTypeIdEnum.ROADMAP);
 
         map = mapView.createMap(options);
-
+        displayPins();
 
         /** now we communciate with the model to get all the locations for markers */
 //        Facade fc = Facade.getInstance();
 //        List<WaterSourceReport> locations = fc.getLocations();
 
+    }
+
+
+    private void displayPins() {
         for (WaterSourceReport w: dataArrayList) {
             MarkerOptions markerOptions = new MarkerOptions();
             LatLong loc = new LatLong(w.getLatitude(), w.getLongitude());
@@ -171,28 +176,44 @@ public class AppViewController implements Initializable, MapComponentInitialized
                     UIEventType.click,
                     (JSObject obj) -> {
                         InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
-//                        infoWindowOptions.content(w.getUser());
-
-                    infoWindowOptions.content("<h2>" + w.toString() + "</h2>"
-                        + "Reporter: " + w.getUser()
-                        + "<br>Location: " + w.getLatitude() + ", " + w.getLongitude()
-                            + "<br>Type: " + w.getType()
-                        + "<br>Condition: " + w.getCondition()
-                        + "<br>Date: " + w.getDate());
+                        infoWindowOptions.content("<h2>" + w.toString() + "</h2>"
+                                + "Reporter: " + w.getUser()
+                                + "<br>Location: " + w.getLatitude() + ", " + w.getLongitude()
+                                + "<br>Type: " + w.getType()
+                                + "<br>Condition: " + w.getCondition()
+                                + "<br>Date: " + w.getDate());
 
                         InfoWindow window = new InfoWindow(infoWindowOptions);
                         window.open(map, marker);
                     });
 
             map.addMarker(marker);
+
         }
-
-
     }
 
+    private void displayInfo(WaterSourceReport report) {
+        MarkerOptions markerOption = new MarkerOptions();
+        LatLong location = new LatLong(report.getLatitude(), report.getLongitude());
 
+        markerOption.position(location)
+                .visible(Boolean.TRUE)
+                .title(report.toString());
+        Marker marker = new Marker(markerOption);
+        map.addMarker(marker);
+        InfoWindowOptions infoWindow = new InfoWindowOptions();
+        infoWindow.content("<h2>" + report.toString() + "</h2>"
+                + "Reporter: " + report.getUser()
+                + "<br>Location: " + report.getLatitude()
+                + ", " + report.getLongitude()
+                + "<br>Type: " + report.getType()
+                + "<br>Condition: " + report.getCondition()
+                + "<br>Date: " + report.getDate());
 
+        InfoWindow itemWindow = new InfoWindow(infoWindow);
+        itemWindow.open(map, marker);
 
+    }
 
     private void focusItem() {
         int index = waterReportList.size() - 1;
@@ -215,9 +236,6 @@ public class AppViewController implements Initializable, MapComponentInitialized
      */
     public void setApp(Main application){
         this.application = application;
-
-//        engine = webView.getEngine();
-//        engine.load("https://maps.google.com");
         username.setText("" + application.getLoggedAccount());
     }
 
@@ -267,8 +285,9 @@ public class AppViewController implements Initializable, MapComponentInitialized
             SimpleDateFormat timeFormatter = new SimpleDateFormat("h:mm a");
             String date = timeFormatter.format(tempDate) + " on " +dateFormatter.format(tempDate);
 
-            Database.addWaterSourceReport(loggedAccount.getId(), longitude.getText()
-                    , latitude.getText(),
+            Database.addWaterSourceReport(loggedAccount.getId(),
+                    latitude.getText(),
+                    longitude.getText(),
                     waterType.getValue(),
                     waterCondition.getValue(),
                     date);
@@ -276,6 +295,7 @@ public class AppViewController implements Initializable, MapComponentInitialized
             resetForm();
             formCollapse.setExpanded(false);
             reportCollapse.setExpanded(true);
+            mapInitialized();
         }
     }
 

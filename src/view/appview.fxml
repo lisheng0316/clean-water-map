@@ -56,12 +56,12 @@
                                                       <Insets />
                                                    </VBox.margin>
                                                 </ComboBox>
-                                                <TextField fx:id="longitude" prefWidth="160.0" promptText="Longitude">
+                                                <TextField fx:id="latitude" prefWidth="160.0" promptText="Latitude">
                                                    <VBox.margin>
                                                       <Insets />
                                                    </VBox.margin>
                                                 </TextField>
-                                                <TextField fx:id="latitude" prefWidth="160.0" promptText="Latitude">
+                                                <TextField fx:id="longitude" prefWidth="160.0" promptText="Longitude">
                                                    <opaqueInsets>
                                                       <Insets />
                                                    </opaqueInsets>

@@ -26,7 +26,7 @@ public class WaterSourceReport implements  Serializable {
 
 
 
-    public WaterSourceReport(int reportNumber, String user, double longitude, double latitude,  WaterType type,
+    public WaterSourceReport(int reportNumber, String user, double latitude, double longitude,  WaterType type,
                              WaterCondition condition, String date) {
 
         this.reportNumber = reportNumber;

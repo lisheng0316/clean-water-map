@@ -178,18 +178,18 @@ public class Database {
         }
     }
 
-    public static void addWaterSourceReport(String username , String longitude
-            , String latitude, WaterType waterType, WaterCondition waterCondition, String date) {
+    public static void addWaterSourceReport(String username , String latitude
+            , String longitude, WaterType waterType, WaterCondition waterCondition, String date) {
 
         try {
-            String query = "INSERT INTO `schema`.`WaterSourceReport` (`ReportNumber`, `Username`, `Longitude`" +
-                    ", `Latitude`, `WaterType`, `WaterCondition`, `Date`)"
+            String query = "INSERT INTO `schema`.`WaterSourceReport` (`ReportNumber`, `Username`, `Latitude`" +
+                    ", `Longitude`, `WaterType`, `WaterCondition`, `Date`)"
                     + " VALUES (null, ?, ?, ?, ?, ?, ?)";
 
             stmt = connection.prepareStatement(query);
             stmt.setString (1, username);
-            stmt.setString (2, longitude);
-            stmt.setString (3, latitude);
+            stmt.setString (2, latitude);
+            stmt.setString (3, longitude);
             stmt.setString (4, waterType.toString());
             stmt.setString (5, waterCondition.toString());
             stmt.setString (6, date);
@@ -226,14 +226,14 @@ public class Database {
             {
                 int reportNumber = rs.getInt("ReportNumber");
                 String username = rs.getString("Username");
-                Double longitude = rs.getDouble("Longitude");
                 Double latitude = rs.getDouble("Latitude");
+                Double longitude = rs.getDouble("Longitude");
                 String type = rs.getString("WaterType");
                 String condition = rs.getString("WaterCondition");
                 String date = rs.getString("Date");
                 WaterSourceReport report;
                 report = new WaterSourceReport(reportNumber,
-                        username, longitude, latitude, WaterType.valueOf(type),
+                        username, latitude, longitude, WaterType.valueOf(type),
                         WaterCondition.valueOf(condition), date);
                 reportList.add(report);
             }
