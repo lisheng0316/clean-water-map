@@ -59,6 +59,14 @@ public class WaterSourceReport {
     }
 
     /**
+     * gets the number of reports created
+     * @return the total number of reports
+     */
+    public static int getTotalReports() {
+        return totalReports;
+    }
+
+    /**
      * getter for the longitude of the report
      * @return the longitude
      */

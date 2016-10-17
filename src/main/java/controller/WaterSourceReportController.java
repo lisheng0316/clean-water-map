@@ -65,6 +65,8 @@ public class WaterSourceReportController extends AnchorPane implements Initializ
         username.setText(loggedAccount.getId());
         latitude.setText("1");
         longitude.setText("2");
+        String tempReportNumber = Integer.toString(WaterSourceReport.getTotalReports() + 1);
+        number.setText(tempReportNumber);
 
 
     }
