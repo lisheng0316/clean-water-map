@@ -97,8 +97,8 @@ public class ProfileController extends AnchorPane implements Initializable{
     }
 
     /**
-     *
-     * @param event
+     * goes back to the Main view of the application
+     * @param event the pressing of the back button
      */
     @FXML
     private void backKeyPressed(KeyEvent event) {
@@ -107,8 +107,8 @@ public class ProfileController extends AnchorPane implements Initializable{
         }
     }
     /**
-     *
-     * @param event
+     * saves the relevent information into the object holder
+     * @param event the pressing of the save button
      */
     @FXML
     private void saveEntered(KeyEvent event) {
