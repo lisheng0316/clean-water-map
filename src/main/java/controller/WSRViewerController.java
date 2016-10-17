@@ -33,7 +33,7 @@ public class WSRViewerController extends AnchorPane implements Initializable {
 
     /**
      * sets the Water Source Report Viewer page
-     * @param application the main application of welcome page
+     * @param application the main application of the WSRViewer page
      */
     public void setApp(Main application) {
         this.application = application;
