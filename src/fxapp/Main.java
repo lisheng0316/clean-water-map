@@ -1,7 +1,7 @@
 package fxapp;
 
-import controller.AppViewController;
-
+import controller.UserAppController;
+import controller.WorkerAppController;
 import controller.RegistrationController;
 import model.Account;
 import controller.*;
@@ -105,7 +105,7 @@ public class Main extends Application {
      */
     public void gotoWorkerApp() {
         try {
-            AppViewController appView = (AppViewController) replaceSceneContent("/view/WorkerAppView.fxml");
+            WorkerAppController appView = (WorkerAppController) replaceSceneContent("/view/WorkerAppView.fxml");
             appView.setApp(this);
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -117,7 +117,7 @@ public class Main extends Application {
      */
     public void gotoUserApp() {
         try {
-            AppViewController appView = (AppViewController) replaceSceneContent("/view/UserWorkAppView.fxml");
+            UserAppController appView = (UserAppController) replaceSceneContent("/view/UserAppView.fxml");
             appView.setApp(this);
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -131,11 +131,7 @@ public class Main extends Application {
      */
     public boolean accountLogging(String userId) {
         loggedAccount = Database.getAccount(userId);
-        if (loggedAccount.getType() == AccountType.User) {
-            gotoApp();
-        } else if (loggedAccount.getType() == AccountType.Worker) {
-            gotoWorkerApp();
-        }
+        gotoApp();
         return true;
     }
 
@@ -151,6 +147,13 @@ public class Main extends Application {
         return true;
     }
 
+    public void gotoApp() {
+        if (loggedAccount.getType() == AccountType.User) {
+            gotoUserApp();
+        } else if (loggedAccount.getType() == AccountType.Worker) {
+            gotoWorkerApp();
+        }
+    }
     /**
      * a method to confirm that the user has logged out of the app
      * @return whether or not the user has logged out of the app
