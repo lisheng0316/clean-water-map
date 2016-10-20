@@ -20,6 +20,7 @@ import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.stage.Modality;
+import model.AccountType;
 import model.Database;
 
 import java.io.IOException;
@@ -102,9 +103,21 @@ public class Main extends Application {
     /**
      * a method to send the app to the map page
      */
-    public void gotoApp() {
+    public void gotoWorkerApp() {
         try {
-            AppViewController appView = (AppViewController) replaceSceneContent("/view/appview.fxml");
+            AppViewController appView = (AppViewController) replaceSceneContent("/view/WorkerAppView.fxml");
+            appView.setApp(this);
+        } catch (Exception ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * a method to send the app to the map page
+     */
+    public void gotoUserApp() {
+        try {
+            AppViewController appView = (AppViewController) replaceSceneContent("/view/UserWorkAppView.fxml");
             appView.setApp(this);
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -118,7 +131,11 @@ public class Main extends Application {
      */
     public boolean accountLogging(String userId) {
         loggedAccount = Database.getAccount(userId);
-        gotoApp();
+        if (loggedAccount.getType() == AccountType.User) {
+            gotoApp();
+        } else if (loggedAccount.getType() == AccountType.Worker) {
+            gotoWorkerApp();
+        }
         return true;
     }
 
@@ -164,8 +181,8 @@ public class Main extends Application {
             in.close();
         }
         Scene scene = new Scene(page, MINIMUM_WINDOW_WIDTH, MINIMUM_WINDOW_HEIGHT);
-        String css = AppViewController.class.getResource("/fxapp/stylesheet.css").toExternalForm();
-        scene.getStylesheets().add(css);
+    //    String css = AppViewController.class.getResource("/fxapp/stylesheet.css").toExternalForm();
+    //    scene.getStylesheets().add(css);
         stage.setScene(scene);
         stage.sizeToScene();
         return (Initializable) loader.getController();

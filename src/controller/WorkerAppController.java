@@ -4,16 +4,6 @@ import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.*;
-import com.lynden.gmapsfx.javascript.object.GoogleMap;
-import com.lynden.gmapsfx.javascript.object.LatLong;
-import com.lynden.gmapsfx.javascript.object.MapOptions;
-import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
-import com.lynden.gmapsfx.javascript.object.Marker;
-import com.lynden.gmapsfx.javascript.object.MarkerOptions;
-import com.lynden.gmapsfx.javascript.object.InfoWindowOptions;
-import com.lynden.gmapsfx.javascript.object.InfoWindow;
-
-
 import fxapp.Main;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -21,26 +11,20 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Window;
 import model.*;
-import model.Database;
-import model.WaterCondition;
-import model.WaterSourceReport;
-import model.WaterType;
 import netscape.javascript.JSObject;
 
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 
 /**
  * Created by Sheng on 9/19/16.
  * A controller for the app view
  */
-public class AppViewController implements Initializable, MapComponentInitializedListener  {
+public class WorkerAppController implements Initializable, MapComponentInitializedListener  {
     @FXML
     private GoogleMapView mapView;
 
@@ -187,6 +171,8 @@ public class AppViewController implements Initializable, MapComponentInitialized
 
                         InfoWindow window = new InfoWindow(infoWindowOptions);
                         window.open(map, marker);
+                        latitude.setText("" + w.getLatitude());
+                        longitude.setText("" + w.getLongitude());
                     });
 
             map.addMarker(marker);
