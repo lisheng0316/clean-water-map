@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+
 <?import com.lynden.gmapsfx.GoogleMapView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
@@ -19,7 +20,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.web.WebView?>
 
 <AnchorPane maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="811.0" styleClass="background" stylesheets="@../fxapp/stylesheet.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppViewController">
    <children>
@@ -128,7 +128,6 @@
                 <AnchorPane maxHeight="570.0" maxWidth="800.0" minHeight="0.0" minWidth="800.0" prefHeight="570.0" prefWidth="800.0">
                      <children>
                         <GoogleMapView fx:id="mapView" maxHeight="550.0" maxWidth="804.0" minHeight="550.0" minWidth="800.0" prefHeight="550.0" prefWidth="804.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-
                      </children>
                   </AnchorPane>
               </items>
