@@ -40,7 +40,7 @@ import java.net.URL;
  * Created by Sheng on 9/19/16.
  * A controller for the app view
  */
-public class AppViewController implements Initializable, MapComponentInitializedListener  {
+public class UserAppController implements Initializable, MapComponentInitializedListener  {
     @FXML
     private GoogleMapView mapView;
 
@@ -263,10 +263,10 @@ public class AppViewController implements Initializable, MapComponentInitialized
     }
 
     private void resetForm() {
-        reportType.setValue("Report Type");
+        //reportType.setValue("Report Type");
         waterCondition.setValue(null);
-        contaminantPPM.clear();
-        virusPPM.clear();
+        //contaminantPPM.clear();
+        //virusPPM.clear();
         longitude.clear();
         latitude.clear();
     }
