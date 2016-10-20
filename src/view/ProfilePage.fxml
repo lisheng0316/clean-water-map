@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@../fxapp/stylesheet.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ProfileController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@../fxapp/stylesheet.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ProfileController">
    <children>
       <Label alignment="CENTER" layoutX="322.0" layoutY="56.0" prefHeight="26.0" prefWidth="145.0" text="Account Profile">
          <font>
@@ -29,6 +29,7 @@
               <rowConstraints>
                   <RowConstraints maxHeight="56.0" minHeight="10.0" prefHeight="42.05829620361328" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="59.587799072265625" minHeight="10.0" prefHeight="43.94170379638672" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="126.0" minHeight="10.0" prefHeight="40.412200927734375" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="126.0" minHeight="10.0" prefHeight="40.412200927734375" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="126.0" minHeight="10.0" prefHeight="44.0" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="121.0" minHeight="10.0" prefHeight="44.0" vgrow="SOMETIMES" />
@@ -48,36 +49,56 @@
                         <Insets left="10.0" right="10.0" />
                      </GridPane.margin>
                   </TextField>
-                  <Label layoutX="10.0" layoutY="140.0" text="First name:" GridPane.rowIndex="2" />
-                  <TextField fx:id="fname" layoutX="120.0" layoutY="23.0" prefHeight="27.0" prefWidth="434.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <Label layoutX="10.0" layoutY="140.0" text="First name:" GridPane.rowIndex="3" />
+                  <TextField fx:id="fname" layoutX="120.0" layoutY="23.0" prefHeight="27.0" prefWidth="434.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <GridPane.margin>
                         <Insets left="10.0" right="10.0" />
                      </GridPane.margin>
                   </TextField>
-                  <TextField fx:id="lname" prefHeight="27.0" prefWidth="593.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                  <TextField fx:id="lname" prefHeight="27.0" prefWidth="593.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <GridPane.margin>
                         <Insets left="10.0" right="10.0" />
                      </GridPane.margin>
                   </TextField>
-                  <Label layoutX="10.0" layoutY="35.0" text="Email:" GridPane.rowIndex="4" />
-                  <TextField fx:id="email" layoutX="120.0" layoutY="75.0" prefHeight="27.0" prefWidth="434.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                  <Label layoutX="10.0" layoutY="35.0" text="Email:" GridPane.rowIndex="5" />
+                  <TextField fx:id="email" layoutX="120.0" layoutY="75.0" prefHeight="27.0" prefWidth="434.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                      <GridPane.margin>
                         <Insets left="10.0" right="10.0" />
                      </GridPane.margin>
                   </TextField>
-                  <Label layoutX="10.0" layoutY="102.0" text="Phone:" GridPane.rowIndex="5" />
-                  <TextField fx:id="phone" layoutX="120.0" layoutY="127.0" prefHeight="27.0" prefWidth="434.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                  <Label layoutX="10.0" layoutY="102.0" text="Phone:" GridPane.rowIndex="6" />
+                  <TextField fx:id="phone" layoutX="120.0" layoutY="127.0" prefHeight="27.0" prefWidth="434.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                      <GridPane.margin>
                         <Insets left="10.0" right="10.0" />
                      </GridPane.margin>
                   </TextField>
-                  <Label layoutX="10.0" layoutY="168.0" text="Address:" GridPane.rowIndex="6" />
-                  <TextArea fx:id="address" prefHeight="33.0" prefWidth="630.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                  <Label layoutX="10.0" layoutY="168.0" text="Address:" GridPane.rowIndex="7" />
+                  <TextArea fx:id="address" prefHeight="33.0" prefWidth="630.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
                      <GridPane.margin>
                         <Insets left="10.0" right="10.0" top="10.0" />
                      </GridPane.margin>
                   </TextArea>
-                  <Label text="Last name:" GridPane.rowIndex="3" />
+                  <Label text="Last name:" GridPane.rowIndex="4" />
+                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <children>
+                        <TextField fx:id="password" prefHeight="27.0" prefWidth="190.0" promptText="type new password">
+                           <HBox.margin>
+                              <Insets left="10.0" right="10.0" top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <Label prefHeight="17.0" prefWidth="142.0" text="Confirm New Password:">
+                           <HBox.margin>
+                              <Insets left="10.0" right="10.0" top="10.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="passwordConfirm" prefHeight="27.0" prefWidth="190.0" promptText="confirm new password">
+                           <HBox.margin>
+                              <Insets left="10.0" right="10.0" top="5.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <Label text="New Password:" GridPane.rowIndex="2" />
                </children>
             </GridPane>
          </children>
