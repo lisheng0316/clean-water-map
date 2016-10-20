@@ -1,7 +1,7 @@
 package fxapp;
 
-import controller.AppViewController;
-
+import controller.UserAppController;
+import controller.WorkerAppController;
 import controller.RegistrationController;
 import model.Account;
 import controller.*;
@@ -20,6 +20,7 @@ import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.stage.Modality;
+import model.AccountType;
 import model.Database;
 
 import java.io.IOException;
@@ -102,9 +103,21 @@ public class Main extends Application {
     /**
      * a method to send the app to the map page
      */
-    public void gotoApp() {
+    public void gotoWorkerApp() {
         try {
-            AppViewController appView = (AppViewController) replaceSceneContent("/view/appview.fxml");
+            WorkerAppController appView = (WorkerAppController) replaceSceneContent("/view/WorkerAppView.fxml");
+            appView.setApp(this);
+        } catch (Exception ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * a method to send the app to the map page
+     */
+    public void gotoUserApp() {
+        try {
+            UserAppController appView = (UserAppController) replaceSceneContent("/view/UserAppView.fxml");
             appView.setApp(this);
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -134,6 +147,13 @@ public class Main extends Application {
         return true;
     }
 
+    public void gotoApp() {
+        if (loggedAccount.getType() == AccountType.User) {
+            gotoUserApp();
+        } else if (loggedAccount.getType() == AccountType.Worker) {
+            gotoWorkerApp();
+        }
+    }
     /**
      * a method to confirm that the user has logged out of the app
      * @return whether or not the user has logged out of the app
@@ -164,8 +184,8 @@ public class Main extends Application {
             in.close();
         }
         Scene scene = new Scene(page, MINIMUM_WINDOW_WIDTH, MINIMUM_WINDOW_HEIGHT);
-        String css = AppViewController.class.getResource("/fxapp/stylesheet.css").toExternalForm();
-        scene.getStylesheets().add(css);
+    //    String css = AppViewController.class.getResource("/fxapp/stylesheet.css").toExternalForm();
+    //    scene.getStylesheets().add(css);
         stage.setScene(scene);
         stage.sizeToScene();
         return (Initializable) loader.getController();
