@@ -43,12 +43,6 @@ public class Account {
     public void setId(String id) { _id.set(id); }
 
     /**
-     * a method to set the password of the user
-     * @param password the password of the user
-     */
-    public void setPassword(String password) { _fname.set(password); }
-
-    /**
      * a method to get the first name of the user
      * @return the first name of the user
      */
