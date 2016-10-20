@@ -54,12 +54,6 @@ public class UserAppController implements Initializable, MapComponentInitialized
     private AnchorPane reportForm;
 
     @FXML
-    private TextField virusPPM;
-
-    @FXML
-    private TextField contaminantPPM;
-
-    @FXML
     private TextField longitude;
 
     @FXML
@@ -342,8 +336,6 @@ public class UserAppController implements Initializable, MapComponentInitialized
         } else if (reportType.getValue().equals("Purity report")) {
             isSourceReport = false;
         }
-        virusPPM.setDisable(isSourceReport);
-        contaminantPPM.setDisable(isSourceReport);
         waterType.setDisable(!isSourceReport);
     }
 
