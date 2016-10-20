@@ -19,9 +19,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.web.WebView?>
 
-<AnchorPane maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="811.0" styleClass="background" stylesheets="@../fxapp/stylesheet.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AppViewController">
+<AnchorPane maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="811.0" styleClass="background" stylesheets="@../fxapp/stylesheet.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.UserAppController">
    <children>
       <GridPane prefHeight="600.0" prefWidth="800.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -45,7 +44,7 @@
                                           <VBox fx:id="form" accessibleRole="LIST_ITEM" alignment="CENTER" fillWidth="false" minWidth="200.0" prefHeight="342.0" prefWidth="210.0" spacing="10.0" translateX="-5.0">
                                              <children>
                                                 <Separator prefHeight="10.0" prefWidth="205.0" />
-                                                <ComboBox fx:id="reportType" layoutX="35.0" layoutY="74.0" onAction="#reportTypeSelected" prefWidth="160.0" promptText="Report Type" />
+                                                <ComboBox fx:id="reportType" disable="true" layoutX="35.0" layoutY="74.0" onAction="#reportTypeSelected" prefWidth="160.0" promptText="Source report" />
                                                 <ComboBox fx:id="waterCondition" prefWidth="160.0" promptText="Water Condition">
                                                    <VBox.margin>
                                                       <Insets />
@@ -69,12 +68,12 @@
                                                       <Insets />
                                                    </VBox.margin>
                                                 </TextField>
-                                                <TextField fx:id="virusPPM" cache="true" prefWidth="160.0" promptText="Virus PPM">
+                                                <TextField fx:id="virusPPM" cache="true" disable="true" prefWidth="160.0" promptText="Virus PPM" visible="false">
                                                    <VBox.margin>
                                                       <Insets />
                                                    </VBox.margin>
                                                 </TextField>
-                                                <TextField fx:id="contaminantPPM" layoutX="35.0" layoutY="162.0" prefWidth="160.0" promptText="Contaminant PPM">
+                                                <TextField fx:id="contaminantPPM" disable="true" layoutX="35.0" layoutY="162.0" prefWidth="160.0" promptText="Contaminant PPM" visible="false">
                                                    <opaqueInsets>
                                                       <Insets />
                                                    </opaqueInsets>

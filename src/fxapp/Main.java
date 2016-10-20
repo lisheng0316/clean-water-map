@@ -1,6 +1,6 @@
 package fxapp;
 
-import controller.AppViewController;
+import controller.UserAppController;
 
 import controller.RegistrationController;
 import model.Account;
@@ -104,7 +104,7 @@ public class Main extends Application {
      */
     public void gotoApp() {
         try {
-            AppViewController appView = (AppViewController) replaceSceneContent("/view/appview.fxml");
+            UserAppController appView = (UserAppController) replaceSceneContent("/view/UserAppView.fxml");
             appView.setApp(this);
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -164,7 +164,7 @@ public class Main extends Application {
             in.close();
         }
         Scene scene = new Scene(page, MINIMUM_WINDOW_WIDTH, MINIMUM_WINDOW_HEIGHT);
-        String css = AppViewController.class.getResource("/fxapp/stylesheet.css").toExternalForm();
+        String css = UserAppController.class.getResource("/fxapp/stylesheet.css").toExternalForm();
         scene.getStylesheets().add(css);
         stage.setScene(scene);
         stage.sizeToScene();
