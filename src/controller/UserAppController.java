@@ -218,6 +218,9 @@ public class UserAppController implements Initializable, MapComponentInitialized
         reportListView.getFocusModel().focus(index);
         reportListView.getSelectionModel().select(index);
     }
+
+
+
     private void pullReport() {
         waterReportList = FXCollections.observableArrayList();
         dataArrayList = Database.getWaterSourceReports();
@@ -243,7 +246,9 @@ public class UserAppController implements Initializable, MapComponentInitialized
     private void usernamePressed() {
         application.gotoProfile();
     };
-
+    /**
+     * Cancel the report submission
+     */
     @FXML
     private void cancelFormPressed() {
         alert.setTitle("Form Cancellation");
@@ -255,7 +260,9 @@ public class UserAppController implements Initializable, MapComponentInitialized
             resetForm();
         }
     }
-
+    /**
+     * Reset the report form
+     */
     private void resetForm() {
         //reportType.setValue("Report Type");
         waterCondition.setValue(null);
@@ -265,8 +272,11 @@ public class UserAppController implements Initializable, MapComponentInitialized
         latitude.clear();
     }
 
+    /**
+     * Activate when
+     */
     @FXML
-    private void submitFormPressed() {
+    private void submitFormPressed()  {
 
         alert.setTitle("Form Submission");
         alert.setHeaderText("You are about to submit the current report");
@@ -281,6 +291,7 @@ public class UserAppController implements Initializable, MapComponentInitialized
             SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yy");
             SimpleDateFormat timeFormatter = new SimpleDateFormat("h:mm a");
             String date = timeFormatter.format(tempDate) + " on " +dateFormatter.format(tempDate);
+
 
             Database.addWaterSourceReport(loggedAccount.getId(),
                     latitude.getText(),

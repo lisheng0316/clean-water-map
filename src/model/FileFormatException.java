@@ -1,7 +1,7 @@
 package model;
 
 /**
- * Created by robertwaters on 10/11/16.
+ * Created by
  */
 public class FileFormatException extends Exception {
     private String line;

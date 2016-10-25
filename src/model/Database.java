@@ -100,7 +100,6 @@ public class Database {
                 stmt.setString(1,username);
                 stmt.setString(2,password);
                 rs = stmt.executeQuery();
-
                 if (rs.next()) {
                     return true;
                 }
