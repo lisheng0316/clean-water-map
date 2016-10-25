@@ -7,6 +7,12 @@ public class Worker extends User {
 
     /**
      * Create new worker
+     * @param id the id
+     * @param fname  first name
+     * @param lname last name
+     * @param email email
+     * @param type account type
+     *
      */
     public Worker(String id, String fname, String lname, String email, AccountType type) {
         super(id, fname, lname, email, type);

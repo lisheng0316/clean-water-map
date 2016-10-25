@@ -21,13 +21,10 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-
-import java.security.cert.PKIXRevocationChecker;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 import javafx.stage.Window;
 import model.*;
 import model.Database;
@@ -95,7 +92,7 @@ public class UserAppController implements Initializable, MapComponentInitialized
             = FXCollections.observableArrayList("Source report", "Purity report");
 
     private DatePicker reportDate;
-    private Stage dialogStage;
+
     //    private WebEngine engine;
     private Main application;
     private boolean reportExpand = true;
@@ -131,8 +128,6 @@ public class UserAppController implements Initializable, MapComponentInitialized
     public void mapInitialized() {
         Database db = Database.getDatabase();
         dataArrayList = db.getWaterSourceReports();
-        System.out.println(dataArrayList.toString());
-
         WaterSourceReport wsr = dataArrayList.get(0);
         double longitude = wsr.getLongitude();
         double latitude = wsr.getLatitude();
@@ -279,6 +274,7 @@ public class UserAppController implements Initializable, MapComponentInitialized
      */
     private void resetForm() {
         waterCondition.setValue(null);
+        waterType.setValue(null);
         longitude.clear();
         latitude.clear();
     }
@@ -289,20 +285,24 @@ public class UserAppController implements Initializable, MapComponentInitialized
      */
     @FXML
     private void submitFormPressed() {
+        if (latitude.getText() == null
+                || longitude.getText() == null
+                || waterType.getValue() == null
+                || waterCondition.getValue() == null) {
 
-        alert.setTitle("Form Submission");
-        alert.setHeaderText("You are about to submit the current report");
-        alert.setContentText("Proceed your submission?");
+            alert.setTitle("Form Submission");
+            alert.setHeaderText("Report is has missing information");
+            alert.setContentText("Please fill out all required field before submitting");
+            Optional<ButtonType> result = alert.showAndWait();
 
-        Optional<ButtonType> result = alert.showAndWait();
+        } else {
+            alert.setTitle("Form Submission");
+            alert.setHeaderText("You are about to submit the current report");
+            alert.setContentText("Proceed your submission?");
+            Optional<ButtonType> result = alert.showAndWait();
 
-        if (result.get() == ButtonType.OK) {
+            if (result.get() == ButtonType.OK) {
 
-            if (latitude.getText() ==null || longitude.getText() == null || waterType.getValue()== null|| waterCondition.getValue() ==null ) {
-
-
-
-            } else {
                 Account loggedAccount = application.getLoggedAccount();
 
                 Date tempDate = new Date();
@@ -324,7 +324,6 @@ public class UserAppController implements Initializable, MapComponentInitialized
             }
         }
     }
-
 
     /**
      * toggle menu when pressed.

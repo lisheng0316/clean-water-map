@@ -131,6 +131,7 @@ public class ReportViewController implements Initializable {
         waterCondition.setText("" + condition);
     }
 
+
     @FXML
     private void menuPressed(){
     }

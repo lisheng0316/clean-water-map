@@ -257,37 +257,72 @@ public class WorkerAppController extends UserAppController implements Initializa
     }
 
     /**
-     * Helper method to submit a source report form.
+     * Disable options between source and purity report when one of both is clicked.
+     */
+    @FXML
+    private void reportTypeSelected() {
+        if (reportType.getValue().equals("Source report")) {
+            isSourceReport = true;
+        } else if (reportType.getValue().equals("Purity report")) {
+            isSourceReport = false;
+        }
+        virusPPM.setDisable(isSourceReport);
+        contaminantPPM.setDisable(isSourceReport);
+    }
+
+    /**
+     * Submit a source report form.
      * Submit report to database.
      */
     @FXML
     private void submitFormPressed() {
+        if (reportType.getValue() == null
+                || latitude.getText() == null
+                || longitude.getText() == null
+                || waterType.getValue() == null
+                || waterCondition.getValue() == null) {
 
-        alert.setTitle("Form Submission");
-        alert.setHeaderText("You are about to submit the current report");
-        alert.setContentText("Proceed your submission?");
-        Optional<ButtonType> result = alert.showAndWait();
+            alert.setTitle("Form Submission");
+            alert.setHeaderText("Report is has missing information");
+            alert.setContentText("Please fill out all required field before submitting");
+            Optional<ButtonType> result = alert.showAndWait();
 
-        if (result.get() == ButtonType.OK){
+        } else {
+            alert.setTitle("Form Submission");
+            alert.setHeaderText("You are about to submit the current report");
+            alert.setContentText("Proceed your submission?");
+            Optional<ButtonType> result = alert.showAndWait();
 
-            Account loggedAccount = application.getLoggedAccount();
+            if (result.get() == ButtonType.OK) {
 
-            Date tempDate = new Date();
-            SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yy");
-            SimpleDateFormat timeFormatter = new SimpleDateFormat("h:mm a");
-            String date = timeFormatter.format(tempDate) + " on " +dateFormatter.format(tempDate);
+                Account loggedAccount = application.getLoggedAccount();
 
-            Database.addWaterSourceReport(loggedAccount.getId(),
-                    latitude.getText(),
-                    longitude.getText(),
-                    waterType.getValue(),
-                    waterCondition.getValue(),
-                    date);
-            pullReport();
-            resetForm();
-            formCollapse.setExpanded(false);
-            reportCollapse.setExpanded(true);
-            displayPins();
+                Date tempDate = new Date();
+                SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yy");
+                SimpleDateFormat timeFormatter = new SimpleDateFormat("h:mm a");
+                String date = timeFormatter.format(tempDate) + " on " + dateFormatter.format(tempDate);
+
+                if (reportType.getValue().equals("Source report")) {
+                    Database.addWaterSourceReport(loggedAccount.getId(),
+                            latitude.getText(),
+                            longitude.getText(),
+                            waterType.getValue(),
+                            waterCondition.getValue(),
+                            date);
+                } else {
+                    Database.addWaterPurityReport(loggedAccount.getId(),
+                            latitude.getText(),
+                            longitude.getText(),
+                            waterType.getValue(),
+                            waterCondition.getValue(),
+                            date, contaminantPPM.getText(), virusPPM.getText());
+                }
+                pullReport();
+                resetForm();
+                formCollapse.setExpanded(false);
+                reportCollapse.setExpanded(true);
+                displayPins();
+            }
         }
     }
 

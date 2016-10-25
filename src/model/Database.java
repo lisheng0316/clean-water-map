@@ -14,20 +14,21 @@ import java.util.List;
  * Created by Bang on 10/6/16.
  */
 public class Database {
-    private static List<WaterSourceReport> reportList;
+    private static List<WaterSourceReport> sourceReportList;
+    private static List<WaterPurityReport> purityReportList;
     //declare connection, statement and resultSet objects
     private static Connection connection = null;
     private static PreparedStatement stmt = null;
     private static ResultSet rs = null;
-    private static Database database;
 
+    private static final Database instance = new Database();
 
     /**
-     * Gettter of database.
-     * @return
+     * Get the instance of database.
+     * @return database
      */
     public static Database getDatabase() {
-        return database;
+        return instance;
     }
 
 
@@ -262,7 +263,7 @@ public class Database {
      */
     public static List<WaterSourceReport> getWaterSourceReports() {
         String query = "SELECT * FROM WaterSourceReport";
-        reportList = new ArrayList<>();
+        sourceReportList = new ArrayList<>();
 
         try {
             stmt = connection.prepareStatement(query);
@@ -281,7 +282,7 @@ public class Database {
                 report = new WaterSourceReport(reportNumber,
                         username, latitude, longitude, WaterType.valueOf(type),
                         WaterCondition.valueOf(condition), date);
-                reportList.add(report);
+                sourceReportList.add(report);
             }
             stmt.close();
 
@@ -289,10 +290,96 @@ public class Database {
             System.out.println(error.getMessage());
         }
 
-        return reportList;
+        return sourceReportList;
     }
 
 
+    /**
+     * Added water purity report to database.
+     * @param username user who submit the report.
+     * @param latitude of location report
+     * @param longitude of location report
+     * @param waterType type of water
+     * @param waterCondition condition of water
+     * @param date date of report
+     */
+
+    public static void addWaterPurityReport(String username , String latitude
+            , String longitude
+            , WaterType waterType
+            , WaterCondition waterCondition
+            , String date, String contaminant, String virus) {
+        try {
+            String query = "INSERT INTO `schema`.`WaterPurityReport` (`ReportNumber`, `Username`, `Latitude`" +
+                    ", `Longitude`, `WaterType`, `WaterCondition`, `Date`, `ContaminantPPM`, `VirusPPM`)"
+                    + " VALUES (null, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+            stmt = connection.prepareStatement(query);
+            stmt.setString (1, username);
+            stmt.setString (2, latitude);
+            stmt.setString (3, longitude);
+            stmt.setString (4, waterType.toString());
+            stmt.setString (5, waterCondition.toString());
+            stmt.setString (6, date);
+            stmt.setString (7, contaminant);
+            stmt.setString (8, virus);
+
+            stmt.executeUpdate();
+        }
+        catch (SQLException ex){
+            System.out.println(ex.getMessage());
+        }
+        finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException sqlEx) { } // ignore
+            }
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException sqlEx) { } // ignore
+            }
+        }
+    }
+
+    /**
+     * Retreive water source report from database.
+     * @return list of water source report
+     */
+    public static List<WaterPurityReport> getWaterPurityReports() {
+        String query = "SELECT * FROM WaterPurityReport";
+        purityReportList = new ArrayList<>();
+
+        try {
+            stmt = connection.prepareStatement(query);
+            rs = stmt.executeQuery();
+
+            while (rs.next())
+            {
+                int reportNumber = rs.getInt("ReportNumber");
+                String username = rs.getString("Username");
+                Double latitude = rs.getDouble("Latitude");
+                Double longitude = rs.getDouble("Longitude");
+                String type = rs.getString("WaterType");
+                String condition = rs.getString("WaterCondition");
+                String date = rs.getString("Date");
+                String contaminantPPM = rs.getString("ContaminantPPM");
+                String virusPPM = rs.getString("VirusPPM");
+                WaterPurityReport report;
+                report = new WaterPurityReport(reportNumber,
+                        username, latitude, longitude, WaterType.valueOf(type),
+                        WaterCondition.valueOf(condition), date, contaminantPPM, virusPPM);
+                purityReportList.add(report);
+            }
+            stmt.close();
+
+        } catch (SQLException error) {
+            System.out.println(error.getMessage());
+        }
+
+        return purityReportList;
+    }
     /**
      * Connect to database.
      * @return null

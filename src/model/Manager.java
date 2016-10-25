@@ -5,7 +5,16 @@ package model;
  * Manager to implement the required functionality
  */
 public class Manager extends Worker {
-    // this it not correct, just place holder
+
+    /**
+     * Create new Manager
+     * @param id the id
+     * @param fname  first name
+     * @param lname last name
+     * @param email email
+     * @param type account type
+     *
+     */
     public Manager(String id, String fname, String lname, String email, AccountType type) {
         super(id, fname, lname, email, type);
     }

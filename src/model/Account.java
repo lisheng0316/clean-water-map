@@ -113,15 +113,31 @@ public class Account {
 
     /**
      * A  the default constructor of the user
+     * @param id the id
+     * @param fname  first name
+     * @param lname last name
+     * @param email email
+     * @param type account type
+     *
      */
     public Account(String id, String fname, String lname, String email, AccountType type) {
 
-     this(id, fname, lname, email, type, "", "");
+        this(id, fname, lname, email, type, "", "");
 
     }
     /**
      * the constructor of user if the user included their phone number
      * and address
+     *
+     *
+     * @param id the id
+     * @param fname  first name
+     * @param lname last name
+     * @param email email
+     * @param type account type
+     * @param phone phone
+     * @param address address
+     *
      */
     public Account(String id, String fname, String lname, String email, AccountType type, String phone, String address) {
 

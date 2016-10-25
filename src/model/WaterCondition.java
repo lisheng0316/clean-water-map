@@ -8,5 +8,5 @@ public enum WaterCondition {
     Clear,
     Treatable,
     Portable,
-    Waste;
+    Waste
 }
