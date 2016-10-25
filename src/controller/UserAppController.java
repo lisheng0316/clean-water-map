@@ -21,10 +21,13 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+
+import java.security.cert.PKIXRevocationChecker;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javafx.stage.Window;
 import model.*;
 import model.Database;
@@ -92,7 +95,7 @@ public class UserAppController implements Initializable, MapComponentInitialized
             = FXCollections.observableArrayList("Source report", "Purity report");
 
     private DatePicker reportDate;
-
+    private Stage dialogStage;
     //    private WebEngine engine;
     private Main application;
     private boolean reportExpand = true;
@@ -156,7 +159,10 @@ public class UserAppController implements Initializable, MapComponentInitialized
 
     }
 
-
+    /**
+     * Helper method to display pin on map.
+     * If a pin is clicked, an info window with location information will pop up.
+     */
     private void displayPins() {
         for (WaterSourceReport w: dataArrayList) {
             MarkerOptions markerOptions = new MarkerOptions();
@@ -188,6 +194,11 @@ public class UserAppController implements Initializable, MapComponentInitialized
         }
     }
 
+    /**
+     * Helper method to display pin on Map.
+     * When user select an item in report list, it will display on map.
+     * @param report report to be pinned on
+     */
     private void displayPinFromList(WaterSourceReport report) {
         MarkerOptions markerOption = new MarkerOptions();
         LatLong location = new LatLong(report.getLatitude(), report.getLongitude());
@@ -212,6 +223,9 @@ public class UserAppController implements Initializable, MapComponentInitialized
         map.addMarker(marker);
     }
 
+    /**
+     * Helper method to auto focus on last added item on report list.
+     */
     private void focusItem() {
         int index = waterReportList.size() - 1;
         reportListView.scrollTo(index);
@@ -219,8 +233,9 @@ public class UserAppController implements Initializable, MapComponentInitialized
         reportListView.getSelectionModel().select(index);
     }
 
-
-
+    /**
+     * Helper method to added report from database to report List.
+     */
     private void pullReport() {
         waterReportList = FXCollections.observableArrayList();
         dataArrayList = Database.getWaterSourceReports();
@@ -240,15 +255,13 @@ public class UserAppController implements Initializable, MapComponentInitialized
     }
 
     /**
-     * Activates the username is pressed
+     * Go to user's profile page.
      */
     @FXML
     private void usernamePressed() {
         application.gotoProfile();
     };
-    /**
-     * Cancel the report submission
-     */
+
     @FXML
     private void cancelFormPressed() {
         alert.setTitle("Form Cancellation");
@@ -260,69 +273,86 @@ public class UserAppController implements Initializable, MapComponentInitialized
             resetForm();
         }
     }
+
     /**
-     * Reset the report form
+     * Reset form. Removed any filled text area.
      */
     private void resetForm() {
-        //reportType.setValue("Report Type");
         waterCondition.setValue(null);
-        //contaminantPPM.clear();
-        //virusPPM.clear();
         longitude.clear();
         latitude.clear();
     }
 
     /**
-     * Activate when
+     * Submit a source report form.
+     * Submit report to database.
      */
     @FXML
-    private void submitFormPressed()  {
+    private void submitFormPressed() {
 
         alert.setTitle("Form Submission");
         alert.setHeaderText("You are about to submit the current report");
         alert.setContentText("Proceed your submission?");
+
         Optional<ButtonType> result = alert.showAndWait();
 
-        if (result.get() == ButtonType.OK){
+        if (result.get() == ButtonType.OK) {
 
-            Account loggedAccount = application.getLoggedAccount();
-
-            Date tempDate = new Date();
-            SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yy");
-            SimpleDateFormat timeFormatter = new SimpleDateFormat("h:mm a");
-            String date = timeFormatter.format(tempDate) + " on " +dateFormatter.format(tempDate);
+            if (latitude.getText() ==null || longitude.getText() == null || waterType.getValue()== null|| waterCondition.getValue() ==null ) {
 
 
-            Database.addWaterSourceReport(loggedAccount.getId(),
-                    latitude.getText(),
-                    longitude.getText(),
-                    waterType.getValue(),
-                    waterCondition.getValue(),
-                    date);
-            pullReport();
-            resetForm();
-            formCollapse.setExpanded(false);
-            reportCollapse.setExpanded(true);
-            displayPins();
+
+            } else {
+                Account loggedAccount = application.getLoggedAccount();
+
+                Date tempDate = new Date();
+                SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yy");
+                SimpleDateFormat timeFormatter = new SimpleDateFormat("h:mm a");
+                String date = timeFormatter.format(tempDate) + " on " + dateFormatter.format(tempDate);
+
+                Database.addWaterSourceReport(loggedAccount.getId(),
+                        latitude.getText(),
+                        longitude.getText(),
+                        waterType.getValue(),
+                        waterCondition.getValue(),
+                        date);
+                pullReport();
+                resetForm();
+                formCollapse.setExpanded(false);
+                reportCollapse.setExpanded(true);
+                displayPins();
+            }
         }
     }
 
+
+    /**
+     * toggle menu when pressed.
+     */
     @FXML
     private void menuPressed(){
         toggleMenu();
     }
 
+    /**
+     * Go to user's profile page when settings is pressed
+     */
     @FXML
     private void accountSettingPressed() {
         application.gotoProfile();
     }
 
+    /**
+     * Log current user out of application when pressed.
+     */
     @FXML
     private void signoutPressed() {
         application.accountLogout();
     }
 
-
+    /**
+     * Expand and Collapse menu when clicked.
+     */
     private void toggleMenu() {
         if (!reportExpand) {
             mapView.setMinWidth(800);
@@ -340,6 +370,9 @@ public class UserAppController implements Initializable, MapComponentInitialized
         }
     }
 
+    /**
+     * Disable options between source and purity report when one of both is clicked.
+     */
     @FXML
     private void reportTypeSelected() {
         if (reportType.getValue().equals("Source report")) {
@@ -349,12 +382,16 @@ public class UserAppController implements Initializable, MapComponentInitialized
         }
         waterType.setDisable(!isSourceReport);
     }
-
+    /**
+     * Collapse other expandable when this tap is pressed.
+     */
     @FXML
     private void newReportPressed() {
         reportCollapse.setExpanded(false);
     }
-
+    /**
+     * Collapse other expandable when this tap is pressed.
+     */
     @FXML
     private void viewReportPressed() {
         formCollapse.setExpanded(false);
