@@ -69,8 +69,8 @@ public class WorkerAppController extends UserAppController implements Initializa
 
     private ObservableList<WaterSourceReport> waterReportList;
 
-    private List<WaterSourceReport> dataArrayList;
-
+    private List<WaterSourceReport> wsrArrayList;
+    private List<WaterPurityReport> wprArrayList;
 
     private final ObservableList<WaterType> waterTypeList
             = FXCollections.observableArrayList(WaterType.values());
@@ -115,10 +115,10 @@ public class WorkerAppController extends UserAppController implements Initializa
     @Override
     public void mapInitialized() {
         Database db = Database.getDatabase();
-        dataArrayList = db.getWaterSourceReports();
-        System.out.println(dataArrayList.toString());
+        wsrArrayList = db.getWaterSourceReports();
+        System.out.println(wsrArrayList.toString());
 
-        WaterSourceReport wsr = dataArrayList.get(0);
+        WaterSourceReport wsr = wsrArrayList.get(0);
         double longitude = wsr.getLongitude();
         double latitude = wsr.getLatitude();
 
@@ -144,7 +144,7 @@ public class WorkerAppController extends UserAppController implements Initializa
      * If a pin is clicked, an info window with location information will pop up.
      */
     private void displayPins() {
-        for (WaterSourceReport w: dataArrayList) {
+        for (WaterSourceReport w: wsrArrayList) {
             MarkerOptions markerOptions = new MarkerOptions();
             LatLong loc = new LatLong(w.getLatitude(), w.getLongitude());
 
@@ -169,6 +169,7 @@ public class WorkerAppController extends UserAppController implements Initializa
                         window.open(map, marker);
                         latitude.setText("" + w.getLatitude());
                         longitude.setText("" + w.getLongitude());
+
                     });
 
             map.addMarker(marker);
@@ -220,10 +221,11 @@ public class WorkerAppController extends UserAppController implements Initializa
      */
     private void pullReport() {
         waterReportList = FXCollections.observableArrayList();
-        dataArrayList = Database.getWaterSourceReports();
-        for (WaterSourceReport e : dataArrayList) {
+        wsrArrayList = Database.getWaterSourceReports();
+        for (WaterSourceReport e : wsrArrayList) {
             waterReportList.add(e);
         }
+
         reportListView.setItems(waterReportList);
         focusItem();
     }
@@ -243,6 +245,20 @@ public class WorkerAppController extends UserAppController implements Initializa
     private void usernamePressed() {
         application.gotoProfile();
     };
+
+
+
+    @FXML
+    private void cancelFormPressed() {
+        alert.setTitle("Form Cancellation");
+        alert.setHeaderText("Are you sure to cancel the current report?");
+        alert.setContentText("Hit OK to void your submission");
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.get() == ButtonType.OK){
+            resetForm();
+        }
+    }
 
     /**
      * Helper method to reset form when cancel  is clicked.
@@ -325,5 +341,51 @@ public class WorkerAppController extends UserAppController implements Initializa
             }
         }
     }
+
+
+    /**
+     * toggle menu when pressed.
+     */
+    @FXML
+    private void menuPressed(){
+        toggleMenu();
+    }
+
+    /**
+     * Go to user's profile page when settings is pressed
+     */
+    @FXML
+    private void accountSettingPressed() {
+        application.gotoProfile();
+    }
+
+    /**
+     * Log current user out of application when pressed.
+     */
+    @FXML
+    private void signoutPressed() {
+        application.accountLogout();
+    }
+
+    /**
+     * Expand and Collapse menu when clicked.
+     */
+    private void toggleMenu() {
+        if (!reportExpand) {
+            mapView.setMinWidth(800);
+            mapView.setMaxWidth(800);
+            reportForm.setMinWidth(0);
+            reportForm.setMaxWidth(0);
+            reportExpand = true;
+        }
+        else {
+            mapView.setMinWidth(600);
+            mapView.setMaxWidth(600);
+            reportForm.setMinWidth(200);
+            reportForm.setMaxWidth(200);
+            reportExpand = false;
+        }
+    }
+
 
 }

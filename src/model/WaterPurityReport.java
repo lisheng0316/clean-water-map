@@ -6,7 +6,6 @@ package model;
 public class WaterPurityReport extends WaterSourceReport {
     private String virusPPM;
     private String contaminantPPM;
-    private OverallCondition overallCondition;
 
     /**
      * Create water purity report
@@ -15,32 +14,25 @@ public class WaterPurityReport extends WaterSourceReport {
      * @param user user
      * @param latitude latitude
      * @param longitude longitude
+     * @param type water type
+     * @param condition water condition
      * @param date create date
      * @param contaminantPPM contaminant PPM
      * @param virusPPM virus PPM
      */
     public WaterPurityReport(int reportNumber, String user,
-                                   double latitude, double longitude,
-                                   String date,
-                                   OverallCondition overallCondition,
-                                   String contaminantPPM,
-                                   String virusPPM ) {
-
-        super(reportNumber, user, latitude, longitude, date);
-        this.overallCondition = overallCondition;
+                             double latitude, double longitude,
+                             WaterType type,
+                             WaterCondition condition,
+                             String date,
+                             String contaminantPPM,
+                             String virusPPM ) {
+        super(reportNumber, user, latitude, longitude, type, condition, date);
         this.virusPPM = virusPPM;
         this.contaminantPPM = contaminantPPM;
-
     }
 
 
-    /**
-     * Get the overall condition of water
-     * @return overall condition type
-     */
-    public OverallCondition getOverallCondition() {
-        return overallCondition;
-    }
     /**
      * Get the virus PPM
      * @return the virus PPM

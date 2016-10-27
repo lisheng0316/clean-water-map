@@ -254,6 +254,11 @@ public class UserAppController implements Initializable, MapComponentInitialized
         application.gotoProfile();
     };
 
+
+    /**
+     * Cancel the submission of the report
+     */
+
     @FXML
     private void cancelFormPressed() {
         alert.setTitle("Form Cancellation");

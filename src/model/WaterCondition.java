@@ -5,8 +5,7 @@ package model;
  * An enum for the condition of the water
  */
 public enum WaterCondition {
-    Clear,
+    Safe,
     Treatable,
-    Portable,
-    Waste
+    Unsafe
 }
