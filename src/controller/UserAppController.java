@@ -3,7 +3,6 @@ package controller;
 import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
-import com.lynden.gmapsfx.javascript.object.*;
 import com.lynden.gmapsfx.javascript.object.GoogleMap;
 import com.lynden.gmapsfx.javascript.object.LatLong;
 import com.lynden.gmapsfx.javascript.object.MapOptions;
@@ -25,11 +24,9 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Window;
 import model.*;
 import model.Database;
 import model.WaterCondition;
-import model.WaterSourceReport;
 import model.WaterType;
 import netscape.javascript.JSObject;
 

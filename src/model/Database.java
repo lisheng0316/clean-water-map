@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -310,7 +309,7 @@ public class Database {
             , WaterCondition waterCondition
             , String date, String contaminant, String virus) {
         try {
-            String query = "INSERT INTO `schema`.`WaterPurityReport` (`ReportNumber`, `Username`, `Latitude`" +
+            String query = "INSERT INTO `schema`.`WaterPuritySourceReport` (`ReportNumber`, `Username`, `Latitude`" +
                     ", `Longitude`, `WaterType`, `WaterCondition`, `Date`, `ContaminantPPM`, `VirusPPM`)"
                     + " VALUES (null, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -348,7 +347,7 @@ public class Database {
      * @return list of water source report
      */
     public static List<WaterPurityReport> getWaterPurityReports() {
-        String query = "SELECT * FROM WaterPurityReport";
+        String query = "SELECT * FROM WaterPuritySourceReport";
         purityReportList = new ArrayList<>();
 
         try {
@@ -357,22 +356,21 @@ public class Database {
 
             while (rs.next())
             {
-                int reportNumber = rs.getInt("ReportNumber");
-                String username = rs.getString("Username");
-                Double latitude = rs.getDouble("Latitude");
-                Double longitude = rs.getDouble("Longitude");
-                String type = rs.getString("WaterType");
-                String condition = rs.getString("WaterCondition");
-                String date = rs.getString("Date");
-                String contaminantPPM = rs.getString("ContaminantPPM");
-                String virusPPM = rs.getString("VirusPPM");
-                WaterPurityReport report;
-                report = new WaterPurityReport(reportNumber,
-                        username, latitude, longitude, WaterType.valueOf(type),
-                        WaterCondition.valueOf(condition), date, contaminantPPM, virusPPM);
-                purityReportList.add(report);
-            }
-            stmt.close();
+            int reportNumber = rs.getInt("ReportNumber");
+            String username = rs.getString("Username");
+            Double latitude = rs.getDouble("Latitude");
+            Double longitude = rs.getDouble("Longitude");
+            String date = rs.getString("Date");
+            String overallCondition = rs.getString("OverallCondition");
+            String contaminantPPM = rs.getString("ContaminantPPM");
+            String virusPPM = rs.getString("VirusPPM");
+            WaterPurityReport report;
+            report = new WaterPurityReport(reportNumber,
+                    username, latitude, longitude,
+                    date,   OverallCondition.valueOf(overallCondition), contaminantPPM, virusPPM);
+            purityReportList.add(report);
+        }
+        stmt.close();
 
         } catch (SQLException error) {
             System.out.println(error.getMessage());
