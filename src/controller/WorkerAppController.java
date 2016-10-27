@@ -177,6 +177,14 @@ public class WorkerAppController extends UserAppController implements Initializa
     }
 
     /**
+     * Go to user's profile page when settings is pressed
+     */
+    @FXML
+    private void accountSettingPressed() {
+        application.gotoProfile();
+    }
+
+    /**
      * Helper method to display pin on Map.
      * When user select an item in report list, it will display on map.
      * @param report report to be pinned on
@@ -269,6 +277,15 @@ public class WorkerAppController extends UserAppController implements Initializa
         virusPPM.setDisable(isSourceReport);
         contaminantPPM.setDisable(isSourceReport);
     }
+
+    /**
+     * Log current user out of application when pressed.
+     */
+    @FXML
+    private void signoutPressed() {
+        application.accountLogout();
+    }
+
 
     /**
      * Submit a source report form.
