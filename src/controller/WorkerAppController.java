@@ -177,13 +177,6 @@ public class WorkerAppController extends UserAppController implements Initializa
         }
     }
 
-    /**
-     * Go to user's profile page when settings is pressed
-     */
-    @FXML
-    private void accountSettingPressed() {
-        application.gotoProfile();
-    }
 
     /**
      * Helper method to display pin on Map.
@@ -292,14 +285,6 @@ public class WorkerAppController extends UserAppController implements Initializa
         }
         virusPPM.setDisable(isSourceReport);
         contaminantPPM.setDisable(isSourceReport);
-    }
-
-    /**
-     * Log current user out of application when pressed.
-     */
-    @FXML
-    private void signoutPressed() {
-        application.accountLogout();
     }
 
 
