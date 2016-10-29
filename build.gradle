@@ -6,7 +6,7 @@ mainClassName = "fxapp.Main"
 
 dependencies {
     compile files("libs/mysql-connector-java-5.1.13.jar")
-
+    compile files("libs/GMapsFX-2.0.9.jar")
     compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.13'
 }
 
@@ -35,7 +35,9 @@ jar {
     }
     manifest {
         attributes(
-                "Main-Class": 'fxapp.Main'
+                "Main-Class": "fxapp.Main",
+                "Class-Path": "../../libs/mysql-connector-java-5.1.13.jar ../../libs/GMapsFX-2.0.9.jar"
         )
+
     }
 }
