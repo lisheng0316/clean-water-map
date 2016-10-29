@@ -233,7 +233,7 @@ public class WorkerAppController extends UserAppController implements Initializa
 
     /**
      * Helper method to display pin on Map.
-     * When user select an item in report list, it will display on map.
+     * When user select an item in source report list, it will display on map.
      * @param report report to be pinned on
      */
     private void displayPinFromList(WaterSourceReport report) {
@@ -253,6 +253,37 @@ public class WorkerAppController extends UserAppController implements Initializa
                 + "<br>Type: " + report.getType()
                 + "<br>Condition: " + report.getCondition()
                 + "<br>Date: " + report.getDate());
+
+        InfoWindow itemWindow = new InfoWindow(infoWindow);
+        itemWindow.setPosition(location);
+        itemWindow.open(map, marker);
+        map.addMarker(marker);
+    }
+
+    /**
+     * Helper method to display pin on Map.
+     * When user select an item in purity report list, it will display on map.
+     * @param report report to be pinned on
+     */
+    private void displayPinFromList(WaterPurityReport report) {
+        MarkerOptions markerOption = new MarkerOptions();
+        LatLong location = new LatLong(report.getLatitude(), report.getLongitude());
+
+        markerOption.position(location)
+                .visible(Boolean.TRUE)
+                .title(report.toString());
+        Marker marker = new Marker(markerOption);
+
+        InfoWindowOptions infoWindow = new InfoWindowOptions();
+        infoWindow.content("<h2>" + report.toString() + "</h2>"
+                + "Reporter: " + report.getUser()
+                + "<br>Location: " + report.getLatitude()
+                + ", " + report.getLongitude()
+                + "<br>Type: " + report.getType()
+                + "<br>Condition: " + report.getCondition()
+                + "<br>Date: " + report.getDate()
+                + "<br>VirusPPM: " + report.getVirusPPM()
+                + "<br>ContaminantPPM: " + report.getContaminantPPM());
 
         InfoWindow itemWindow = new InfoWindow(infoWindow);
         itemWindow.setPosition(location);
