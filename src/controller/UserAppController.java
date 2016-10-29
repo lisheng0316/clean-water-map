@@ -145,10 +145,6 @@ public class UserAppController implements Initializable, MapComponentInitialized
         map = mapView.createMap(options);
         displayPins();
 
-        /** now we communciate with the model to get all the locations for markers */
-//        Facade fc = Facade.getInstance();
-//        List<WaterSourceReport> locations = fc.getLocations();
-
     }
 
     /**
@@ -397,4 +393,24 @@ public class UserAppController implements Initializable, MapComponentInitialized
     private void viewReportPressed() {
         formCollapse.setExpanded(false);
     }
+
+
+    /**
+     * Go to user's water source report page.
+     */
+    @FXML
+    private void viewPressed() {
+        WaterSourceReport wsr
+                = reportListView.getSelectionModel().getSelectedItem();
+        if (wsr == null) {
+            alert.setTitle("ERROR");
+            alert.setContentText(
+                    "Please select the report to view!");
+            alert.showAndWait();
+        } else {
+            application.gotoWSR(wsr);
+        }
+    }
+
+
 }

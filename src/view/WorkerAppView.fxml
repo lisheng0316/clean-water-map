@@ -9,6 +9,8 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.image.Image?>
@@ -20,7 +22,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="811.0" styleClass="background" stylesheets="@../fxapp/stylesheet.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.WorkerAppController">
+<AnchorPane maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="811.0" styleClass="background" stylesheets="@../fxapp/stylesheet.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.WorkerAppController">
    <children>
       <GridPane prefHeight="600.0" prefWidth="800.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -101,7 +103,37 @@
                                  <content>
                                     <AnchorPane minHeight="360.0" minWidth="0.0" prefHeight="360.0" prefWidth="205.0">
                                        <children>
-                                          <ListView fx:id="reportListView" maxHeight="362.0" prefHeight="362.0" prefWidth="204.0" translateX="-1.0" />
+                                          <VBox prefHeight="326.0" prefWidth="210.0">
+                                             <children>
+                                                <TabPane prefHeight="294.0" prefWidth="210.0" tabClosingPolicy="UNAVAILABLE">
+                                                  <tabs>
+                                                    <Tab fx:id="srTab" text="SourceReport">
+                                                      <content>
+                                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                               <children>
+                                                                  <ListView fx:id="sourceReportListView" maxHeight="371.0" prefHeight="313.0" prefWidth="210.0" />
+                                                               </children>
+                                                            </AnchorPane>
+                                                      </content>
+                                                    </Tab>
+                                                    <Tab fx:id="prTab" text="PurityReport">
+                                                      <content>
+                                                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                               <children>
+                                                                  <ListView fx:id="purityReportListView" maxHeight="362.0" prefHeight="311.0" prefWidth="210.0" />
+                                                               </children>
+                                                            </AnchorPane>
+                                                      </content>
+                                                    </Tab>
+                                                  </tabs>
+                                                </TabPane>
+                                                <Button mnemonicParsing="false" onAction="#viewPressed" text="View">
+                                                   <VBox.margin>
+                                                      <Insets left="70.0" />
+                                                   </VBox.margin>
+                                                </Button>
+                                             </children>
+                                          </VBox>
                                        </children>
                                     </AnchorPane>
                                  </content>

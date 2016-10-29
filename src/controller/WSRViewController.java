@@ -7,6 +7,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import model.WaterCondition;
+import model.WaterSourceReport;
 import model.WaterType;
 import java.sql.Timestamp;
 import java.net.URL;
@@ -17,7 +18,7 @@ import java.util.ResourceBundle;
  * Created by Sheng on 9/19/16.
  * A controller for the app view
  */
-public class ReportViewController implements Initializable {
+public class WSRViewController implements Initializable {
 
     @FXML
     private Label welcome;
@@ -60,8 +61,7 @@ public class ReportViewController implements Initializable {
      */
     public void setApp(Main application){
         this.application = application;
-
-        username.setText("" + application.getLoggedAccount());
+       // username.setText("" + application.getLoggedAccount());
     }
 
     /**
@@ -81,8 +81,8 @@ public class ReportViewController implements Initializable {
     /**
      * Setter of date created.
      */
-    public void setDateCreated(Timestamp date) {
-        dateCreated.setText("" + date);
+    public void setDateCreated(String date) {
+        dateCreated.setText(date);
     }
 
     /**
@@ -114,10 +114,6 @@ public class ReportViewController implements Initializable {
         waterCondition.setText("" + condition);
     }
 
-
-    @FXML
-    private void menuPressed(){
-    }
 
     /**
      * Go to application when pressed.

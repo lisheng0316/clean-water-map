@@ -65,10 +65,16 @@ public class WorkerAppController extends UserAppController implements Initializa
     private ComboBox<String> reportType;
 
     @FXML
-    private ListView<WaterSourceReport> reportListView;
+    private ListView<WaterSourceReport> sourceReportListView;
+    @FXML
+    private Tab srTab;
+    @FXML
+    private Tab prTab;
+    @FXML
+    private ListView<WaterPurityReport> purityReportListView;
 
-    private ObservableList<WaterSourceReport> waterReportList;
-
+    private ObservableList<WaterSourceReport> waterSourceReportList;
+    private ObservableList<WaterPurityReport> waterPurityReportList;
     private List<WaterSourceReport> wsrArrayList;
     private List<WaterPurityReport> wprArrayList;
 
@@ -100,7 +106,7 @@ public class WorkerAppController extends UserAppController implements Initializa
         pullReport();
 
         //listener for Listview, check if item selected;
-        reportListView.getSelectionModel().selectedItemProperty().addListener(
+        sourceReportListView.getSelectionModel().selectedItemProperty().addListener(
                 (ObservableValue<? extends WaterSourceReport> ov, WaterSourceReport oldSelectedItem,
                  WaterSourceReport selectedItem) -> {
                     if (selectedItem != null) {
@@ -108,6 +114,14 @@ public class WorkerAppController extends UserAppController implements Initializa
                     }
                 });
 
+
+        purityReportListView.getSelectionModel().selectedItemProperty().addListener(
+                (ObservableValue<? extends WaterPurityReport> ov, WaterPurityReport oldSelectedItem,
+                 WaterPurityReport selectedItem) -> {
+                    if (selectedItem != null) {
+                        displayPinFromList(selectedItem);
+                    }
+                });
         alert = new Alert(Alert.AlertType.CONFIRMATION);
     }
 
@@ -116,7 +130,9 @@ public class WorkerAppController extends UserAppController implements Initializa
     public void mapInitialized() {
         Database db = Database.getDatabase();
         wsrArrayList = db.getWaterSourceReports();
-        System.out.println(wsrArrayList.toString());
+        wprArrayList = db.getWaterPurityReports();
+        System.out.println("wsrlist :" + wsrArrayList.toString());
+        System.out.println("wprlist :" + wprArrayList.toString());
 
         WaterSourceReport wsr = wsrArrayList.get(0);
         double longitude = wsr.getLongitude();
@@ -175,6 +191,43 @@ public class WorkerAppController extends UserAppController implements Initializa
             map.addMarker(marker);
 
         }
+
+        for (WaterPurityReport wpr: wprArrayList) {
+            MarkerOptions markerOptions = new MarkerOptions();
+            LatLong loc = new LatLong(wpr.getLatitude(), wpr.getLongitude());
+
+            markerOptions.position(loc)
+                    .visible(Boolean.TRUE)
+                    .title(wpr.toString());
+
+            Marker marker = new Marker(markerOptions);
+
+            map.addUIEventHandler(marker,
+                    UIEventType.click,
+                    (JSObject obj) -> {
+                        InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
+                        infoWindowOptions.content("<h2>" + wpr.toString() + "</h2>"
+                                + "Reporter: " + wpr.getUser()
+                                + "<br>Location: " + wpr.getLatitude() + ", " + wpr.getLongitude()
+                                + "<br>Type: " + wpr.getType()
+                                + "<br>Condition: " + wpr.getCondition()
+                                + "<br>Date: " + wpr.getDate()
+                                + "<br>VirusPPM: " + wpr.getVirusPPM()
+                                + "<br>ContaminantPPM: " + wpr.getContaminantPPM());
+
+                        InfoWindow window = new InfoWindow(infoWindowOptions);
+                        window.open(map, marker);
+                        latitude.setText("" + wpr.getLatitude());
+                        longitude.setText("" + wpr.getLongitude());
+
+
+                    });
+
+            map.addMarker(marker);
+
+        }
+
+
     }
 
 
@@ -211,23 +264,37 @@ public class WorkerAppController extends UserAppController implements Initializa
      * Helper method to auto focus on last added item on report list.
      */
     private void focusItem() {
-        int index = waterReportList.size() - 1;
-        reportListView.scrollTo(index);
-        reportListView.getFocusModel().focus(index);
-        reportListView.getSelectionModel().select(index);
+        int indexWSR = waterSourceReportList.size() - 1;
+        sourceReportListView.scrollTo(indexWSR);
+        sourceReportListView.getFocusModel().focus(indexWSR);
+        sourceReportListView.getSelectionModel().select(indexWSR);
+
+
+        int indexWPR = waterPurityReportList.size() - 1;
+        purityReportListView.scrollTo(indexWPR);
+        purityReportListView.getFocusModel().focus(indexWPR);
+        purityReportListView.getSelectionModel().select(indexWPR);
     }
 
     /**
      * Helper method to added report from database to report List.
      */
     private void pullReport() {
-        waterReportList = FXCollections.observableArrayList();
+        waterSourceReportList = FXCollections.observableArrayList();
         wsrArrayList = Database.getWaterSourceReports();
         for (WaterSourceReport e : wsrArrayList) {
-            waterReportList.add(e);
+            waterSourceReportList.add(e);
         }
 
-        reportListView.setItems(waterReportList);
+        sourceReportListView.setItems(waterSourceReportList);
+
+        waterPurityReportList = FXCollections.observableArrayList();
+        wprArrayList = Database.getWaterPurityReports();
+        for (WaterPurityReport e : wprArrayList) {
+            waterPurityReportList.add(e);
+        }
+
+        purityReportListView.setItems(waterPurityReportList);
         focusItem();
     }
     /**
@@ -387,6 +454,32 @@ public class WorkerAppController extends UserAppController implements Initializa
             reportForm.setMaxWidth(200);
             reportExpand = false;
         }
+    }
+
+
+    /**
+     * Go to worker's water source report page.
+     */
+    @FXML
+    private void viewPressed() {
+        WaterSourceReport wsr
+                = sourceReportListView.getSelectionModel().getSelectedItem();
+        WaterPurityReport wpr
+                = purityReportListView.getSelectionModel().getSelectedItem();
+
+        if (wsr == null) {
+            alert.setTitle("ERROR");
+            alert.setContentText(
+                    "Please select the report to view!");
+            alert.showAndWait();
+        } else if (srTab.isSelected()) {
+            application.gotoWSR(wsr);
+        } else if (prTab.isSelected()) {
+            application.gotoWPR(wpr);
+        }
+
+
+
     }
 
 

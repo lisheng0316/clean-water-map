@@ -4,8 +4,8 @@ package model;
  * Created by Bang on 10/25/16.
  */
 public class WaterPurityReport extends WaterSourceReport {
-    private String virusPPM;
-    private String contaminantPPM;
+    private double virusPPM;
+    private double contaminantPPM;
 
     /**
      * Create water purity report
@@ -25,8 +25,8 @@ public class WaterPurityReport extends WaterSourceReport {
                              WaterType type,
                              WaterCondition condition,
                              String date,
-                             String contaminantPPM,
-                             String virusPPM ) {
+                             double contaminantPPM,
+                             double virusPPM ) {
         super(reportNumber, user, latitude, longitude, type, condition, date);
         this.virusPPM = virusPPM;
         this.contaminantPPM = contaminantPPM;
@@ -37,14 +37,25 @@ public class WaterPurityReport extends WaterSourceReport {
      * Get the virus PPM
      * @return the virus PPM
      */
-    public String getVirusPPM() {
+    public double getVirusPPM() {
         return virusPPM;
     }
     /**
      * Get the contaminant PPM
      * @return the contaminant PPM
      */
-    public String getContaminantPPM() {
+    public double getContaminantPPM() {
         return contaminantPPM;
     }
+
+    /**
+     * a method to get string representation of report title
+     * @return the report title
+     */
+    @Override
+    public String toString(){
+        return "[Purity Report " + this.getReportNumber()+ "] "
+                + this.getUser() + " " + this.getDate();
+
+    };
 }

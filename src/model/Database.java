@@ -362,8 +362,8 @@ public class Database {
                 String type = rs.getString("WaterType");
                 String condition = rs.getString("WaterCondition");
                 String date = rs.getString("Date");
-                String contaminantPPM = rs.getString("ContaminantPPM");
-                String virusPPM = rs.getString("VirusPPM");
+                Double contaminantPPM = rs.getDouble("ContaminantPPM");
+                Double virusPPM = rs.getDouble("VirusPPM");
                 WaterPurityReport report;
                 report = new WaterPurityReport(reportNumber,
                         username, latitude, longitude,

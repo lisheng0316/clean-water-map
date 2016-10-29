@@ -22,6 +22,8 @@ import java.util.logging.Logger;
 import javafx.stage.Modality;
 import model.AccountType;
 import model.Database;
+import model.WaterPurityReport;
+import model.WaterSourceReport;
 
 import java.io.IOException;
 
@@ -39,7 +41,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        Database db = new Database();
+        Database db = Database.getDatabase();
         db.connectToDatabase();
 
         try {
@@ -152,6 +154,49 @@ public class Main extends Application {
             gotoUserApp();
         } else if (loggedAccount.getType() == AccountType.Worker) {
             gotoWorkerApp();
+        }
+    }
+
+
+    /**
+     * a method to send the app to the water source report page
+     */
+    public void gotoWSR(WaterSourceReport wsr) {
+        try {
+            WSRViewController wsrView = (WSRViewController) replaceSceneContent("/view/WaterSourceReportView.fxml");
+            wsrView.setApp(this);
+            wsrView.setReportNumber(wsr.getReportNumber());
+            wsrView.setReporter(wsr.getUser());
+            wsrView.setLongitude(wsr.getLongitude());
+            wsrView.setLatitude(wsr.getLatitude());
+            wsrView.setWaterType(wsr.getType());
+            wsrView.setWaterCondition(wsr.getCondition());
+            wsrView.setDateCreated(wsr.getDate());
+
+        } catch (Exception ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+
+    /**
+     * a method to send the app to the water source report page
+     */
+    public void gotoWPR(WaterPurityReport wpr) {
+        try {
+            WPRWorkViewController wprWorkView = (WPRWorkViewController) replaceSceneContent("/view/WaterPurityReportWorkerView.fxml");
+            wprWorkView.setApp(this);
+            wprWorkView.setReportNumber(wpr.getReportNumber());
+            wprWorkView.setReporter(wpr.getUser());
+            wprWorkView.setLongitude(wpr.getLongitude());
+            wprWorkView.setLatitude(wpr.getLatitude());
+            wprWorkView.setWaterType(wpr.getType());
+            wprWorkView.setWaterCondition(wpr.getCondition());
+            wprWorkView.setDateCreated(wpr.getDate());
+            wprWorkView.setVirusPPM(wpr.getVirusPPM());
+            wprWorkView.setContaminantPPM(wpr.getContaminantPPM());
+        } catch (Exception ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     /**
