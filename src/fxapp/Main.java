@@ -103,7 +103,7 @@ public class Main extends Application {
     }
 
     /**
-     * a method to send the app to the map page
+     * a method to send the app to the worker's map page
      */
     public void gotoWorkerApp() {
         try {
@@ -115,7 +115,7 @@ public class Main extends Application {
     }
 
     /**
-     * a method to send the app to the map page
+     * a method to send the app to the user's map page
      */
     public void gotoUserApp() {
         try {
@@ -148,7 +148,9 @@ public class Main extends Application {
         gotoApp();
         return true;
     }
-
+    /**
+     * a method to send the app to the map page
+     */
     public void gotoApp() {
         if (loggedAccount.getType() == AccountType.User) {
             gotoUserApp();

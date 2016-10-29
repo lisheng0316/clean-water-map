@@ -346,7 +346,9 @@ public class WorkerAppController extends UserAppController implements Initializa
     };
 
 
-
+    /**
+     * Cancel the submission of the report
+     */
     @FXML
     private void cancelFormPressed() {
         alert.setTitle("Form Cancellation");
