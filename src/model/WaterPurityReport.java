@@ -54,7 +54,7 @@ public class WaterPurityReport extends WaterSourceReport {
      */
     @Override
     public String toString(){
-        return "[Purity Report " + this.getReportNumber()+ "] "
+        return "[" + this.getReportNumber()+ "] "
                 + this.getUser() + " " + this.getDate();
 
     };

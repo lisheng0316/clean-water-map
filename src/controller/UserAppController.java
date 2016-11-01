@@ -166,7 +166,7 @@ public class UserAppController implements Initializable, MapComponentInitialized
                     UIEventType.click,
                     (JSObject obj) -> {
                         InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
-                        infoWindowOptions.content("<h2>" + w.toString() + "</h2>"
+                        infoWindowOptions.content("<h2> Source report #" + w.getReportNumber() + "</h2>"
                                 + "Reporter: " + w.getUser()
                                 + "<br>Location: " + w.getLatitude() + ", " + w.getLongitude()
                                 + "<br>Type: " + w.getType()

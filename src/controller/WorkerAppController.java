@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import model.*;
 import netscape.javascript.JSObject;
 
@@ -31,11 +32,17 @@ public class WorkerAppController extends UserAppController implements Initializa
     private GoogleMap map;
 
     @FXML
+    private VBox mainListViewPane;
+
+    @FXML
     private Label welcome;
     @FXML
     private Label username;
+
+    // Form related instances
+
     @FXML
-    private AnchorPane reportForm;
+    private AnchorPane reportPane;
 
     @FXML
     private TextField virusPPM;
@@ -72,7 +79,6 @@ public class WorkerAppController extends UserAppController implements Initializa
     private Tab prTab;
     @FXML
     private ListView<WaterPurityReport> purityReportListView;
-
     private ObservableList<WaterSourceReport> waterSourceReportList;
     private ObservableList<WaterPurityReport> waterPurityReportList;
     private List<WaterSourceReport> wsrArrayList;
@@ -89,7 +95,28 @@ public class WorkerAppController extends UserAppController implements Initializa
 
     private DatePicker reportDate;
 
-    //    private WebEngine engine;
+    //Main report instances
+
+    @FXML
+    private Label mainReportNumber;
+    @FXML
+    private Label mainReporter;
+    @FXML
+    private Label mainLongitude;
+    @FXML
+    private Label mainLatitude;
+    @FXML
+    private Label mainWaterType;
+    @FXML
+    private Label mainWaterCondition;
+    @FXML
+    private Label mainContaminant;
+    @FXML
+    private Label mainVirus;
+    @FXML
+    private Label mainDate;
+
+    //private WebEngine engine;
     private Main application;
     private boolean reportExpand = true;
     private static boolean isSourceReport = false;
@@ -98,7 +125,6 @@ public class WorkerAppController extends UserAppController implements Initializa
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         mapView.addMapInializedListener(this);
-
         Locale.setDefault(Locale.US);
         waterType.setItems(waterTypeList);
         waterCondition.setItems(waterConditionList);
@@ -110,7 +136,20 @@ public class WorkerAppController extends UserAppController implements Initializa
                 (ObservableValue<? extends WaterSourceReport> ov, WaterSourceReport oldSelectedItem,
                  WaterSourceReport selectedItem) -> {
                     if (selectedItem != null) {
-                        displayPinFromList(selectedItem);
+                        if (mapView.isDisable()) {
+                            mainReportNumber.setText(selectedItem.getReportNumber() + "");
+                            mainReporter.setText(selectedItem.getUser());
+                            mainLongitude.setText(selectedItem.getLongitude() + "");
+                            mainLatitude.setText(selectedItem.getLatitude() + "");
+                            mainWaterType.setText(selectedItem.getType() + "");
+                            ;
+                            mainWaterCondition.setText(selectedItem.getCondition() + "");
+                            mainContaminant.setText("N/A (Purity report only)");
+                            mainVirus.setText("N/A (Purity report only)");
+                            mainDate.setText(selectedItem.getDate());
+                        } else {
+                            displayPinFromList(selectedItem);
+                        }
                     }
                 });
 
@@ -119,7 +158,19 @@ public class WorkerAppController extends UserAppController implements Initializa
                 (ObservableValue<? extends WaterPurityReport> ov, WaterPurityReport oldSelectedItem,
                  WaterPurityReport selectedItem) -> {
                     if (selectedItem != null) {
-                        displayPinFromList(selectedItem);
+                        if (mapView.isDisable()) {
+                            mainReportNumber.setText(selectedItem.getReportNumber() + "");
+                            mainReporter.setText(selectedItem.getUser());
+                            mainLongitude.setText(selectedItem.getLongitude() + "");
+                            mainLatitude.setText(selectedItem.getLatitude() + "");
+                            mainWaterType.setText(selectedItem.getType() + "");;
+                            mainWaterCondition.setText(selectedItem.getCondition() + "");
+                            mainContaminant.setText(selectedItem.getContaminantPPM() + "");
+                            mainVirus.setText(selectedItem.getVirusPPM() + "");
+                            mainDate.setText(selectedItem.getDate());
+                        } else {
+                            displayPinFromList(selectedItem);
+                        }
                     }
                 });
         alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -131,8 +182,6 @@ public class WorkerAppController extends UserAppController implements Initializa
         Database db = Database.getDatabase();
         wsrArrayList = db.getWaterSourceReports();
         wprArrayList = db.getWaterPurityReports();
-        System.out.println("wsrlist :" + wsrArrayList.toString());
-        System.out.println("wprlist :" + wprArrayList.toString());
 
         WaterSourceReport wsr = wsrArrayList.get(0);
         double longitude = wsr.getLongitude();
@@ -174,7 +223,7 @@ public class WorkerAppController extends UserAppController implements Initializa
                     UIEventType.click,
                     (JSObject obj) -> {
                         InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
-                        infoWindowOptions.content("<h2>" + w.toString() + "</h2>"
+                        infoWindowOptions.content("<h2>Source report #" + w.getReportNumber() + "</h2>"
                                 + "Reporter: " + w.getUser()
                                 + "<br>Location: " + w.getLatitude() + ", " + w.getLongitude()
                                 + "<br>Type: " + w.getType()
@@ -206,7 +255,7 @@ public class WorkerAppController extends UserAppController implements Initializa
                     UIEventType.click,
                     (JSObject obj) -> {
                         InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
-                        infoWindowOptions.content("<h2>" + wpr.toString() + "</h2>"
+                        infoWindowOptions.content("<h2>Purity report #" + wpr.getReportNumber() + "</h2> "
                                 + "Reporter: " + wpr.getUser()
                                 + "<br>Location: " + wpr.getLatitude() + ", " + wpr.getLongitude()
                                 + "<br>Type: " + wpr.getType()
@@ -246,7 +295,7 @@ public class WorkerAppController extends UserAppController implements Initializa
         Marker marker = new Marker(markerOption);
 
         InfoWindowOptions infoWindow = new InfoWindowOptions();
-        infoWindow.content("<h2>" + report.toString() + "</h2>"
+        infoWindow.content("<h2>Source report #" + report.getReportNumber() + "</h2>"
                 + "Reporter: " + report.getUser()
                 + "<br>Location: " + report.getLatitude()
                 + ", " + report.getLongitude()
@@ -275,7 +324,7 @@ public class WorkerAppController extends UserAppController implements Initializa
         Marker marker = new Marker(markerOption);
 
         InfoWindowOptions infoWindow = new InfoWindowOptions();
-        infoWindow.content("<h2>" + report.toString() + "</h2>"
+        infoWindow.content("<h2>Purity report #" +report.getReportNumber() + "</h2>"
                 + "Reporter: " + report.getUser()
                 + "<br>Location: " + report.getLatitude()
                 + ", " + report.getLongitude()
@@ -325,6 +374,7 @@ public class WorkerAppController extends UserAppController implements Initializa
             waterPurityReportList.add(e);
         }
 
+        sourceReportListView.setItems(waterSourceReportList);
         purityReportListView.setItems(waterPurityReportList);
         focusItem();
     }
@@ -476,15 +526,15 @@ public class WorkerAppController extends UserAppController implements Initializa
         if (!reportExpand) {
             mapView.setMinWidth(800);
             mapView.setMaxWidth(800);
-            reportForm.setMinWidth(0);
-            reportForm.setMaxWidth(0);
+            reportPane.setMinWidth(0);
+            reportPane.setMaxWidth(0);
             reportExpand = true;
         }
         else {
             mapView.setMinWidth(600);
             mapView.setMaxWidth(600);
-            reportForm.setMinWidth(200);
-            reportForm.setMaxWidth(200);
+            reportPane.setMinWidth(200);
+            reportPane.setMaxWidth(200);
             reportExpand = false;
         }
     }
@@ -495,21 +545,32 @@ public class WorkerAppController extends UserAppController implements Initializa
      */
     @FXML
     private void viewPressed() {
-        WaterSourceReport wsr
-                = sourceReportListView.getSelectionModel().getSelectedItem();
-        WaterPurityReport wpr
-                = purityReportListView.getSelectionModel().getSelectedItem();
-
-        if (wsr == null) {
-            alert.setTitle("ERROR");
-            alert.setContentText(
-                    "Please select the report to view!");
-            alert.showAndWait();
-        } else if (srTab.isSelected()) {
-            application.gotoWSR(wsr);
-        } else if (prTab.isSelected()) {
-            application.gotoWPR(wpr);
+        if (!mainListViewPane.isVisible()) {
+            mapView.setVisible(false);
+            mapView.setDisable(true);
+            mainListViewPane.setVisible(true);
+            mainListViewPane.setDisable(false);
+        } else {
+            mapView.setVisible(true);
+            mapView.setDisable(false);
+            mainListViewPane.setVisible(false);
+            mainListViewPane.setDisable(true);
         }
+//        WaterSourceReport wsr
+//                = sourceReportListView.getSelectionModel().getSelectedItem();
+//        WaterPurityReport wpr
+//                = purityReportListView.getSelectionModel().getSelectedItem();
+//
+//        if (wsr == null) {
+//            alert.setTitle("ERROR");
+//            alert.setContentText(
+//                    "Please select the report to view!");
+//            alert.showAndWait();
+//        } else if (srTab.isSelected()) {
+//            application.gotoWSR(wsr);
+//        } else if (prTab.isSelected()) {
+//            application.gotoWPR(wpr);
+//        }
 
 
 
