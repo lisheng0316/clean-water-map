@@ -384,12 +384,12 @@ public class Database {
      * Connect to database.
      * @return null
      */
-    public static Database connectToDatabase(){
+    public static Database connectToDatabase() {
 
         //load jdbc driver for mysql database
         try {
             Class.forName("com.mysql.jdbc.Driver");
-        }catch(Exception e) {
+        } catch(Exception e) {
             System.out.println("Unable to load Driver");
         }
 
@@ -400,6 +400,7 @@ public class Database {
         } catch (SQLException e) {
             System.out.println("Unable to connect to database");
         }
+
         return null;
     }
 }

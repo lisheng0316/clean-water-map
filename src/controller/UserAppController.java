@@ -11,7 +11,7 @@ import com.lynden.gmapsfx.javascript.object.Marker;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 import com.lynden.gmapsfx.javascript.object.InfoWindowOptions;
 import com.lynden.gmapsfx.javascript.object.InfoWindow;
-
+import com.lynden.gmapsfx.javascript.JavascriptObject;
 
 import fxapp.Main;
 import javafx.beans.value.ObservableValue;
@@ -322,6 +322,7 @@ public class UserAppController implements Initializable, MapComponentInitialized
             }
         }
     }
+
 
     /**
      * toggle menu when pressed.

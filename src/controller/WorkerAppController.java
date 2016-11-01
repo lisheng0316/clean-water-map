@@ -234,6 +234,8 @@ public class WorkerAppController extends UserAppController implements Initializa
                         window.open(map, marker);
                         latitude.setText("" + w.getLatitude());
                         longitude.setText("" + w.getLongitude());
+                        waterType.setValue(w.getType());
+                        waterCondition.setValue(w.getCondition());
 
                     });
 
@@ -268,6 +270,9 @@ public class WorkerAppController extends UserAppController implements Initializa
                         window.open(map, marker);
                         latitude.setText("" + wpr.getLatitude());
                         longitude.setText("" + wpr.getLongitude());
+                        waterType.setValue(wpr.getType());
+                        waterCondition.setValue(wpr.getCondition());
+
 
 
                     });

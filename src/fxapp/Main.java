@@ -103,6 +103,21 @@ public class Main extends Application {
     }
 
     /**
+     * a method to send the app to the manager's map page
+     */
+    public void gotoManagerApp() {
+        try {
+            UserAppController appView = (UserAppController) replaceSceneContent("/view/ManagerAppView.fxml");
+            appView.setApp(this);
+        } catch (Exception ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+
+
+
+    /**
      * a method to send the app to the worker's map page
      */
     public void gotoWorkerApp() {
@@ -125,6 +140,7 @@ public class Main extends Application {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
 
     /**
      * a method to check if the user logged into the app
@@ -156,7 +172,10 @@ public class Main extends Application {
             gotoUserApp();
         } else if (loggedAccount.getType() == AccountType.Worker) {
             gotoWorkerApp();
+        } else if (loggedAccount.getType() == AccountType.Manager) {
+            gotoManagerApp();
         }
+
     }
 
 
