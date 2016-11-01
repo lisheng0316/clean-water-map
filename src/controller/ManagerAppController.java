@@ -4,40 +4,51 @@ import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.GoogleMap;
+import com.lynden.gmapsfx.javascript.object.InfoWindow;
+import com.lynden.gmapsfx.javascript.object.InfoWindowOptions;
 import com.lynden.gmapsfx.javascript.object.LatLong;
 import com.lynden.gmapsfx.javascript.object.MapOptions;
 import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
 import com.lynden.gmapsfx.javascript.object.Marker;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
-import com.lynden.gmapsfx.javascript.object.InfoWindowOptions;
-import com.lynden.gmapsfx.javascript.object.InfoWindow;
-import com.lynden.gmapsfx.javascript.JavascriptObject;
-
 import fxapp.Main;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import javafx.scene.layout.AnchorPane;
-import model.*;
+import model.Account;
 import model.Database;
 import model.WaterCondition;
+import model.WaterPurityReport;
+import model.WaterSourceReport;
 import model.WaterType;
 import netscape.javascript.JSObject;
 
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
+import java.util.ResourceBundle;
 
 
 /**
  * Created by Sheng on 9/19/16.
  * A controller for the app view
  */
-public class UserAppController implements Initializable, MapComponentInitializedListener  {
+public class ManagerAppController extends UserAppController implements Initializable, MapComponentInitializedListener  {
     @FXML
     private GoogleMapView mapView;
 
@@ -49,6 +60,12 @@ public class UserAppController implements Initializable, MapComponentInitialized
     private Label username;
     @FXML
     private AnchorPane reportForm;
+
+    @FXML
+    private TextField virusPPM;
+
+    @FXML
+    private TextField contaminantPPM;
 
     @FXML
     private TextField longitude;
@@ -72,12 +89,18 @@ public class UserAppController implements Initializable, MapComponentInitialized
     private ComboBox<String> reportType;
 
     @FXML
-    private ListView<WaterSourceReport> reportListView;
+    private ListView<WaterSourceReport> sourceReportListView;
+    @FXML
+    private Tab srTab;
+    @FXML
+    private Tab prTab;
+    @FXML
+    private ListView<WaterPurityReport> purityReportListView;
 
-    private ObservableList<WaterSourceReport> waterReportList;
-
-    private List<WaterSourceReport> dataArrayList;
-
+    private ObservableList<WaterSourceReport> waterSourceReportList;
+    private ObservableList<WaterPurityReport> waterPurityReportList;
+    private List<WaterSourceReport> wsrArrayList;
+    private List<WaterPurityReport> wprArrayList;
 
     private final ObservableList<WaterType> waterTypeList
             = FXCollections.observableArrayList(WaterType.values());
@@ -98,8 +121,6 @@ public class UserAppController implements Initializable, MapComponentInitialized
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-
         mapView.addMapInializedListener(this);
 
         Locale.setDefault(Locale.US);
@@ -109,7 +130,7 @@ public class UserAppController implements Initializable, MapComponentInitialized
         pullReport();
 
         //listener for Listview, check if item selected;
-        reportListView.getSelectionModel().selectedItemProperty().addListener(
+        sourceReportListView.getSelectionModel().selectedItemProperty().addListener(
                 (ObservableValue<? extends WaterSourceReport> ov, WaterSourceReport oldSelectedItem,
                  WaterSourceReport selectedItem) -> {
                     if (selectedItem != null) {
@@ -117,6 +138,14 @@ public class UserAppController implements Initializable, MapComponentInitialized
                     }
                 });
 
+
+        purityReportListView.getSelectionModel().selectedItemProperty().addListener(
+                (ObservableValue<? extends WaterPurityReport> ov, WaterPurityReport oldSelectedItem,
+                 WaterPurityReport selectedItem) -> {
+                    if (selectedItem != null) {
+                        displayPinFromList(selectedItem);
+                    }
+                });
         alert = new Alert(Alert.AlertType.CONFIRMATION);
     }
 
@@ -124,8 +153,12 @@ public class UserAppController implements Initializable, MapComponentInitialized
     @Override
     public void mapInitialized() {
         Database db = Database.getDatabase();
-        dataArrayList = db.getWaterSourceReports();
-        WaterSourceReport wsr = dataArrayList.get(0);
+        wsrArrayList = db.getWaterSourceReports();
+        wprArrayList = db.getWaterPurityReports();
+        System.out.println("wsrlist :" + wsrArrayList.toString());
+        System.out.println("wprlist :" + wprArrayList.toString());
+
+        WaterSourceReport wsr = wsrArrayList.get(0);
         double longitude = wsr.getLongitude();
         double latitude = wsr.getLatitude();
 
@@ -144,7 +177,6 @@ public class UserAppController implements Initializable, MapComponentInitialized
 
         map = mapView.createMap(options);
         displayPins();
-
     }
 
     /**
@@ -152,7 +184,7 @@ public class UserAppController implements Initializable, MapComponentInitialized
      * If a pin is clicked, an info window with location information will pop up.
      */
     private void displayPins() {
-        for (WaterSourceReport w: dataArrayList) {
+        for (WaterSourceReport w: wsrArrayList) {
             MarkerOptions markerOptions = new MarkerOptions();
             LatLong loc = new LatLong(w.getLatitude(), w.getLongitude());
 
@@ -175,16 +207,62 @@ public class UserAppController implements Initializable, MapComponentInitialized
 
                         InfoWindow window = new InfoWindow(infoWindowOptions);
                         window.open(map, marker);
+                        latitude.setText("" + w.getLatitude());
+                        longitude.setText("" + w.getLongitude());
+                        waterType.setValue(w.getType());
+                        waterCondition.setValue(w.getCondition());
+
                     });
 
             map.addMarker(marker);
 
         }
+
+        for (WaterPurityReport wpr: wprArrayList) {
+            MarkerOptions markerOptions = new MarkerOptions();
+            LatLong loc = new LatLong(wpr.getLatitude(), wpr.getLongitude());
+
+            markerOptions.position(loc)
+                    .visible(Boolean.TRUE)
+                    .title(wpr.toString());
+
+            Marker marker = new Marker(markerOptions);
+
+            map.addUIEventHandler(marker,
+                    UIEventType.click,
+                    (JSObject obj) -> {
+                        InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
+                        infoWindowOptions.content("<h2>" + wpr.toString() + "</h2>"
+                                + "Reporter: " + wpr.getUser()
+                                + "<br>Location: " + wpr.getLatitude() + ", " + wpr.getLongitude()
+                                + "<br>Type: " + wpr.getType()
+                                + "<br>Condition: " + wpr.getCondition()
+                                + "<br>Date: " + wpr.getDate()
+                                + "<br>VirusPPM: " + wpr.getVirusPPM()
+                                + "<br>ContaminantPPM: " + wpr.getContaminantPPM());
+
+                        InfoWindow window = new InfoWindow(infoWindowOptions);
+                        window.open(map, marker);
+                        latitude.setText("" + wpr.getLatitude());
+                        longitude.setText("" + wpr.getLongitude());
+                        waterType.setValue(wpr.getType());
+                        waterCondition.setValue(wpr.getCondition());
+
+
+
+                    });
+
+            map.addMarker(marker);
+
+        }
+
+
     }
+
 
     /**
      * Helper method to display pin on Map.
-     * When user select an item in report list, it will display on map.
+     * When user select an item in source report list, it will display on map.
      * @param report report to be pinned on
      */
     private void displayPinFromList(WaterSourceReport report) {
@@ -212,25 +290,71 @@ public class UserAppController implements Initializable, MapComponentInitialized
     }
 
     /**
+     * Helper method to display pin on Map.
+     * When user select an item in purity report list, it will display on map.
+     * @param report report to be pinned on
+     */
+    private void displayPinFromList(WaterPurityReport report) {
+        MarkerOptions markerOption = new MarkerOptions();
+        LatLong location = new LatLong(report.getLatitude(), report.getLongitude());
+
+        markerOption.position(location)
+                .visible(Boolean.TRUE)
+                .title(report.toString());
+        Marker marker = new Marker(markerOption);
+
+        InfoWindowOptions infoWindow = new InfoWindowOptions();
+        infoWindow.content("<h2>" + report.toString() + "</h2>"
+                + "Reporter: " + report.getUser()
+                + "<br>Location: " + report.getLatitude()
+                + ", " + report.getLongitude()
+                + "<br>Type: " + report.getType()
+                + "<br>Condition: " + report.getCondition()
+                + "<br>Date: " + report.getDate()
+                + "<br>VirusPPM: " + report.getVirusPPM()
+                + "<br>ContaminantPPM: " + report.getContaminantPPM());
+
+        InfoWindow itemWindow = new InfoWindow(infoWindow);
+        itemWindow.setPosition(location);
+        itemWindow.open(map, marker);
+        map.addMarker(marker);
+    }
+
+    /**
      * Helper method to auto focus on last added item on report list.
      */
     private void focusItem() {
-        int index = waterReportList.size() - 1;
-        reportListView.scrollTo(index);
-        reportListView.getFocusModel().focus(index);
-        reportListView.getSelectionModel().select(index);
+        int indexWSR = waterSourceReportList.size() - 1;
+        sourceReportListView.scrollTo(indexWSR);
+        sourceReportListView.getFocusModel().focus(indexWSR);
+        sourceReportListView.getSelectionModel().select(indexWSR);
+
+
+        int indexWPR = waterPurityReportList.size() - 1;
+        purityReportListView.scrollTo(indexWPR);
+        purityReportListView.getFocusModel().focus(indexWPR);
+        purityReportListView.getSelectionModel().select(indexWPR);
     }
 
     /**
      * Helper method to added report from database to report List.
      */
     private void pullReport() {
-        waterReportList = FXCollections.observableArrayList();
-        dataArrayList = Database.getWaterSourceReports();
-        for (WaterSourceReport e : dataArrayList) {
-            waterReportList.add(e);
+        waterSourceReportList = FXCollections.observableArrayList();
+        wsrArrayList = Database.getWaterSourceReports();
+        for (WaterSourceReport e : wsrArrayList) {
+            waterSourceReportList.add(e);
         }
-        reportListView.setItems(waterReportList);
+
+        sourceReportListView.setItems(waterSourceReportList);
+
+        waterPurityReportList = FXCollections.observableArrayList();
+        wprArrayList = Database.getWaterPurityReports();
+        for (WaterPurityReport e : wprArrayList) {
+            waterPurityReportList.add(e);
+        }
+
+        purityReportListView.setItems(waterPurityReportList);
         focusItem();
     }
     /**
@@ -243,7 +367,7 @@ public class UserAppController implements Initializable, MapComponentInitialized
     }
 
     /**
-     * Go to user's profile page.
+     * Activates the username is pressed
      */
     @FXML
     private void usernamePressed() {
@@ -254,7 +378,6 @@ public class UserAppController implements Initializable, MapComponentInitialized
     /**
      * Cancel the submission of the report
      */
-
     @FXML
     private void cancelFormPressed() {
         alert.setTitle("Form Cancellation");
@@ -268,14 +391,31 @@ public class UserAppController implements Initializable, MapComponentInitialized
     }
 
     /**
-     * Reset form. Removed any filled text area.
+     * Helper method to reset form when cancel  is clicked.
      */
     private void resetForm() {
+        reportType.setValue("Report Type");
         waterCondition.setValue(null);
-        waterType.setValue(null);
+        contaminantPPM.clear();
+        virusPPM.clear();
         longitude.clear();
         latitude.clear();
     }
+
+    /**
+     * Disable options between source and purity report when one of both is clicked.
+     */
+    @FXML
+    private void reportTypeSelected() {
+        if (reportType.getValue().equals("Source report")) {
+            isSourceReport = true;
+        } else if (reportType.getValue().equals("Purity report")) {
+            isSourceReport = false;
+        }
+        virusPPM.setDisable(isSourceReport);
+        contaminantPPM.setDisable(isSourceReport);
+    }
+
 
     /**
      * Submit a source report form.
@@ -283,7 +423,8 @@ public class UserAppController implements Initializable, MapComponentInitialized
      */
     @FXML
     private void submitFormPressed() {
-        if (latitude.getText() == null
+        if (reportType.getValue() == null
+                || latitude.getText() == null
                 || longitude.getText() == null
                 || waterType.getValue() == null
                 || waterCondition.getValue() == null) {
@@ -308,12 +449,21 @@ public class UserAppController implements Initializable, MapComponentInitialized
                 SimpleDateFormat timeFormatter = new SimpleDateFormat("h:mm a");
                 String date = timeFormatter.format(tempDate) + " on " + dateFormatter.format(tempDate);
 
-                Database.addWaterSourceReport(loggedAccount.getId(),
-                        latitude.getText(),
-                        longitude.getText(),
-                        waterType.getValue(),
-                        waterCondition.getValue(),
-                        date);
+                if (reportType.getValue().equals("Source report")) {
+                    Database.addWaterSourceReport(loggedAccount.getId(),
+                            latitude.getText(),
+                            longitude.getText(),
+                            waterType.getValue(),
+                            waterCondition.getValue(),
+                            date);
+                } else {
+                    Database.addWaterPurityReport(loggedAccount.getId(),
+                            latitude.getText(),
+                            longitude.getText(),
+                            waterType.getValue(),
+                            waterCondition.getValue(),
+                            date, contaminantPPM.getText(), virusPPM.getText());
+                }
                 pullReport();
                 resetForm();
                 formCollapse.setExpanded(false);
@@ -368,49 +518,30 @@ public class UserAppController implements Initializable, MapComponentInitialized
         }
     }
 
-    /**
-     * Disable options between source and purity report when one of both is clicked.
-     */
-    @FXML
-    private void reportTypeSelected() {
-        if (reportType.getValue().equals("Source report")) {
-            isSourceReport = true;
-        } else if (reportType.getValue().equals("Purity report")) {
-            isSourceReport = false;
-        }
-        waterType.setDisable(!isSourceReport);
-    }
-    /**
-     * Collapse other expandable when this tap is pressed.
-     */
-    @FXML
-    private void newReportPressed() {
-        reportCollapse.setExpanded(false);
-    }
-    /**
-     * Collapse other expandable when this tap is pressed.
-     */
-    @FXML
-    private void viewReportPressed() {
-        formCollapse.setExpanded(false);
-    }
-
 
     /**
-     * Go to user's water source report page.
+     * Go to worker's water source report page.
      */
     @FXML
     private void viewPressed() {
         WaterSourceReport wsr
-                = reportListView.getSelectionModel().getSelectedItem();
+                = sourceReportListView.getSelectionModel().getSelectedItem();
+        WaterPurityReport wpr
+                = purityReportListView.getSelectionModel().getSelectedItem();
+
         if (wsr == null) {
             alert.setTitle("ERROR");
             alert.setContentText(
                     "Please select the report to view!");
             alert.showAndWait();
-        } else {
+        } else if (srTab.isSelected()) {
             application.gotoWSR(wsr);
+        } else if (prTab.isSelected()) {
+            application.gotoWPR(wpr);
         }
+
+
+
     }
 
 
