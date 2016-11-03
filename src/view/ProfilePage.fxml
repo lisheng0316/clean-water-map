@@ -119,7 +119,7 @@
             <HBox alignment="TOP_CENTER" prefHeight="28.0" prefWidth="660.0" spacing="10.0">
                <children>
                   <Button fx:id="backToReg" mnemonicParsing="false" onAction="#backToRegPressed" prefHeight="26.0" prefWidth="90.0" text="Back" />
-                  <Button mnemonicParsing="false" onAction="#savePressed" prefHeight="26.0" prefWidth="90.0" text="Save" />
+                  <Button fx:id ="save" mnemonicParsing="false" onAction="#savePressed" prefHeight="26.0" prefWidth="90.0" text="Save" />
                </children>
             </HBox>
             <Label fx:id="message" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="662.0" text="Profile updated" textFill="#d32020" visible="false">

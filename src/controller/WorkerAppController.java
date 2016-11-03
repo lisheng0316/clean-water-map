@@ -550,6 +550,7 @@ public class WorkerAppController extends UserAppController implements Initializa
      */
     @FXML
     private void viewPressed() {
+
         if (!mainListViewPane.isVisible()) {
             mapView.setVisible(false);
             mapView.setDisable(true);
@@ -561,10 +562,10 @@ public class WorkerAppController extends UserAppController implements Initializa
             mainListViewPane.setVisible(false);
             mainListViewPane.setDisable(true);
         }
-//        WaterSourceReport wsr
-//                = sourceReportListView.getSelectionModel().getSelectedItem();
-//        WaterPurityReport wpr
-//                = purityReportListView.getSelectionModel().getSelectedItem();
+        WaterSourceReport wsr
+                = sourceReportListView.getSelectionModel().getSelectedItem();
+        WaterPurityReport wpr
+                = purityReportListView.getSelectionModel().getSelectedItem();
 //
 //        if (wsr == null) {
 //            alert.setTitle("ERROR");

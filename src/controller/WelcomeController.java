@@ -45,7 +45,7 @@ public class WelcomeController extends AnchorPane implements Initializable {
     @FXML
     private void registrationPressed() {
             application.gotoRegistration();
-        }
+    }
 
     /**
      * called when the user closes
