@@ -36,11 +36,7 @@ public class HistoricalReportController implements Initializable {
     private ObservableList<String> monthNames = FXCollections.observableArrayList();
 
     private List<WaterPurityReport> waterPurityReportList = new ArrayList<>();
-
-    private int virusPPMclick = 1;
-
-    private int contaminantPPMclick = 1;
-
+    
     private XYChart.Series<String, Double> virusSeries;
 
     private XYChart.Series<String, Double> contaminantSeries;
@@ -103,7 +99,6 @@ public class HistoricalReportController implements Initializable {
 
 
     private void virusPPM() {
-        if (virusPPMclick % 2 != 0) {
             double[] monthCounter = new double[12];
             int[] eachMonthTotalReports = new int[12];
             for (WaterPurityReport p : waterPurityReportList) {
@@ -124,10 +119,6 @@ public class HistoricalReportController implements Initializable {
             virusSeries = createMonthDataSeries(averages);
             virusSeries.setName("VirusPPM");
             lineChart.getData().add(virusSeries);
-        } else {
-            lineChart.getData().remove(virusSeries);
-        }
-        virusPPMclick++;
     }
 
     /**
@@ -143,7 +134,6 @@ public class HistoricalReportController implements Initializable {
     }
 
     private void contaminantPPM() {
-        if (contaminantPPMclick % 2 != 0) {
             double[] monthCounter = new double[12];
             int[] eachMonthTotalReports = new int[12];
             for (WaterPurityReport p : waterPurityReportList) {
@@ -158,15 +148,8 @@ public class HistoricalReportController implements Initializable {
                     averages[i] = monthCounter[i] / eachMonthTotalReports[i];
                 }
             }
-
             contaminantSeries = createMonthDataSeries(averages);
             contaminantSeries.setName("ContaminantPPM");
-
-            lineChart.getData().add(contaminantSeries);
-        } else {
-            lineChart.getData().remove(contaminantSeries);
-        }
-        contaminantPPMclick++;
     }
 
     /**
