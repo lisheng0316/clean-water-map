@@ -79,6 +79,18 @@ public class Main extends Application {
     }
 
     /**
+     * a method to send the app to the welcome screen
+     */
+    public void gotoHistoricalReport(WaterPurityReport wpr) {
+        try {
+            HistoricalReportController controller = (HistoricalReportController) replaceSceneContent("/view/HistoricalReport.fxml");
+            controller.setApp(this, wpr);
+        } catch (Exception ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
      * a method to send the app to the registration page
      */
     public void gotoRegistration() {

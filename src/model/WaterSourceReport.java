@@ -114,7 +114,7 @@ public class WaterSourceReport implements Serializable {
      * @return the report title
      */
     public String toString(){
-        return "[Source Report " + this.getReportNumber()+ "] " + this.getUser() + " " + this.getDate();
+        return ""+ this.getReportNumber();
 
     };
 }

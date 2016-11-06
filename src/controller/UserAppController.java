@@ -197,7 +197,7 @@ public class UserAppController implements Initializable, MapComponentInitialized
         Marker marker = new Marker(markerOption);
 
         InfoWindowOptions infoWindow = new InfoWindowOptions();
-        infoWindow.content("<h2>" + report.toString() + "</h2>"
+        infoWindow.content("<h2>Source report #" + report.getReportNumber() + "</h2>"
                 + "Reporter: " + report.getUser()
                 + "<br>Location: " + report.getLatitude()
                 + ", " + report.getLongitude()
@@ -358,8 +358,7 @@ public class UserAppController implements Initializable, MapComponentInitialized
             reportForm.setMinWidth(0);
             reportForm.setMaxWidth(0);
             reportExpand = true;
-        }
-        else {
+        } else {
             mapView.setMinWidth(600);
             mapView.setMaxWidth(600);
             reportForm.setMinWidth(200);
@@ -412,6 +411,4 @@ public class UserAppController implements Initializable, MapComponentInitialized
             application.gotoWSR(wsr);
         }
     }
-
-
 }

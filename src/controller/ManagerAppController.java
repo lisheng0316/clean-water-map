@@ -3,45 +3,22 @@ package controller;
 import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
-import com.lynden.gmapsfx.javascript.object.GoogleMap;
-import com.lynden.gmapsfx.javascript.object.InfoWindow;
-import com.lynden.gmapsfx.javascript.object.InfoWindowOptions;
-import com.lynden.gmapsfx.javascript.object.LatLong;
-import com.lynden.gmapsfx.javascript.object.MapOptions;
-import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
-import com.lynden.gmapsfx.javascript.object.Marker;
-import com.lynden.gmapsfx.javascript.object.MarkerOptions;
+import com.lynden.gmapsfx.javascript.object.*;
 import fxapp.Main;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TitledPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import model.Account;
-import model.Database;
-import model.WaterCondition;
-import model.WaterPurityReport;
-import model.WaterSourceReport;
-import model.WaterType;
+import javafx.scene.layout.VBox;
+import model.*;
 import netscape.javascript.JSObject;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 
 
 /**
@@ -55,11 +32,17 @@ public class ManagerAppController extends UserAppController implements Initializ
     private GoogleMap map;
 
     @FXML
+    private VBox mainListViewPane;
+
+    @FXML
     private Label welcome;
     @FXML
     private Label username;
+
+    // Form related instances
+
     @FXML
-    private AnchorPane reportForm;
+    private AnchorPane reportPane;
 
     @FXML
     private TextField virusPPM;
@@ -96,7 +79,6 @@ public class ManagerAppController extends UserAppController implements Initializ
     private Tab prTab;
     @FXML
     private ListView<WaterPurityReport> purityReportListView;
-
     private ObservableList<WaterSourceReport> waterSourceReportList;
     private ObservableList<WaterPurityReport> waterPurityReportList;
     private List<WaterSourceReport> wsrArrayList;
@@ -113,7 +95,28 @@ public class ManagerAppController extends UserAppController implements Initializ
 
     private DatePicker reportDate;
 
-    //    private WebEngine engine;
+    //Main report instances
+
+    @FXML
+    private Label mainReportNumber;
+    @FXML
+    private Label mainReporter;
+    @FXML
+    private Label mainLongitude;
+    @FXML
+    private Label mainLatitude;
+    @FXML
+    private Label mainWaterType;
+    @FXML
+    private Label mainWaterCondition;
+    @FXML
+    private Label mainContaminant;
+    @FXML
+    private Label mainVirus;
+    @FXML
+    private Label mainDate;
+
+    //private WebEngine engine;
     private Main application;
     private boolean reportExpand = true;
     private static boolean isSourceReport = false;
@@ -122,7 +125,6 @@ public class ManagerAppController extends UserAppController implements Initializ
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         mapView.addMapInializedListener(this);
-
         Locale.setDefault(Locale.US);
         waterType.setItems(waterTypeList);
         waterCondition.setItems(waterConditionList);
@@ -134,7 +136,20 @@ public class ManagerAppController extends UserAppController implements Initializ
                 (ObservableValue<? extends WaterSourceReport> ov, WaterSourceReport oldSelectedItem,
                  WaterSourceReport selectedItem) -> {
                     if (selectedItem != null) {
-                        displayPinFromList(selectedItem);
+                        if (mapView.isDisable()) {
+                            mainReportNumber.setText(selectedItem.getReportNumber() + "");
+                            mainReporter.setText(selectedItem.getUser());
+                            mainLongitude.setText(selectedItem.getLongitude() + "");
+                            mainLatitude.setText(selectedItem.getLatitude() + "");
+                            mainWaterType.setText(selectedItem.getType() + "");
+                            ;
+                            mainWaterCondition.setText(selectedItem.getCondition() + "");
+                            mainContaminant.setText("N/A (Purity report only)");
+                            mainVirus.setText("N/A (Purity report only)");
+                            mainDate.setText(selectedItem.getDate());
+                        } else {
+                            displayPinFromList(selectedItem);
+                        }
                     }
                 });
 
@@ -143,7 +158,19 @@ public class ManagerAppController extends UserAppController implements Initializ
                 (ObservableValue<? extends WaterPurityReport> ov, WaterPurityReport oldSelectedItem,
                  WaterPurityReport selectedItem) -> {
                     if (selectedItem != null) {
-                        displayPinFromList(selectedItem);
+                        if (mapView.isDisable()) {
+                            mainReportNumber.setText(selectedItem.getReportNumber() + "");
+                            mainReporter.setText(selectedItem.getUser());
+                            mainLongitude.setText(selectedItem.getLongitude() + "");
+                            mainLatitude.setText(selectedItem.getLatitude() + "");
+                            mainWaterType.setText(selectedItem.getType() + "");;
+                            mainWaterCondition.setText(selectedItem.getCondition() + "");
+                            mainContaminant.setText(selectedItem.getContaminantPPM() + "");
+                            mainVirus.setText(selectedItem.getVirusPPM() + "");
+                            mainDate.setText(selectedItem.getDate());
+                        } else {
+                            displayPinFromList(selectedItem);
+                        }
                     }
                 });
         alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -155,8 +182,6 @@ public class ManagerAppController extends UserAppController implements Initializ
         Database db = Database.getDatabase();
         wsrArrayList = db.getWaterSourceReports();
         wprArrayList = db.getWaterPurityReports();
-        System.out.println("wsrlist :" + wsrArrayList.toString());
-        System.out.println("wprlist :" + wprArrayList.toString());
 
         WaterSourceReport wsr = wsrArrayList.get(0);
         double longitude = wsr.getLongitude();
@@ -198,7 +223,7 @@ public class ManagerAppController extends UserAppController implements Initializ
                     UIEventType.click,
                     (JSObject obj) -> {
                         InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
-                        infoWindowOptions.content("<h2>" + w.toString() + "</h2>"
+                        infoWindowOptions.content("<h2>Source report #" + w.getReportNumber() + "</h2>"
                                 + "Reporter: " + w.getUser()
                                 + "<br>Location: " + w.getLatitude() + ", " + w.getLongitude()
                                 + "<br>Type: " + w.getType()
@@ -232,7 +257,7 @@ public class ManagerAppController extends UserAppController implements Initializ
                     UIEventType.click,
                     (JSObject obj) -> {
                         InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
-                        infoWindowOptions.content("<h2>" + wpr.toString() + "</h2>"
+                        infoWindowOptions.content("<h2>Purity report #" + wpr.getReportNumber() + "</h2> "
                                 + "Reporter: " + wpr.getUser()
                                 + "<br>Location: " + wpr.getLatitude() + ", " + wpr.getLongitude()
                                 + "<br>Type: " + wpr.getType()
@@ -248,14 +273,10 @@ public class ManagerAppController extends UserAppController implements Initializ
                         waterType.setValue(wpr.getType());
                         waterCondition.setValue(wpr.getCondition());
 
-
-
                     });
 
             map.addMarker(marker);
-
         }
-
 
     }
 
@@ -275,7 +296,7 @@ public class ManagerAppController extends UserAppController implements Initializ
         Marker marker = new Marker(markerOption);
 
         InfoWindowOptions infoWindow = new InfoWindowOptions();
-        infoWindow.content("<h2>" + report.toString() + "</h2>"
+        infoWindow.content("<h2>Source report #" + report.getReportNumber() + "</h2>"
                 + "Reporter: " + report.getUser()
                 + "<br>Location: " + report.getLatitude()
                 + ", " + report.getLongitude()
@@ -304,7 +325,7 @@ public class ManagerAppController extends UserAppController implements Initializ
         Marker marker = new Marker(markerOption);
 
         InfoWindowOptions infoWindow = new InfoWindowOptions();
-        infoWindow.content("<h2>" + report.toString() + "</h2>"
+        infoWindow.content("<h2>Purity report #" +report.getReportNumber() + "</h2>"
                 + "Reporter: " + report.getUser()
                 + "<br>Location: " + report.getLatitude()
                 + ", " + report.getLongitude()
@@ -354,6 +375,7 @@ public class ManagerAppController extends UserAppController implements Initializ
             waterPurityReportList.add(e);
         }
 
+        sourceReportListView.setItems(waterSourceReportList);
         purityReportListView.setItems(waterPurityReportList);
         focusItem();
     }
@@ -505,15 +527,15 @@ public class ManagerAppController extends UserAppController implements Initializ
         if (!reportExpand) {
             mapView.setMinWidth(800);
             mapView.setMaxWidth(800);
-            reportForm.setMinWidth(0);
-            reportForm.setMaxWidth(0);
+            reportPane.setMinWidth(0);
+            reportPane.setMaxWidth(0);
             reportExpand = true;
         }
         else {
             mapView.setMinWidth(600);
             mapView.setMaxWidth(600);
-            reportForm.setMinWidth(200);
-            reportForm.setMaxWidth(200);
+            reportPane.setMinWidth(200);
+            reportPane.setMaxWidth(200);
             reportExpand = false;
         }
     }
@@ -524,25 +546,26 @@ public class ManagerAppController extends UserAppController implements Initializ
      */
     @FXML
     private void viewPressed() {
-        WaterSourceReport wsr
-                = sourceReportListView.getSelectionModel().getSelectedItem();
-        WaterPurityReport wpr
-                = purityReportListView.getSelectionModel().getSelectedItem();
 
-        if (wsr == null) {
-            alert.setTitle("ERROR");
-            alert.setContentText(
-                    "Please select the report to view!");
-            alert.showAndWait();
-        } else if (srTab.isSelected()) {
-            application.gotoWSR(wsr);
-        } else if (prTab.isSelected()) {
-            application.gotoWPR(wpr);
+        if (!mainListViewPane.isVisible()) {
+            mapView.setVisible(false);
+            mapView.setDisable(true);
+            mainListViewPane.setVisible(true);
+            mainListViewPane.setDisable(false);
+            sourceReportListView.getSelectionModel().select(0);
+            purityReportListView.getSelectionModel().select(0);
+        } else {
+            mapView.setVisible(true);
+            mapView.setDisable(false);
+            mainListViewPane.setVisible(false);
+            mainListViewPane.setDisable(true);
         }
-
-
-
     }
 
+    public void historyReportButtonPressed() {
+        WaterPurityReport wpr
+                = purityReportListView.getSelectionModel().getSelectedItem();
+        application.gotoHistoricalReport(wpr);
+    }
 
 }

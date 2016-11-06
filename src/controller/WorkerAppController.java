@@ -142,7 +142,6 @@ public class WorkerAppController extends UserAppController implements Initializa
                             mainLongitude.setText(selectedItem.getLongitude() + "");
                             mainLatitude.setText(selectedItem.getLatitude() + "");
                             mainWaterType.setText(selectedItem.getType() + "");
-                            ;
                             mainWaterCondition.setText(selectedItem.getCondition() + "");
                             mainContaminant.setText("N/A (Purity report only)");
                             mainVirus.setText("N/A (Purity report only)");
@@ -556,31 +555,14 @@ public class WorkerAppController extends UserAppController implements Initializa
             mapView.setDisable(true);
             mainListViewPane.setVisible(true);
             mainListViewPane.setDisable(false);
+            sourceReportListView.getSelectionModel().select(0);
+            purityReportListView.getSelectionModel().select(0);
         } else {
             mapView.setVisible(true);
             mapView.setDisable(false);
             mainListViewPane.setVisible(false);
             mainListViewPane.setDisable(true);
         }
-        WaterSourceReport wsr
-                = sourceReportListView.getSelectionModel().getSelectedItem();
-        WaterPurityReport wpr
-                = purityReportListView.getSelectionModel().getSelectedItem();
-//
-//        if (wsr == null) {
-//            alert.setTitle("ERROR");
-//            alert.setContentText(
-//                    "Please select the report to view!");
-//            alert.showAndWait();
-//        } else if (srTab.isSelected()) {
-//            application.gotoWSR(wsr);
-//        } else if (prTab.isSelected()) {
-//            application.gotoWPR(wpr);
-//        }
-
-
-
     }
-
 
 }
