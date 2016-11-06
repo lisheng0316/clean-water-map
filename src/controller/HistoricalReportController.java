@@ -36,7 +36,11 @@ public class HistoricalReportController implements Initializable {
     private ObservableList<String> monthNames = FXCollections.observableArrayList();
 
     private List<WaterPurityReport> waterPurityReportList = new ArrayList<>();
-    
+
+    private int virusPPMclick = 1;
+
+    private int contaminantPPMclick = 1;
+
     private XYChart.Series<String, Double> virusSeries;
 
     private XYChart.Series<String, Double> contaminantSeries;
@@ -74,7 +78,8 @@ public class HistoricalReportController implements Initializable {
         XYChart.Series<String,Double> series = new XYChart.Series<String,Double>();
 
         for (int i = 0; i < monthCounter.length; i++) {
-            XYChart.Data<String, Double> monthData = new XYChart.Data<String,Double>(monthNames.get(i), monthCounter[i]);
+            XYChart.Data<String, Double> monthData
+                    = new XYChart.Data<String,Double>(monthNames.get(i), monthCounter[i]);
             series.getData().add(monthData);
         }
 
@@ -102,9 +107,7 @@ public class HistoricalReportController implements Initializable {
             double[] monthCounter = new double[12];
             int[] eachMonthTotalReports = new int[12];
             for (WaterPurityReport p : waterPurityReportList) {
-                System.out.println(p.getDate());
                 int month = getMonth(p) - 1;
-                System.out.println(month);
                 monthCounter[month] += p.getVirusPPM();
                 eachMonthTotalReports[month]++;
             }
@@ -117,7 +120,7 @@ public class HistoricalReportController implements Initializable {
             }
 
             virusSeries = createMonthDataSeries(averages);
-            virusSeries.setName("VirusPPM");
+            virusSeries.setName("Virus PPM");
             lineChart.getData().add(virusSeries);
     }
 
@@ -148,8 +151,11 @@ public class HistoricalReportController implements Initializable {
                     averages[i] = monthCounter[i] / eachMonthTotalReports[i];
                 }
             }
+
             contaminantSeries = createMonthDataSeries(averages);
-            contaminantSeries.setName("ContaminantPPM");
+            contaminantSeries.setName("Contaminant PPM");
+
+            lineChart.getData().add(contaminantSeries);
     }
 
     /**
