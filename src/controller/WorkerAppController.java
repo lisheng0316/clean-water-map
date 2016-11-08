@@ -32,9 +32,6 @@ public class WorkerAppController extends UserAppController implements Initializa
     private GoogleMap map;
 
     @FXML
-    private VBox mainListViewPane;
-
-    @FXML
     private Label welcome;
     @FXML
     private Label username;
@@ -96,7 +93,8 @@ public class WorkerAppController extends UserAppController implements Initializa
     private DatePicker reportDate;
 
     //Main report instances
-
+    @FXML
+    private VBox mainListViewPane;
     @FXML
     private Label mainReportNumber;
     @FXML
@@ -470,7 +468,7 @@ public class WorkerAppController extends UserAppController implements Initializa
                 Account loggedAccount = application.getLoggedAccount();
 
                 Date tempDate = new Date();
-                SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yy");
+                SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy");
                 SimpleDateFormat timeFormatter = new SimpleDateFormat("h:mm a");
                 String date = timeFormatter.format(tempDate) + " on " + dateFormatter.format(tempDate);
 

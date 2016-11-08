@@ -467,7 +467,7 @@ public class ManagerAppController extends UserAppController implements Initializ
                 Account loggedAccount = application.getLoggedAccount();
 
                 Date tempDate = new Date();
-                SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yy");
+                SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy");
                 SimpleDateFormat timeFormatter = new SimpleDateFormat("h:mm a");
                 String date = timeFormatter.format(tempDate) + " on " + dateFormatter.format(tempDate);
 

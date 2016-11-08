@@ -24,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import model.*;
 import model.Database;
 import model.WaterCondition;
@@ -48,7 +49,7 @@ public class UserAppController implements Initializable, MapComponentInitialized
     @FXML
     private Label username;
     @FXML
-    private AnchorPane reportForm;
+    private AnchorPane reportPane;
 
     @FXML
     private TextField longitude;
@@ -72,7 +73,7 @@ public class UserAppController implements Initializable, MapComponentInitialized
     private ComboBox<String> reportType;
 
     @FXML
-    private ListView<WaterSourceReport> reportListView;
+    private ListView<WaterSourceReport> sourceReportListView;
 
     private ObservableList<WaterSourceReport> waterReportList;
 
@@ -96,6 +97,30 @@ public class UserAppController implements Initializable, MapComponentInitialized
     private static boolean isSourceReport = false;
     private static Alert alert;
 
+    //Main List View
+
+    //Main report instances
+    @FXML
+    private VBox mainListViewPane;
+    @FXML
+    private Label mainReportNumber;
+    @FXML
+    private Label mainReporter;
+    @FXML
+    private Label mainLongitude;
+    @FXML
+    private Label mainLatitude;
+    @FXML
+    private Label mainWaterType;
+    @FXML
+    private Label mainWaterCondition;
+    @FXML
+    private Label mainContaminant;
+    @FXML
+    private Label mainVirus;
+    @FXML
+    private Label mainDate;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -109,11 +134,23 @@ public class UserAppController implements Initializable, MapComponentInitialized
         pullReport();
 
         //listener for Listview, check if item selected;
-        reportListView.getSelectionModel().selectedItemProperty().addListener(
+        sourceReportListView.getSelectionModel().selectedItemProperty().addListener(
                 (ObservableValue<? extends WaterSourceReport> ov, WaterSourceReport oldSelectedItem,
                  WaterSourceReport selectedItem) -> {
                     if (selectedItem != null) {
-                        displayPinFromList(selectedItem);
+                        if (mapView.isDisable()) {
+                            mainReportNumber.setText(selectedItem.getReportNumber() + "");
+                            mainReporter.setText(selectedItem.getUser());
+                            mainLongitude.setText(selectedItem.getLongitude() + "");
+                            mainLatitude.setText(selectedItem.getLatitude() + "");
+                            mainWaterType.setText(selectedItem.getType() + "");
+                            mainWaterCondition.setText(selectedItem.getCondition() + "");
+                            mainContaminant.setText("N/A (Purity report only)");
+                            mainVirus.setText("N/A (Purity report only)");
+                            mainDate.setText(selectedItem.getDate());
+                        } else {
+                            displayPinFromList(selectedItem);
+                        }
                     }
                 });
 
@@ -216,9 +253,9 @@ public class UserAppController implements Initializable, MapComponentInitialized
      */
     private void focusItem() {
         int index = waterReportList.size() - 1;
-        reportListView.scrollTo(index);
-        reportListView.getFocusModel().focus(index);
-        reportListView.getSelectionModel().select(index);
+        sourceReportListView.scrollTo(index);
+        sourceReportListView.getFocusModel().focus(index);
+        sourceReportListView.getSelectionModel().select(index);
     }
 
     /**
@@ -230,7 +267,7 @@ public class UserAppController implements Initializable, MapComponentInitialized
         for (WaterSourceReport e : dataArrayList) {
             waterReportList.add(e);
         }
-        reportListView.setItems(waterReportList);
+        sourceReportListView.setItems(waterReportList);
         focusItem();
     }
     /**
@@ -304,7 +341,7 @@ public class UserAppController implements Initializable, MapComponentInitialized
                 Account loggedAccount = application.getLoggedAccount();
 
                 Date tempDate = new Date();
-                SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yy");
+                SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy");
                 SimpleDateFormat timeFormatter = new SimpleDateFormat("h:mm a");
                 String date = timeFormatter.format(tempDate) + " on " + dateFormatter.format(tempDate);
 
@@ -355,14 +392,14 @@ public class UserAppController implements Initializable, MapComponentInitialized
         if (!reportExpand) {
             mapView.setMinWidth(800);
             mapView.setMaxWidth(800);
-            reportForm.setMinWidth(0);
-            reportForm.setMaxWidth(0);
+            reportPane.setMinWidth(0);
+            reportPane.setMaxWidth(0);
             reportExpand = true;
         } else {
             mapView.setMinWidth(600);
             mapView.setMaxWidth(600);
-            reportForm.setMinWidth(200);
-            reportForm.setMaxWidth(200);
+            reportPane.setMinWidth(200);
+            reportPane.setMaxWidth(200);
             reportExpand = false;
         }
     }
@@ -398,17 +435,36 @@ public class UserAppController implements Initializable, MapComponentInitialized
     /**
      * Go to user's water source report page.
      */
+//    @FXML
+//    private void viewPressed() {
+//        WaterSourceReport wsr
+//                = sourceReportListView.getSelectionModel().getSelectedItem();
+//        if (wsr == null) {
+//            alert.setTitle("ERROR");
+//            alert.setContentText(
+//                    "Please select the report to view!");
+//            alert.showAndWait();
+//        } else {
+//            application.gotoWSR(wsr);
+//        }
+//    }
+    /**
+     * Go to worker's water source report page.
+     */
     @FXML
     private void viewPressed() {
-        WaterSourceReport wsr
-                = reportListView.getSelectionModel().getSelectedItem();
-        if (wsr == null) {
-            alert.setTitle("ERROR");
-            alert.setContentText(
-                    "Please select the report to view!");
-            alert.showAndWait();
+
+        if (!mainListViewPane.isVisible()) {
+            mapView.setVisible(false);
+            mapView.setDisable(true);
+            mainListViewPane.setVisible(true);
+            mainListViewPane.setDisable(false);
+            sourceReportListView.getSelectionModel().select(0);
         } else {
-            application.gotoWSR(wsr);
+            mapView.setVisible(true);
+            mapView.setDisable(false);
+            mainListViewPane.setVisible(false);
+            mainListViewPane.setDisable(true);
         }
     }
 }
