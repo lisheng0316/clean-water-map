@@ -71,7 +71,7 @@ public class ProfileController extends AnchorPane implements Initializable{
      * @param event the instance to be saved
      */
     @FXML
-    private void savePressed(ActionEvent event) {
+    private void savePressed() {
         Account loggedAccount = application.getLoggedAccount();
         String emailRegex = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)" +
                 "*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
@@ -87,8 +87,8 @@ public class ProfileController extends AnchorPane implements Initializable{
             Database.updateAccount(fname.getText(),
             lname.getText(), email.getText(),
             phone.getText(), address.getText(), loggedAccount.getId());
-            message.setVisible(true);
         }
+        message.setVisible(true);
     }
 
     /**
