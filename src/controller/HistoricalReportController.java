@@ -231,7 +231,7 @@ public class HistoricalReportController implements Initializable {
     }
 
     /**
-     * incrememnts the report for the graph
+     * increments the report for the graph
      */
     @FXML
     private void reportIncrement() {
