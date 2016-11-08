@@ -1,18 +1,15 @@
 package controller;
 
 import fxapp.Main;
-import javafx.fxml.Initializable;
-import javafx.scene.layout.AnchorPane;
+
 import java.util.ResourceBundle;
-import javafx.animation.FadeTransition;
+
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import java.net.URL;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import javafx.util.Duration;
 import model.Account;
 import model.Database;
 

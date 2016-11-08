@@ -56,5 +56,5 @@ public class WaterPurityReport extends WaterSourceReport {
     public String toString(){
         return "" + this.getReportNumber();
 
-    };
+    }
 }

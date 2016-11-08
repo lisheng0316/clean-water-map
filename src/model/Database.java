@@ -301,6 +301,8 @@ public class Database {
      * @param waterType type of water
      * @param waterCondition condition of water
      * @param date date of report
+     * @param contaminant contaminantPPM of the water
+     * @param virus virusPPM of the water
      */
 
     public static void addWaterPurityReport(String username , String latitude
