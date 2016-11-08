@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
     <children>
         <GridPane layoutY="2.0" onKeyPressed="#enterPressed" prefHeight="241.0" prefWidth="400.0">
             <columnConstraints>
@@ -29,7 +29,7 @@
             <RowConstraints maxHeight="119.0" minHeight="10.0" prefHeight="38.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <TextField fx:id="accountId" maxWidth="250.0" prefHeight="26.0" prefWidth="300.0" promptText="Username" text="Dawit" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <TextField fx:id="accountId" maxWidth="250.0" prefHeight="26.0" prefWidth="300.0" promptText="Username" text="momo" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <GridPane.margin>
                         <Insets />
                     </GridPane.margin>
@@ -39,10 +39,10 @@
                         <Insets />
                     </GridPane.margin>
                 </PasswordField>
-                <ButtonBar maxWidth="230.0" prefHeight="52.0" prefWidth="218.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                <ButtonBar maxWidth="230.0" prefHeight="52.0" prefWidth="218.0" stylesheets="@../fxapp/stylesheet.css" GridPane.columnIndex="1" GridPane.rowIndex="3">
                     <buttons>
                         <Button maxWidth="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#OKPressed" prefHeight="26.0" prefWidth="50.0" text="Sign In" translateX="-35.0" />
-                        <Button maxWidth="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#loginCancelPressed" prefWidth="50.0" text="Cancel" translateX="-35.0" />
+                        <Button maxWidth="75.0" minWidth="50.0" mnemonicParsing="false" onAction="#loginCancelPressed" prefHeight="26.0" prefWidth="50.0" text="Cancel" translateX="-35.0" />
                     </buttons>
                     <GridPane.margin>
                         <Insets />
