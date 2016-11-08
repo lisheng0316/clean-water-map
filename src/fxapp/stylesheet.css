@@ -74,3 +74,6 @@
 #menu {
     -fx-opacity: 1 ;
 }
+#historicalInfo {
+    -fx-background-color: #CCD5D9;
+}

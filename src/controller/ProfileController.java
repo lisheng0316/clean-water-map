@@ -71,22 +71,26 @@ public class ProfileController extends AnchorPane implements Initializable{
      * @param event the instance to be saved
      */
     @FXML
-    private void savePressed() {
+    private void savePressed(ActionEvent event) {
         Account loggedAccount = application.getLoggedAccount();
         String emailRegex = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)" +
                 "*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
         if (!email.getText().matches(emailRegex)) {
             message.setText("Invalid email address");
+            //message.setVisible(true);
         } else if (!email.getText().matches(emailRegex)) {
             message.setText("Invalid email address");
+            //message.setVisible(true);
         } else if (!phone.getText().matches("[0-9]+")) {
             message.setText("Please provide digit only for phone number");
+            //message.setVisible(true);
         } else {
             loggedAccount.setEmail(email.getText());
             message.setText("profile updated");
             Database.updateAccount(fname.getText(),
             lname.getText(), email.getText(),
             phone.getText(), address.getText(), loggedAccount.getId());
+            //message.setVisible(true);
         }
         message.setVisible(true);
     }

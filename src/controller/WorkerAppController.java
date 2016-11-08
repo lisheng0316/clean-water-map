@@ -32,9 +32,6 @@ public class WorkerAppController extends UserAppController implements Initializa
     private GoogleMap map;
 
     @FXML
-    private VBox mainListViewPane;
-
-    @FXML
     private Label welcome;
     @FXML
     private Label username;
@@ -96,7 +93,8 @@ public class WorkerAppController extends UserAppController implements Initializa
     private DatePicker reportDate;
 
     //Main report instances
-
+    @FXML
+    private VBox mainListViewPane;
     @FXML
     private Label mainReportNumber;
     @FXML
@@ -142,7 +140,6 @@ public class WorkerAppController extends UserAppController implements Initializa
                             mainLongitude.setText(selectedItem.getLongitude() + "");
                             mainLatitude.setText(selectedItem.getLatitude() + "");
                             mainWaterType.setText(selectedItem.getType() + "");
-                            ;
                             mainWaterCondition.setText(selectedItem.getCondition() + "");
                             mainContaminant.setText("N/A (Purity report only)");
                             mainVirus.setText("N/A (Purity report only)");
@@ -471,7 +468,7 @@ public class WorkerAppController extends UserAppController implements Initializa
                 Account loggedAccount = application.getLoggedAccount();
 
                 Date tempDate = new Date();
-                SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yy");
+                SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy");
                 SimpleDateFormat timeFormatter = new SimpleDateFormat("h:mm a");
                 String date = timeFormatter.format(tempDate) + " on " + dateFormatter.format(tempDate);
 
@@ -556,31 +553,14 @@ public class WorkerAppController extends UserAppController implements Initializa
             mapView.setDisable(true);
             mainListViewPane.setVisible(true);
             mainListViewPane.setDisable(false);
+            sourceReportListView.getSelectionModel().select(0);
+            purityReportListView.getSelectionModel().select(0);
         } else {
             mapView.setVisible(true);
             mapView.setDisable(false);
             mainListViewPane.setVisible(false);
             mainListViewPane.setDisable(true);
         }
-        WaterSourceReport wsr
-                = sourceReportListView.getSelectionModel().getSelectedItem();
-        WaterPurityReport wpr
-                = purityReportListView.getSelectionModel().getSelectedItem();
-//
-//        if (wsr == null) {
-//            alert.setTitle("ERROR");
-//            alert.setContentText(
-//                    "Please select the report to view!");
-//            alert.showAndWait();
-//        } else if (srTab.isSelected()) {
-//            application.gotoWSR(wsr);
-//        } else if (prTab.isSelected()) {
-//            application.gotoWPR(wpr);
-//        }
-
-
-
     }
-
 
 }
