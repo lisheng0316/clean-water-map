@@ -562,6 +562,9 @@ public class ManagerAppController extends UserAppController implements Initializ
         }
     }
 
+    /**
+     * opens the graph for the history report
+     */
     public void historyReportButtonPressed() {
         WaterPurityReport wpr
                 = purityReportListView.getSelectionModel().getSelectedItem();

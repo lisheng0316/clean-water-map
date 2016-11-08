@@ -68,6 +68,10 @@ public class HistoricalReportController implements Initializable {
         graph(wpr);
     }
 
+    /**
+     * creates and displays the page for the graph
+     * @param report the report that the graph will be created off of
+     */
     private void graph(WaterPurityReport report) {
         System.out.println(report.getLatitude() + " This is in Graph()");
         setWaterPurityData(report);
@@ -95,6 +99,11 @@ public class HistoricalReportController implements Initializable {
         x.setCategories(monthNames);
     }
 
+    /**
+     * creates the graph to be displayed
+     * @param monthCounter the months that will be used as the X-coordinate of the graph
+     * @return the graph to be displayed
+     */
     private XYChart.Series<String, Double> createMonthDataSeries(double[] monthCounter) {
         XYChart.Series<String,Double> series = new XYChart.Series<String,Double>();
 
@@ -126,6 +135,9 @@ public class HistoricalReportController implements Initializable {
     }
 
 
+    /**
+     * the virus PPM for the XY graph
+     */
     private void virusPPM() {
             double[] monthCounter = new double[12];
             int[] eachMonthTotalReports = new int[12];
@@ -149,6 +161,9 @@ public class HistoricalReportController implements Initializable {
             lineChart.getData().add(virusSeries);
     }
 
+    /**
+     * the contaminant for the XY graph
+     */
     private void contaminantPPM() {
             double[] monthCounter = new double[12];
             int[] eachMonthTotalReports = new int[12];
@@ -192,6 +207,10 @@ public class HistoricalReportController implements Initializable {
         String year = dateAndTime[2];
         return year;
     }
+
+    /**
+     * increment the year for the graph
+     */
     @FXML
     private void yearIncrement() {
         int temp = Integer.parseInt(yearBox.getText());
@@ -200,6 +219,9 @@ public class HistoricalReportController implements Initializable {
         refreshChart();
     }
 
+    /**
+     * decrements the year for the graph
+     */
     @FXML
     private void yearDecrement() {
         int temp = Integer.parseInt(yearBox.getText());
@@ -208,6 +230,9 @@ public class HistoricalReportController implements Initializable {
         refreshChart();
     }
 
+    /**
+     * incrememnts the report for the graph
+     */
     @FXML
     private void reportIncrement() {
         int currentReportNumber = Integer.parseInt(reportBox.getText());
@@ -218,6 +243,10 @@ public class HistoricalReportController implements Initializable {
             refreshChart();
         }
     }
+
+    /**
+     * decrements the report for the graph
+     */
     @FXML
     private void reportDecrement() {
         int currentReportNumber = Integer.parseInt(reportBox.getText());
@@ -229,10 +258,17 @@ public class HistoricalReportController implements Initializable {
         }
     }
 
+    /**
+     * clears the graph for a fresh start
+     */
     private void clearChart() {
         lineChart.getData().remove(virusSeries);
         lineChart.getData().remove(contaminantSeries);
     }
+
+    /**
+     * updates the graph
+     */
     private void refreshChart() {
         clearChart();
         int currentReportNumber = Integer.parseInt(reportBox.getText());
@@ -246,12 +282,20 @@ public class HistoricalReportController implements Initializable {
         System.exit(0);
     }
 
+    /**
+     * sends the user back to the main page of the app
+     */
     @FXML
     private void backButtonPressed() {
         lineChart.getData().clear();
         application.gotoManagerApp();
     }
 
+    /**
+     * retrieves the report
+     * @param reportNumber the number of the specific report
+     * @return the report that coincides with te number
+     */
     private WaterPurityReport getReport(int reportNumber) {
         WaterPurityReport report = null;
         for (WaterPurityReport element : totalList) {
