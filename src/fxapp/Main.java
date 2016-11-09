@@ -172,7 +172,7 @@ public class Main extends Application {
      * @return whether or not the data was updated
      */
     public boolean registrationLogging(String userId) {
-        loggedAccount = Database.getAccount(userId);;
+        loggedAccount = Database.getAccount(userId);
         gotoApp();
         return true;
     }

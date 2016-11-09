@@ -285,7 +285,7 @@ public class UserAppController implements Initializable, MapComponentInitialized
     @FXML
     private void usernamePressed() {
         application.gotoProfile();
-    };
+    }
 
 
     /**

@@ -160,7 +160,7 @@ public class WorkerAppController extends UserAppController implements Initializa
                             mainReporter.setText(selectedItem.getUser());
                             mainLongitude.setText(selectedItem.getLongitude() + "");
                             mainLatitude.setText(selectedItem.getLatitude() + "");
-                            mainWaterType.setText(selectedItem.getType() + "");;
+                            mainWaterType.setText(selectedItem.getType() + "");
                             mainWaterCondition.setText(selectedItem.getCondition() + "");
                             mainContaminant.setText(selectedItem.getContaminantPPM() + "");
                             mainVirus.setText(selectedItem.getVirusPPM() + "");
@@ -395,7 +395,7 @@ public class WorkerAppController extends UserAppController implements Initializa
     @FXML
     private void usernamePressed() {
         application.gotoProfile();
-    };
+    }
 
 
     /**

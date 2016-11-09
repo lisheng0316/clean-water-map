@@ -257,7 +257,7 @@ public class Database {
     }
 
     /**
-     * Retreive water source report from database.
+     * Retrieve water source report from database.
      * @return list of water source report
      */
     public static List<WaterSourceReport> getWaterSourceReports() {
@@ -343,7 +343,7 @@ public class Database {
     }
 
     /**
-     * Retreive water source report from database.
+     * Retrieve water source report from database.
      * @return list of water source report
      */
     public static List<WaterPurityReport> getWaterPurityReports() {

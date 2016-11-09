@@ -142,7 +142,7 @@ public class ManagerAppController extends UserAppController implements Initializ
                             mainLongitude.setText(selectedItem.getLongitude() + "");
                             mainLatitude.setText(selectedItem.getLatitude() + "");
                             mainWaterType.setText(selectedItem.getType() + "");
-                            ;
+
                             mainWaterCondition.setText(selectedItem.getCondition() + "");
                             mainContaminant.setText("N/A (Purity report only)");
                             mainVirus.setText("N/A (Purity report only)");
@@ -163,7 +163,7 @@ public class ManagerAppController extends UserAppController implements Initializ
                             mainReporter.setText(selectedItem.getUser());
                             mainLongitude.setText(selectedItem.getLongitude() + "");
                             mainLatitude.setText(selectedItem.getLatitude() + "");
-                            mainWaterType.setText(selectedItem.getType() + "");;
+                            mainWaterType.setText(selectedItem.getType() + "");
                             mainWaterCondition.setText(selectedItem.getCondition() + "");
                             mainContaminant.setText(selectedItem.getContaminantPPM() + "");
                             mainVirus.setText(selectedItem.getVirusPPM() + "");
@@ -394,7 +394,7 @@ public class ManagerAppController extends UserAppController implements Initializ
     @FXML
     private void usernamePressed() {
         application.gotoProfile();
-    };
+    }
 
 
     /**
