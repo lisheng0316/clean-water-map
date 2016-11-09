@@ -11,64 +11,60 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="600.0" maxWidth="800.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@../fxapp/stylesheet.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HistoricalReportController">
-   <children>
-      <HBox alignment="CENTER_LEFT">
-         <children>
-            <VBox id="historicalInfo" alignment="CENTER" prefHeight="200.0" prefWidth="250.0" spacing="5.0" stylesheets="@../fxapp/stylesheet.css">
-               <children>
-                  <Label text="Report year" />
-                  <HBox alignment="CENTER" prefHeight="24.0" prefWidth="200.0" spacing="5.0">
-                     <children>
-                        <Button layoutX="457.0" mnemonicParsing="false" onAction="#yearDecrement" prefHeight="24.0" text="&lt;" />
-                        <TextField fx:id="yearBox" alignment="CENTER" prefWidth="80.0" promptText="yyyy" text="2016" />
-                        <Button mnemonicParsing="false" onAction="#yearIncrement" prefHeight="26.0" text="&gt;">
-                           <HBox.margin>
-                              <Insets bottom="2.0" />
-                           </HBox.margin>
-                        </Button>
-                     </children>
-                  </HBox>
-                  <Label text="Report number:" />
-                  <HBox fx:id="reportNumber" alignment="CENTER" layoutX="10.0" layoutY="292.0" prefHeight="24.0" prefWidth="200.0" spacing="5.0">
-                     <children>
-                        <Button layoutX="457.0" mnemonicParsing="false" onAction="#reportDecrement" prefHeight="24.0" text="&lt;" />
-                        <TextField fx:id="reportBox" alignment="CENTER" prefWidth="80.0" promptText="1" text="1" />
-                        <Button mnemonicParsing="false" onAction="#reportIncrement" prefHeight="26.0" text="&gt;">
-                           <HBox.margin>
-                              <Insets bottom="2.0" />
-                           </HBox.margin>
-                        </Button>
-                     </children>
-                  </HBox>
-                  <Label text="Latitude:" />
-                  <Label fx:id="latitude" text="Latitude" />
-                  <Label layoutX="84.0" layoutY="322.0" text="Longitude:" />
-                  <Label fx:id="longitude" text="Longitude" />
-                <Button mnemonicParsing="false" onAction="#backButtonPressed" prefHeight="26.0" prefWidth="150.0" text="Back">
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </Button>
-               </children>
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-            </VBox>
-            <VBox id="historicalContent" alignment="CENTER_LEFT" prefHeight="600.0" prefWidth="550.0" stylesheets="@../fxapp/stylesheet.css">
-               <children>
-                  <Label alignment="CENTER" prefWidth="550.0" text="Historical Report" />
-                  <LineChart fx:id="lineChart" maxWidth="500.0" title="Virus Contaminant PPM / month">
-                    <xAxis>
-                      <CategoryAxis side="BOTTOM" fx:id="x" />
-                    </xAxis>
-                    <yAxis>
-                      <NumberAxis fx:id="y" side="LEFT" />
-                    </yAxis>
-                  </LineChart>
-               </children>
-            </VBox>
-         </children>
-      </HBox>
-   </children>
+<AnchorPane maxHeight="600.0" maxWidth="800.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
+            prefWidth="800.0" stylesheets="@../fxapp/stylesheet.css" xmlns="http://javafx.com/javafx/8.0.65"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HistoricalReportController">
+    <HBox alignment="CENTER_LEFT">
+        <VBox id="historicalInfo" alignment="CENTER" prefHeight="200.0" prefWidth="250.0" spacing="5.0"
+              stylesheets="@../fxapp/stylesheet.css">
+            <HBox.margin>
+                <Insets/>
+            </HBox.margin>
+            <Label text="Report year"/>
+            <HBox alignment="CENTER" prefHeight="24.0" prefWidth="200.0" spacing="5.0">
+                <Button layoutX="457.0" mnemonicParsing="false" onAction="#yearDecrement" prefHeight="24.0"
+                        text="&lt;"/>
+                <TextField fx:id="yearBox" alignment="CENTER" prefWidth="80.0" promptText="yyyy" text="2016"/>
+                <Button mnemonicParsing="false" onAction="#yearIncrement" prefHeight="26.0" text="&gt;">
+                    <HBox.margin>
+                        <Insets bottom="2.0"/>
+                    </HBox.margin>
+                </Button>
+            </HBox>
+            <Label text="Report number:"/>
+            <HBox fx:id="reportNumber" alignment="CENTER" layoutX="10.0" layoutY="292.0" prefHeight="24.0"
+                  prefWidth="200.0" spacing="5.0">
+                <Button layoutX="457.0" mnemonicParsing="false" onAction="#reportDecrement"
+                        prefHeight="24.0" text="&lt;"/>
+                <TextField fx:id="reportBox" alignment="CENTER" prefWidth="80.0" promptText="1" text="1"/>
+                <Button mnemonicParsing="false" onAction="#reportIncrement" prefHeight="26.0" text="&gt;">
+                    <HBox.margin>
+                        <Insets bottom="2.0"/>
+                    </HBox.margin>
+                </Button>
+            </HBox>
+            <Label text="Latitude:"/>
+            <Label fx:id="latitude" text="Latitude"/>
+            <Label layoutX="84.0" layoutY="322.0" text="Longitude:"/>
+            <Label fx:id="longitude" text="Longitude"/>
+            <Button mnemonicParsing="false" onAction="#backButtonPressed" prefHeight="26.0" prefWidth="150.0"
+                    text="Back">
+                <VBox.margin>
+                    <Insets top="10.0"/>
+                </VBox.margin>
+            </Button>
+        </VBox>
+        <VBox id="historicalContent" alignment="CENTER_LEFT" prefHeight="600.0" prefWidth="550.0"
+              stylesheets="@../fxapp/stylesheet.css">
+            <Label alignment="CENTER" prefWidth="550.0" text="Historical Report"/>
+            <LineChart fx:id="lineChart" maxWidth="500.0" title="Virus Contaminant PPM / month">
+                <xAxis>
+                    <CategoryAxis side="BOTTOM" fx:id="x"/>
+                </xAxis>
+                <yAxis>
+                    <NumberAxis fx:id="y" side="LEFT"/>
+                </yAxis>
+            </LineChart>
+        </VBox>
+    </HBox>
 </AnchorPane>

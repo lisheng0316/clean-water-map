@@ -127,47 +127,47 @@ public class HistoricalReportController implements Initializable {
 
 
     private void virusPPM() {
-            double[] monthCounter = new double[12];
-            int[] eachMonthTotalReports = new int[12];
-            for (WaterPurityReport p : waterPurityReportList) {
-                if (yearBox.getText().equals(getYear(p))) {
-                    int month = getMonth(p) - 1;
-                    monthCounter[month] += p.getVirusPPM();
-                    eachMonthTotalReports[month]++;
-                }
+        double[] monthCounter = new double[12];
+        int[] eachMonthTotalReports = new int[12];
+        for (WaterPurityReport p : waterPurityReportList) {
+            if (yearBox.getText().equals(getYear(p))) {
+                int month = getMonth(p) - 1;
+                monthCounter[month] += p.getVirusPPM();
+                eachMonthTotalReports[month]++;
             }
+        }
 
-            double[] averages = new double[12];
-            for (int i = 0; i < 12; i++) {
-                if (eachMonthTotalReports[i] != 0) {
-                    averages[i] = monthCounter[i] / eachMonthTotalReports[i];
-                }
+        double[] averages = new double[12];
+        for (int i = 0; i < 12; i++) {
+            if (eachMonthTotalReports[i] != 0) {
+                averages[i] = monthCounter[i] / eachMonthTotalReports[i];
             }
+        }
 
-            virusSeries = createMonthDataSeries(averages);
-            virusSeries.setName("Virus PPM");
-            lineChart.getData().add(virusSeries);
+        virusSeries = createMonthDataSeries(averages);
+        virusSeries.setName("Virus PPM");
+        lineChart.getData().add(virusSeries);
     }
 
     private void contaminantPPM() {
-            double[] monthCounter = new double[12];
-            int[] eachMonthTotalReports = new int[12];
-            for (WaterPurityReport p : waterPurityReportList) {
-                if (yearBox.getText().equals(getYear(p))) {
-                    int month = getMonth(p) - 1;
-                    monthCounter[month] += p.getContaminantPPM();
-                    eachMonthTotalReports[month]++;
-                }
+        double[] monthCounter = new double[12];
+        int[] eachMonthTotalReports = new int[12];
+        for (WaterPurityReport p : waterPurityReportList) {
+            if (yearBox.getText().equals(getYear(p))) {
+                int month = getMonth(p) - 1;
+                monthCounter[month] += p.getContaminantPPM();
+                eachMonthTotalReports[month]++;
             }
-            double[] averages = new double[12];
-            for (int i = 0; i < 12; i++) {
-                if (eachMonthTotalReports[i] != 0) {
-                    averages[i] = monthCounter[i] / eachMonthTotalReports[i];
-                }
+        }
+        double[] averages = new double[12];
+        for (int i = 0; i < 12; i++) {
+            if (eachMonthTotalReports[i] != 0) {
+                averages[i] = monthCounter[i] / eachMonthTotalReports[i];
             }
-            contaminantSeries = createMonthDataSeries(averages);
-            contaminantSeries.setName("Contaminant PPM");
-            lineChart.getData().add(contaminantSeries);
+        }
+        contaminantSeries = createMonthDataSeries(averages);
+        contaminantSeries.setName("Contaminant PPM");
+        lineChart.getData().add(contaminantSeries);
     }
 
     /**

@@ -48,13 +48,12 @@ public class WPRWorkViewController implements Initializable {
     private Main application;
     private boolean reportExpand = true;
     private static boolean isSourceReport = false;
-    private static Alert alert;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Locale.setDefault(Locale.US);
 
-        alert = new Alert(Alert.AlertType.CONFIRMATION);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
     }
 
     /**
