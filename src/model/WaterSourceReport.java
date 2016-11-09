@@ -3,6 +3,7 @@ package model;
 import java.io.Serializable;
 
 /**
+ * Water source report class
  * Created by Bang on 10/25/16.
  */
 public class WaterSourceReport implements Serializable {
@@ -65,7 +66,7 @@ public class WaterSourceReport implements Serializable {
      * a method to get the user who made the report
      * @return the creator of the report
      */
-    public String getUser() {return user;}
+    public String getUser() { return user;}
 
 
     /**

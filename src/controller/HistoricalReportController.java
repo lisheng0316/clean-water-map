@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 /**
+ * Historical Report Controller
  * Created by Bang on 11/5/16.
  */
 public class HistoricalReportController implements Initializable {
@@ -83,11 +84,7 @@ public class HistoricalReportController implements Initializable {
         longitude.setText(report.getLongitude()+ "");
     }
 
-    /**
-     * Initialize the location and resources
-     * @param location the relative location
-     * @param resources the resources to be used
-     */
+    @Override
     public void initialize(URL location, ResourceBundle resources) {
         x.setLabel("Month");
         y.setLabel("PPM");
@@ -100,8 +97,8 @@ public class HistoricalReportController implements Initializable {
         x.setCategories(monthNames);
     }
     /**
-     * Create the monthly data for
-     * @param monthCounter month for
+     * Create the monthly data for chart
+     * @param monthCounter month counter to be
      */
     private XYChart.Series<String, Double> createMonthDataSeries(double[] monthCounter) {
         XYChart.Series<String, Double> series = new XYChart.Series<>();
