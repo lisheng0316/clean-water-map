@@ -190,8 +190,7 @@ public class HistoricalReportController implements Initializable {
     private int getMonth(WaterPurityReport report) {
         String[] dateAndTime = report.getDate().split("/");
         String[] temp = dateAndTime[0].split(" ");
-        int month = Integer.parseInt(temp[3]);
-        return month;
+        return Integer.parseInt(temp[3]);
     }
 
     /**
@@ -201,8 +200,7 @@ public class HistoricalReportController implements Initializable {
      */
     private String getYear(WaterPurityReport report) {
         String[] dateAndTime = report.getDate().split("/");
-        String year = dateAndTime[2];
-        return year;
+        return dateAndTime[2];
     }
     /**
      * increment the year

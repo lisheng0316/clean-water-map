@@ -4,7 +4,7 @@ package model;
  * Created by Sheng on 9/27/16.
  * Manager to implement the required functionality
  */
-public class Manager extends Worker {
+class Manager extends Worker {
 
     /**
      * Create new Manager

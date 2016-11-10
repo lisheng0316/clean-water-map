@@ -44,7 +44,7 @@ public class WaterSourceReport implements Serializable {
      * @param longitude longitude
      * @param date create date
      */
-    public WaterSourceReport(int reportNumber, String user, double latitude, double longitude, String date) {
+    private WaterSourceReport(int reportNumber, String user, double latitude, double longitude, String date) {
 
         this.reportNumber = reportNumber;
         this.user = user;
