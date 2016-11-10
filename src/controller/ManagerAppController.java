@@ -25,7 +25,8 @@ import java.util.*;
  * Created by Sheng on 9/19/16.
  * A controller for the app view
  */
-public class ManagerAppController extends UserAppController implements Initializable, MapComponentInitializedListener  {
+public class ManagerAppController extends UserAppController implements
+        Initializable, MapComponentInitializedListener  {
     @FXML
     private GoogleMapView mapView;
 
@@ -142,7 +143,6 @@ public class ManagerAppController extends UserAppController implements Initializ
                             mainLongitude.setText(selectedItem.getLongitude() + "");
                             mainLatitude.setText(selectedItem.getLatitude() + "");
                             mainWaterType.setText(selectedItem.getType() + "");
-
                             mainWaterCondition.setText(selectedItem.getCondition() + "");
                             mainContaminant.setText("N/A (Purity report only)");
                             mainVirus.setText("N/A (Purity report only)");
@@ -180,8 +180,8 @@ public class ManagerAppController extends UserAppController implements Initializ
     @Override
     public void mapInitialized() {
         Database db = Database.getDatabase();
-        wsrArrayList = db.getWaterSourceReports();
-        wprArrayList = db.getWaterPurityReports();
+        wsrArrayList = Database.getWaterSourceReports();
+        wprArrayList = Database.getWaterPurityReports();
 
         WaterSourceReport wsr = wsrArrayList.get(0);
         double longitude = wsr.getLongitude();
@@ -325,7 +325,7 @@ public class ManagerAppController extends UserAppController implements Initializ
         Marker marker = new Marker(markerOption);
 
         InfoWindowOptions infoWindow = new InfoWindowOptions();
-        infoWindow.content("<h2>Purity report #" +report.getReportNumber() + "</h2>"
+        infoWindow.content("<h2>Purity report #" + report.getReportNumber() + "</h2>"
                 + "Reporter: " + report.getUser()
                 + "<br>Location: " + report.getLatitude()
                 + ", " + report.getLongitude()
@@ -407,7 +407,7 @@ public class ManagerAppController extends UserAppController implements Initializ
         alert.setContentText("Hit OK to void your submission");
         Optional<ButtonType> result = alert.showAndWait();
 
-        if (result.get() == ButtonType.OK){
+        if (result.isPresent() && result.get() == ButtonType.OK){
             resetForm();
         }
     }
@@ -561,10 +561,10 @@ public class ManagerAppController extends UserAppController implements Initializ
             mainListViewPane.setDisable(true);
         }
     }
-
     /**
-     * opens the graph for the history report
+     * Go to history report page.
      */
+    @FXML
     public void historyReportButtonPressed() {
         WaterPurityReport wpr
                 = purityReportListView.getSelectionModel().getSelectedItem();

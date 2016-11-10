@@ -7,9 +7,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import model.WaterCondition;
-import model.WaterSourceReport;
 import model.WaterType;
-import java.sql.Timestamp;
+
 import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;

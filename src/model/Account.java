@@ -27,7 +27,7 @@ public class Account {
     private final StringProperty _address = new SimpleStringProperty();
     private final ObjectProperty<AccountType> _type = new SimpleObjectProperty<>();
 
-    public static final Map<String, Account> accountList = new HashMap<String, Account>();
+    public static final Map<String, Account> accountList = new HashMap<>();
 
 
     /**

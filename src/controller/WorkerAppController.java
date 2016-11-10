@@ -177,8 +177,8 @@ public class WorkerAppController extends UserAppController implements Initializa
     @Override
     public void mapInitialized() {
         Database db = Database.getDatabase();
-        wsrArrayList = db.getWaterSourceReports();
-        wprArrayList = db.getWaterPurityReports();
+        wsrArrayList = Database.getWaterSourceReports();
+        wprArrayList = Database.getWaterPurityReports();
 
         WaterSourceReport wsr = wsrArrayList.get(0);
         double longitude = wsr.getLongitude();
