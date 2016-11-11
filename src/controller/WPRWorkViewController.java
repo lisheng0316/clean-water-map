@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
  * Created by Sheng on 9/19/16.
  * A controller for the app view
  */
-public class WPRWorkViewController implements Initializable {
+class WPRWorkViewController implements Initializable {
 
     @FXML
     private Label welcome;
@@ -48,13 +48,12 @@ public class WPRWorkViewController implements Initializable {
     private Main application;
     private boolean reportExpand = true;
     private static boolean isSourceReport = false;
-    private static Alert alert;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Locale.setDefault(Locale.US);
 
-        alert = new Alert(Alert.AlertType.CONFIRMATION);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
     }
 
     /**

@@ -17,11 +17,9 @@ import java.util.Map;
  */
 public class Account {
 
-    private String address = ""; //the address of the user
-    private String phone = ""; //the phone number of the user
     private final StringProperty _id = new SimpleStringProperty();
-    private final StringProperty _fname = new SimpleStringProperty();
-    private final StringProperty _lname = new SimpleStringProperty();
+    private final StringProperty _fName = new SimpleStringProperty();
+    private final StringProperty _lName = new SimpleStringProperty();
     private final StringProperty _email = new SimpleStringProperty();
     private final StringProperty _phone = new SimpleStringProperty();
     private final StringProperty _address = new SimpleStringProperty();
@@ -46,25 +44,25 @@ public class Account {
      * a method to get the first name of the user
      * @return the first name of the user
      */
-    public String getFname() {return _fname.get();}
+    public String getFName() {return _fName.get();}
 
     /**
      * a method to set the first name of the user
-     * @param fname the first name of the user
+     * @param fName the first name of the user
      */
-    public void setFname(String fname) { _fname.set(fname); }
+    public void setFName(String fName) { _fName.set(fName); }
 
     /**
      * a method to get the last name of the User
      * @return the last name of the user
      */
-    public String getLname() {return _lname.get(); }
+    public String getLName() {return _lName.get(); }
 
     /**
      * a method to set the last name of the User
-     * @param lname the last name of the user
+     * @param lName the last name of the user
      */
-    public void setLname(String lname) { _lname.set(lname); }
+    public void setLName(String lName) { _lName.set(lName); }
 
     /**
      * a method to get the e-mail address of the user
@@ -114,15 +112,15 @@ public class Account {
     /**
      * A  the default constructor of the user
      * @param id the id
-     * @param fname  first name
-     * @param lname last name
+     * @param fName  first name
+     * @param lName last name
      * @param email email
      * @param type account type
      *
      */
-    Account(String id, String fname, String lname, String email, AccountType type) {
+    Account(String id, String fName, String lName, String email, AccountType type) {
 
-        this(id, fname, lname, email, type, "", "");
+        this(id, fName, lName, email, type, "", "");
 
     }
     /**
@@ -131,19 +129,19 @@ public class Account {
      *
      *
      * @param id the id
-     * @param fname  first name
-     * @param lname last name
+     * @param fName  first name
+     * @param lName last name
      * @param email email
      * @param type account type
      * @param phone phone
      * @param address address
      *
      */
-    public Account(String id, String fname, String lname, String email, AccountType type, String phone, String address) {
+    public Account(String id, String fName, String lName, String email, AccountType type, String phone, String address) {
 
         _id.set(id);
-        _fname.set(fname);
-        _lname.set(lname);
+        _fName.set(fName);
+        _lName.set(lName);
         _email.set(email);
         _type.set(type);
         _phone.set(phone);
@@ -194,7 +192,7 @@ public class Account {
      * @param phone the phone to set
      */
     public void setPhone(String phone) {
-        this.phone = phone;
+        String phone1 = phone;
     }
 
 
@@ -203,7 +201,7 @@ public class Account {
      * @param address the address to set
      */
     public void setAddress(String address) {
-        this.address = address;
+        String address1 = address;
     }
 
 

@@ -21,40 +21,40 @@ public class Database {
     private static PreparedStatement stmt = null;
     private static ResultSet rs = null;
 
-    private static final Database INSTANCE = new Database();
+    private static final Database instance = new Database();
 
     /**
      * Get the instance of database.
      * @return database
      */
     public static Database getDatabase() {
-        return INSTANCE;
+        return instance;
     }
 
 
     /**
      * Update information of an account to database.
-     * @param fname first name of user.
-     * @param lname last name of user.
+     * @param fName first name of user.
+     * @param lName last name of user.
      * @param email email address of user.
      * @param phone phone number of user.
      * @param address address of user.
      * @param username username of user.
      */
-    public static void updateAccount(String fname,
-                                     String lname,
+    public static void updateAccount(String fName,
+                                     String lName,
                                      String email,
                                      String phone, String address, String username) {
 
         try {
-            String sql = "UPDATE user SET fname = ?, lname = ?, email = ? , phone = ?, address = ? where username = ?";
-            stmt = connection.prepareStatement(sql);
-            stmt.setString(1, fname);
-            stmt.setString(2, lname);
-            stmt.setString(3, email);
-            stmt.setString(4, phone);
-            stmt.setString(5, address);
-            stmt.setString(6, username);
+            String SQL = "UPDATE user SET fName = ?, lName = ?, email = ? , phone = ?, address = ? where username = ?";
+            stmt = connection.prepareStatement(SQL);
+            stmt.setString (1, fName);
+            stmt.setString (2, lName);
+            stmt.setString (3, email);
+            stmt.setString (4, phone);
+            stmt.setString (5, address);
+            stmt.setString (6, username);
             stmt.executeUpdate();
         }
         catch (SQLException ex){
@@ -64,35 +64,35 @@ public class Database {
             if (rs != null) {
                 try {
                     rs.close();
-                } catch (SQLException sqlEx) { } // ignore
+                } catch (SQLException sqlEx) { System.out.println("Could not close the database"); } // ignore
             }
             if (stmt != null) {
                 try {
                     stmt.close();
-                } catch (SQLException sqlEx) { } // ignore
+                } catch (SQLException sqlEx) { System.out.println("Something wrong with the database"); } // ignore
             }
         }
     }
 
     /**
      * Obtain user Account from database
-     * @param id of user Account
+     * @param username of user Account
      * @return account of that username.
      */
-    public static Account getAccount(String id) {
+    public static Account getAccount(String username) {
         Account account = null;
 
         try {
-            String sql = "SELECT * FROM user WHERE username= ?";
-            stmt = connection.prepareStatement(sql);
-            stmt.setString(1, id);
+            String SQL = "SELECT * FROM user WHERE username= ?";
+            stmt = connection.prepareStatement(SQL);
+            stmt.setString(1,username);
             rs = stmt.executeQuery();
 
             while (rs.next())
             {
-                String username = rs.getString("username");
-                String firstName = rs.getString("fname");
-                String lastName = rs.getString("lname");
+                String username_ = rs.getString("username");
+                String firstName = rs.getString("fName");
+                String lastName = rs.getString("lName");
                 String email = rs.getString("email");
                 String type = rs.getString("type");
                 String phone = rs.getString("phone") + "";
@@ -119,10 +119,10 @@ public class Database {
 
         try {
             if (username != null && password != null) {
-                String sql = "SELECT * FROM user WHERE username= ? AND password= ?";
-                stmt = connection.prepareStatement(sql);
-                stmt.setString(1, username);
-                stmt.setString(2, password);
+                String SQL = "SELECT * FROM user WHERE username= ? AND password= ?";
+                stmt = connection.prepareStatement(SQL);
+                stmt.setString(1,username);
+                stmt.setString(2,password);
                 rs = stmt.executeQuery();
                 if (rs.next()) {
                     return true;
@@ -143,9 +143,9 @@ public class Database {
     public static boolean validateUsername(String username) {
 
         try {
-            String sql = "SELECT `username` FROM `schema`.user WHERE username = ?";
-            stmt = connection.prepareStatement(sql);
-            stmt.setString(1, username);
+            String SQL = "SELECT `username` FROM `schema`.user WHERE username = ?";
+            stmt = connection.prepareStatement(SQL);
+            stmt.setString(1,username);
             rs = stmt.executeQuery();
 
             if (!rs.next()) {
@@ -159,12 +159,12 @@ public class Database {
             if (rs != null) {
                 try {
                   rs.close();
-                } catch (SQLException sqlEx) { } // ignore
+                } catch (SQLException sqlEx) { System.out.println("Could not close the database"); } // ignore
             }
             if (stmt != null) {
                 try {
                     stmt.close();
-                } catch (SQLException sqlEx) { } // ignore
+                } catch (SQLException sqlEx) { System.out.println("Something wrong with the database"); } // ignore
             }
         }
         return false;
@@ -174,24 +174,24 @@ public class Database {
      * Added a user to user table in data base
      * @param username of user
      * @param password of user
-     * @param fname first name.
-     * @param lname last name.
+     * @param fName first name.
+     * @param lName last name.
      * @param email email address.
      * @param type type of user.
      */
-    public static void addUser(String username, String password, String fname,
-                               String lname, String email, AccountType type) {
+    public static void addUser(String username, String password, String fName
+            , String lName, String email, AccountType type) {
 
         try {
             String query = "INSERT INTO `schema`.`user` (`id`, `username`, `password`" +
-                    ", `fname`, `lname`, `email`, `type`)"
+                    ", `fName`, `lName`, `email`, `type`)"
                     + " VALUES (null, ?, ?, ?, ?, ?, ?)";
 
             stmt = connection.prepareStatement(query);
             stmt.setString (1, username);
             stmt.setString (2, password);
-            stmt.setString (3, fname);
-            stmt.setString (4, lname);
+            stmt.setString (3, fName);
+            stmt.setString (4, lName);
             stmt.setString (5, email);
             stmt.setString (6, type.toString());
             stmt.executeUpdate();
@@ -203,12 +203,12 @@ public class Database {
             if (rs != null) {
                 try {
                     rs.close();
-                } catch (SQLException sqlEx) { } // ignore
+                } catch (SQLException sqlEx) { System.out.println("Could not close the database"); } // ignore
             }
             if (stmt != null) {
                 try {
                     stmt.close();
-                } catch (SQLException sqlEx) { } // ignore
+                } catch (SQLException sqlEx) { System.out.println("Something wrong with the database"); } // ignore
             }
         }
     }
@@ -222,7 +222,7 @@ public class Database {
      * @param waterCondition condition of water
      * @param date date of report
      */
-    public static void addWaterSourceReport(String username, String latitude
+    public static void addWaterSourceReport(String username , String latitude
             , String longitude, WaterType waterType, WaterCondition waterCondition, String date) {
 
         try {
@@ -247,18 +247,18 @@ public class Database {
             if (rs != null) {
                 try {
                     rs.close();
-                } catch (SQLException sqlEx) { } // ignore
+                } catch (SQLException sqlEx) { System.out.println("Could not close the database"); } // ignore
             }
             if (stmt != null) {
                 try {
                     stmt.close();
-                } catch (SQLException sqlEx) { } // ignore
+                } catch (SQLException sqlEx) { System.out.println("Something wrong with the database"); } // ignore
             }
         }
     }
 
     /**
-     * Retreive water source report from database.
+     * Retrieve water source report from database.
      * @return list of water source report
      */
     public static List<WaterSourceReport> getWaterSourceReports() {
@@ -335,18 +335,18 @@ public class Database {
             if (rs != null) {
                 try {
                     rs.close();
-                } catch (SQLException sqlEx) { } // ignore
+                } catch (SQLException sqlEx) { System.out.println("Could not close the database"); } // ignore
             }
             if (stmt != null) {
                 try {
                     stmt.close();
-                } catch (SQLException sqlEx) { } // ignore
+                } catch (SQLException sqlEx) { System.out.println("Something wrong with the database"); } // ignore
             }
         }
     }
 
     /**
-     * Retreive water source report from database.
+     * Retrieve water source report from database.
      * @return list of water source report
      */
     public static List<WaterPurityReport> getWaterPurityReports() {
@@ -385,9 +385,8 @@ public class Database {
     }
     /**
      * Connect to database.
-     * @return null
      */
-    public static Database connectToDatabase() {
+    public static void connectToDatabase() {
 
         //load jdbc driver for mysql database
         try {
@@ -403,7 +402,5 @@ public class Database {
         } catch (SQLException e) {
             System.out.println("Unable to connect to database");
         }
-
-        return null;
     }
 }

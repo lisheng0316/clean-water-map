@@ -129,7 +129,7 @@ public class Main extends Application {
     /**
      * a method to send the app to the worker's map page
      */
-    public void gotoWorkerApp() {
+    private void gotoWorkerApp() {
         try {
             WorkerAppController appView = (WorkerAppController) replaceSceneContent("/view/WorkerAppView.fxml");
             appView.setApp(this);
@@ -141,7 +141,7 @@ public class Main extends Application {
     /**
      * a method to send the app to the user's map page
      */
-    public void gotoUserApp() {
+    private void gotoUserApp() {
         try {
             UserAppController appView = (UserAppController) replaceSceneContent("/view/UserAppView.fxml");
             appView.setApp(this);
