@@ -52,11 +52,14 @@ public class DBmethodTest {
         account = new Account(id, fname, lname, email, accountType, phone, address);
 
     }
-
+//    public static void updateAccount(String fname,
+//                                     String lname,
+//                                     String email,
+//                                     String phone, String address, String username, String password) {
     @Test
     public void testUpdateAccount() {
         setUp();
-        Database.updateAccount("Sean", "Mc", "sm@hotmail.com", "8005990232", "North Ave Dinning", id);
+        Database.updateAccount("Sean", "Mc", "sm@hotmail.com", "8005990232", "North Ave Dinning", id, "654321");
         Account newAccount = Database.getAccount(id);
 //        id = "sli471";
 //        password = "123456";
@@ -64,8 +67,8 @@ public class DBmethodTest {
 //        lname = "Li";
 //        email = "sli@gmail.com";
 
-        assertEquals(newAccount.getFname(), "Sean");
-        assertEquals(newAccount.getLname(), "Mc");
+        assertEquals(newAccount.getFName(), "Sean");
+        assertEquals(newAccount.getLName(), "Mc");
         assertEquals(newAccount.getEmail(), "sm@hotmail.com");
         assertEquals(newAccount.getPhone(), "8005990232");
         assertEquals(newAccount.getAddress(), "North Ave Dinning");
