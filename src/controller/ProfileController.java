@@ -1,20 +1,19 @@
 package controller;
 
 import fxapp.Main;
-import javafx.fxml.Initializable;
-import javafx.scene.layout.AnchorPane;
+
 import java.util.ResourceBundle;
-import javafx.animation.FadeTransition;
+
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import java.net.URL;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import javafx.util.Duration;
 import model.Account;
 import model.Database;
+
+import javax.print.attribute.standard.DateTimeAtCompleted;
 
 /**
  * Created by Sheng on 9/29/16.
@@ -27,9 +26,9 @@ public class ProfileController extends AnchorPane implements Initializable{
     @FXML
     private TextField user;
     @FXML
-    private TextField password;
+    private PasswordField password;
     @FXML
-    private TextField passwordConfirm;
+    private PasswordField passwordConfirm;
     @FXML
     private TextField fname;
     @FXML
@@ -53,6 +52,8 @@ public class ProfileController extends AnchorPane implements Initializable{
         this.application = application;
         Account loggedAccount = application.getLoggedAccount();
         accountType.setText(loggedAccount.getType().toString());
+        password.setText(Database.getPassword(loggedAccount.getId()));
+        passwordConfirm.setText(Database.getPassword(loggedAccount.getId()));
         user.setText(loggedAccount.getId());
         fname.setText(loggedAccount.getFname());
         lname.setText(loggedAccount.getLname());
@@ -77,20 +78,19 @@ public class ProfileController extends AnchorPane implements Initializable{
                 "*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
         if (!email.getText().matches(emailRegex)) {
             message.setText("Invalid email address");
-            //message.setVisible(true);
         } else if (!email.getText().matches(emailRegex)) {
             message.setText("Invalid email address");
-            //message.setVisible(true);
+        } else if (!passwordConfirm.getText().equals(password.getText())) {
+                message.setText("Invalid passwords");
         } else if (!phone.getText().matches("[0-9]+")) {
             message.setText("Please provide digit only for phone number");
-            //message.setVisible(true);
         } else {
             loggedAccount.setEmail(email.getText());
             message.setText("profile updated");
             Database.updateAccount(fname.getText(),
             lname.getText(), email.getText(),
-            phone.getText(), address.getText(), loggedAccount.getId());
-            //message.setVisible(true);
+            phone.getText(), address.getText(), loggedAccount.getId(), password.getText());
+
         }
         message.setVisible(true);
     }

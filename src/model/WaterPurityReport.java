@@ -1,6 +1,7 @@
 package model;
 
 /**
+ * Water purity report class
  * Created by Bang on 10/25/16.
  */
 public class WaterPurityReport extends WaterSourceReport {
@@ -56,5 +57,5 @@ public class WaterPurityReport extends WaterSourceReport {
     public String toString(){
         return "" + this.getReportNumber();
 
-    };
+    }
 }

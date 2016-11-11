@@ -11,7 +11,6 @@ import com.lynden.gmapsfx.javascript.object.Marker;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 import com.lynden.gmapsfx.javascript.object.InfoWindowOptions;
 import com.lynden.gmapsfx.javascript.object.InfoWindow;
-import com.lynden.gmapsfx.javascript.JavascriptObject;
 
 import fxapp.Main;
 import javafx.beans.value.ObservableValue;
@@ -26,9 +25,6 @@ import java.util.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import model.*;
-import model.Database;
-import model.WaterCondition;
-import model.WaterType;
 import netscape.javascript.JSObject;
 
 import java.net.URL;
@@ -161,7 +157,7 @@ public class UserAppController implements Initializable, MapComponentInitialized
     @Override
     public void mapInitialized() {
         Database db = Database.getDatabase();
-        dataArrayList = db.getWaterSourceReports();
+        dataArrayList = Database.getWaterSourceReports();
         WaterSourceReport wsr = dataArrayList.get(0);
         double longitude = wsr.getLongitude();
         double latitude = wsr.getLatitude();
@@ -285,7 +281,7 @@ public class UserAppController implements Initializable, MapComponentInitialized
     @FXML
     private void usernamePressed() {
         application.gotoProfile();
-    };
+    }
 
 
     /**
@@ -432,22 +428,6 @@ public class UserAppController implements Initializable, MapComponentInitialized
     }
 
 
-    /**
-     * Go to user's water source report page.
-     */
-//    @FXML
-//    private void viewPressed() {
-//        WaterSourceReport wsr
-//                = sourceReportListView.getSelectionModel().getSelectedItem();
-//        if (wsr == null) {
-//            alert.setTitle("ERROR");
-//            alert.setContentText(
-//                    "Please select the report to view!");
-//            alert.showAndWait();
-//        } else {
-//            application.gotoWSR(wsr);
-//        }
-//    }
     /**
      * Go to worker's water source report page.
      */
