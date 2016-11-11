@@ -55,8 +55,8 @@ public class ProfileController extends AnchorPane implements Initializable{
         password.setText(Database.getPassword(loggedAccount.getId()));
         passwordConfirm.setText(Database.getPassword(loggedAccount.getId()));
         user.setText(loggedAccount.getId());
-        fname.setText(loggedAccount.getFname());
-        lname.setText(loggedAccount.getLname());
+        fname.setText(loggedAccount.getFName());
+        lname.setText(loggedAccount.getLName());
         email.setText(loggedAccount.getEmail());
         phone.setText(loggedAccount.getPhone());
         if (loggedAccount.getAddress() != null) {

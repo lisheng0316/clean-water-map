@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
  * Created by Sheng on 9/19/16.
  * A controller for the app view
  */
-public class WPRWorkViewController implements Initializable {
+class WPRWorkViewController implements Initializable {
 
     @FXML
     private Label welcome;
