@@ -92,8 +92,8 @@ public class DBmethodTest {
 
         Database.addUser(id, password, fname, lname, email, accountType);
         assertEquals(db.getAccount(id).getId(), "little");
-        assertEquals(db.getAccount(id).getFname(), "Bob");
-        assertEquals(db.getAccount(id).getLname(), "Hanson");
+        assertEquals(db.getAccount(id).getFName(), "Bob");
+        assertEquals(db.getAccount(id).getLName(), "Hanson");
         assertEquals(db.getAccount(id).getEmail(), "bh@gmail.com");
 
     }

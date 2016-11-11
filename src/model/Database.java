@@ -391,7 +391,7 @@ public class Database {
         //load jdbc driver for mysql database
         try {
             Class.forName("com.mysql.jdbc.Driver");
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.out.println("Unable to load Driver");
         }
 
