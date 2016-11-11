@@ -27,7 +27,7 @@ public class Account {
     private final StringProperty _address = new SimpleStringProperty();
     private final ObjectProperty<AccountType> _type = new SimpleObjectProperty<>();
 
-    public static final Map<String, Account> accountList = new HashMap<>();
+    private static final Map<String, Account> accountList = new HashMap<>();
 
 
     /**
@@ -120,7 +120,7 @@ public class Account {
      * @param type account type
      *
      */
-    public Account(String id, String fname, String lname, String email, AccountType type) {
+    Account(String id, String fname, String lname, String email, AccountType type) {
 
         this(id, fname, lname, email, type, "", "");
 

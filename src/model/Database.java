@@ -21,14 +21,14 @@ public class Database {
     private static PreparedStatement stmt = null;
     private static ResultSet rs = null;
 
-    private static final Database instance = new Database();
+    private static final Database INSTANCE = new Database();
 
     /**
      * Get the instance of database.
      * @return database
      */
     public static Database getDatabase() {
-        return instance;
+        return INSTANCE;
     }
 
 
@@ -47,14 +47,14 @@ public class Database {
                                      String phone, String address, String username) {
 
         try {
-            String SQL = "UPDATE user SET fname = ?, lname = ?, email = ? , phone = ?, address = ? where username = ?";
-            stmt = connection.prepareStatement(SQL);
-            stmt.setString (1, fname);
-            stmt.setString (2, lname);
-            stmt.setString (3, email);
-            stmt.setString (4, phone);
-            stmt.setString (5, address);
-            stmt.setString (6, username);
+            String sql = "UPDATE user SET fname = ?, lname = ?, email = ? , phone = ?, address = ? where username = ?";
+            stmt = connection.prepareStatement(sql);
+            stmt.setString(1, fname);
+            stmt.setString(2, lname);
+            stmt.setString(3, email);
+            stmt.setString(4, phone);
+            stmt.setString(5, address);
+            stmt.setString(6, username);
             stmt.executeUpdate();
         }
         catch (SQLException ex){
@@ -76,21 +76,21 @@ public class Database {
 
     /**
      * Obtain user Account from database
-     * @param username of user Account
+     * @param id of user Account
      * @return account of that username.
      */
-    public static Account getAccount(String username) {
+    public static Account getAccount(String id) {
         Account account = null;
 
         try {
-            String SQL = "SELECT * FROM user WHERE username= ?";
-            stmt = connection.prepareStatement(SQL);
-            stmt.setString(1,username);
+            String sql = "SELECT * FROM user WHERE username= ?";
+            stmt = connection.prepareStatement(sql);
+            stmt.setString(1, id);
             rs = stmt.executeQuery();
 
             while (rs.next())
             {
-                String username_ = rs.getString("username");
+                String username = rs.getString("username");
                 String firstName = rs.getString("fname");
                 String lastName = rs.getString("lname");
                 String email = rs.getString("email");
@@ -119,10 +119,10 @@ public class Database {
 
         try {
             if (username != null && password != null) {
-                String SQL = "SELECT * FROM user WHERE username= ? AND password= ?";
-                stmt = connection.prepareStatement(SQL);
-                stmt.setString(1,username);
-                stmt.setString(2,password);
+                String sql = "SELECT * FROM user WHERE username= ? AND password= ?";
+                stmt = connection.prepareStatement(sql);
+                stmt.setString(1, username);
+                stmt.setString(2, password);
                 rs = stmt.executeQuery();
                 if (rs.next()) {
                     return true;
@@ -143,9 +143,9 @@ public class Database {
     public static boolean validateUsername(String username) {
 
         try {
-            String SQL = "SELECT `username` FROM `schema`.user WHERE username = ?";
-            stmt = connection.prepareStatement(SQL);
-            stmt.setString(1,username);
+            String sql = "SELECT `username` FROM `schema`.user WHERE username = ?";
+            stmt = connection.prepareStatement(sql);
+            stmt.setString(1, username);
             rs = stmt.executeQuery();
 
             if (!rs.next()) {
@@ -179,8 +179,8 @@ public class Database {
      * @param email email address.
      * @param type type of user.
      */
-    public static void addUser(String username, String password, String fname
-            , String lname, String email, AccountType type) {
+    public static void addUser(String username, String password, String fname,
+                               String lname, String email, AccountType type) {
 
         try {
             String query = "INSERT INTO `schema`.`user` (`id`, `username`, `password`" +
@@ -222,7 +222,7 @@ public class Database {
      * @param waterCondition condition of water
      * @param date date of report
      */
-    public static void addWaterSourceReport(String username , String latitude
+    public static void addWaterSourceReport(String username, String latitude
             , String longitude, WaterType waterType, WaterCondition waterCondition, String date) {
 
         try {

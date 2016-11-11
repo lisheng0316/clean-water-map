@@ -64,7 +64,8 @@ public class WSRViewController implements Initializable {
     }
 
     /**
-     * Setter of report numner
+     * Setter of report number
+     * @param number report number to set
      */
     public void setReportNumber(int number) {
         reportNumber.setText("" + number);
@@ -72,6 +73,7 @@ public class WSRViewController implements Initializable {
 
     /**
      * Setter of reporter.
+     * @param name name to set
      */
     public void setReporter(String name) {
         reporter.setText(name);
@@ -79,6 +81,7 @@ public class WSRViewController implements Initializable {
 
     /**
      * Setter of date created.
+     * @param date date to set
      */
     public void setDateCreated(String date) {
         dateCreated.setText(date);
@@ -86,6 +89,7 @@ public class WSRViewController implements Initializable {
 
     /**
      * Setter of report longitude location.
+     * @param longi longitude to set
      */
     public void setLongitude(double longi) {
         longitude.setText("" + longi);
@@ -94,6 +98,7 @@ public class WSRViewController implements Initializable {
 
     /**
      * Setter of latitude location.
+     * @param lati latitude to set
      */
     public void setLatitude(double lati) {
         latitude.setText("" + lati);
@@ -101,6 +106,7 @@ public class WSRViewController implements Initializable {
 
     /**
      * Setter of water type in report.
+     * @param type type to set
      */
     public void setWaterType(WaterType type) {
         waterType.setText("" + type);
@@ -108,6 +114,7 @@ public class WSRViewController implements Initializable {
 
     /**
      * Setter of report water condition in report.
+     * @param condition condition to set
      */
     public void setWaterCondition(WaterCondition condition) {
         waterCondition.setText("" + condition);
@@ -115,7 +122,7 @@ public class WSRViewController implements Initializable {
 
 
     /**
-     * Go to application when pressed.
+     * Go to application when pressed.s
      */
     @FXML
     private void backToAppPressed() {
