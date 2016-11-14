@@ -136,50 +136,50 @@ public class HistoricalReportController implements Initializable {
      *
      */
     private void virusPPM() {
-            double[] monthCounter = new double[12];
-            int[] eachMonthTotalReports = new int[12];
-            for (WaterPurityReport p : waterPurityReportList) {
-                if (yearBox.getText().equals(getYear(p))) {
-                    int month = getMonth(p) - 1;
-                    monthCounter[month] += p.getVirusPPM();
-                    eachMonthTotalReports[month]++;
-                }
+        double[] monthCounter = new double[12];
+        int[] eachMonthTotalReports = new int[12];
+        for (WaterPurityReport p : waterPurityReportList) {
+            if (yearBox.getText().equals(getYear(p))) {
+                int month = getMonth(p) - 1;
+                monthCounter[month] += p.getVirusPPM();
+                eachMonthTotalReports[month]++;
             }
+        }
 
-            double[] averages = new double[12];
-            for (int i = 0; i < 12; i++) {
-                if (eachMonthTotalReports[i] != 0) {
-                    averages[i] = monthCounter[i] / eachMonthTotalReports[i];
-                }
+        double[] averages = new double[12];
+        for (int i = 0; i < 12; i++) {
+            if (eachMonthTotalReports[i] != 0) {
+                averages[i] = monthCounter[i] / eachMonthTotalReports[i];
             }
+        }
 
-            virusSeries = createMonthDataSeries(averages);
-            virusSeries.setName("Virus PPM");
-            lineChart.getData().add(virusSeries);
+        virusSeries = createMonthDataSeries(averages);
+        virusSeries.setName("Virus PPM");
+        lineChart.getData().add(virusSeries);
     }
     /**
      * Show the line graph base on contaminant PPM
      *
      */
     private void contaminantPPM() {
-            double[] monthCounter = new double[12];
-            int[] eachMonthTotalReports = new int[12];
-            for (WaterPurityReport p : waterPurityReportList) {
-                if (yearBox.getText().equals(getYear(p))) {
-                    int month = getMonth(p) - 1;
-                    monthCounter[month] += p.getContaminantPPM();
-                    eachMonthTotalReports[month]++;
-                }
+        double[] monthCounter = new double[12];
+        int[] eachMonthTotalReports = new int[12];
+        for (WaterPurityReport p : waterPurityReportList) {
+            if (yearBox.getText().equals(getYear(p))) {
+                int month = getMonth(p) - 1;
+                monthCounter[month] += p.getContaminantPPM();
+                eachMonthTotalReports[month]++;
             }
-            double[] averages = new double[12];
-            for (int i = 0; i < 12; i++) {
-                if (eachMonthTotalReports[i] != 0) {
-                    averages[i] = monthCounter[i] / eachMonthTotalReports[i];
-                }
+        }
+        double[] averages = new double[12];
+        for (int i = 0; i < 12; i++) {
+            if (eachMonthTotalReports[i] != 0) {
+                averages[i] = monthCounter[i] / eachMonthTotalReports[i];
             }
-            contaminantSeries = createMonthDataSeries(averages);
-            contaminantSeries.setName("Contaminant PPM");
-            lineChart.getData().add(contaminantSeries);
+        }
+        contaminantSeries = createMonthDataSeries(averages);
+        contaminantSeries.setName("Contaminant PPM");
+        lineChart.getData().add(contaminantSeries);
     }
 
     /**
@@ -190,8 +190,7 @@ public class HistoricalReportController implements Initializable {
     private int getMonth(WaterPurityReport report) {
         String[] dateAndTime = report.getDate().split("/");
         String[] temp = dateAndTime[0].split(" ");
-        int month = Integer.parseInt(temp[3]);
-        return month;
+        return Integer.parseInt(temp[3]);
     }
 
     /**
@@ -201,8 +200,7 @@ public class HistoricalReportController implements Initializable {
      */
     private String getYear(WaterPurityReport report) {
         String[] dateAndTime = report.getDate().split("/");
-        String year = dateAndTime[2];
-        return year;
+        return dateAndTime[2];
     }
     /**
      * increment the year

@@ -13,6 +13,8 @@ import javafx.scene.layout.AnchorPane;
 import model.Account;
 import model.Database;
 
+import javax.print.attribute.standard.DateTimeAtCompleted;
+
 /**
  * Created by Sheng on 9/29/16.
  * A controller for the profile page
@@ -24,9 +26,9 @@ public class ProfileController extends AnchorPane implements Initializable{
     @FXML
     private TextField user;
     @FXML
-    private TextField password;
+    private PasswordField password;
     @FXML
-    private TextField passwordConfirm;
+    private PasswordField passwordConfirm;
     @FXML
     private TextField fname;
     @FXML
@@ -50,9 +52,11 @@ public class ProfileController extends AnchorPane implements Initializable{
         this.application = application;
         Account loggedAccount = application.getLoggedAccount();
         accountType.setText(loggedAccount.getType().toString());
+        password.setText(Database.getPassword(loggedAccount.getId()));
+        passwordConfirm.setText(Database.getPassword(loggedAccount.getId()));
         user.setText(loggedAccount.getId());
-        fname.setText(loggedAccount.getFname());
-        lname.setText(loggedAccount.getLname());
+        fname.setText(loggedAccount.getFName());
+        lname.setText(loggedAccount.getLName());
         email.setText(loggedAccount.getEmail());
         phone.setText(loggedAccount.getPhone());
         if (loggedAccount.getAddress() != null) {
@@ -74,20 +78,19 @@ public class ProfileController extends AnchorPane implements Initializable{
                 "*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
         if (!email.getText().matches(emailRegex)) {
             message.setText("Invalid email address");
-            //message.setVisible(true);
         } else if (!email.getText().matches(emailRegex)) {
             message.setText("Invalid email address");
-            //message.setVisible(true);
+        } else if (!passwordConfirm.getText().equals(password.getText())) {
+                message.setText("Invalid passwords");
         } else if (!phone.getText().matches("[0-9]+")) {
             message.setText("Please provide digit only for phone number");
-            //message.setVisible(true);
         } else {
             loggedAccount.setEmail(email.getText());
             message.setText("profile updated");
             Database.updateAccount(fname.getText(),
             lname.getText(), email.getText(),
-            phone.getText(), address.getText(), loggedAccount.getId());
-            //message.setVisible(true);
+            phone.getText(), address.getText(), loggedAccount.getId(), password.getText());
+
         }
         message.setVisible(true);
     }

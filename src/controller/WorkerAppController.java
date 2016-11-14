@@ -326,7 +326,7 @@ public class WorkerAppController extends UserAppController implements Initializa
         Marker marker = new Marker(markerOption);
 
         InfoWindowOptions infoWindow = new InfoWindowOptions();
-        infoWindow.content("<h2>Purity report #" +report.getReportNumber() + "</h2>"
+        infoWindow.content("<h2>Purity report #" + report.getReportNumber() + "</h2>"
                 + "Reporter: " + report.getUser()
                 + "<br>Location: " + report.getLatitude()
                 + ", " + report.getLongitude()

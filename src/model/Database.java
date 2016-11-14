@@ -21,16 +21,15 @@ public class Database {
     private static PreparedStatement stmt = null;
     private static ResultSet rs = null;
 
-    private static final Database instance = new Database();
+    private static final Database INSTANCE = new Database();
 
     /**
      * Get the instance of database.
      * @return database
      */
     public static Database getDatabase() {
-        return instance;
+        return INSTANCE;
     }
-
 
     /**
      * Update information of an account to database.
@@ -40,21 +39,23 @@ public class Database {
      * @param phone phone number of user.
      * @param address address of user.
      * @param username username of user.
+     * @param password password of user.
      */
     public static void updateAccount(String fname,
                                      String lname,
                                      String email,
-                                     String phone, String address, String username) {
-
+                                     String phone, String address, String username, String password) {
+        PreparedStatement stmt = null;
         try {
-            String SQL = "UPDATE user SET fname = ?, lname = ?, email = ? , phone = ?, address = ? where username = ?";
-            stmt = connection.prepareStatement(SQL);
-            stmt.setString (1, fname);
-            stmt.setString (2, lname);
-            stmt.setString (3, email);
-            stmt.setString (4, phone);
-            stmt.setString (5, address);
-            stmt.setString (6, username);
+            String sql = "UPDATE user SET fname = ?, lname = ?, email = ? , phone = ?, address = ?, password = ? where username = ?";
+            stmt = connection.prepareStatement(sql);
+            stmt.setString(1, fname);
+            stmt.setString(2, lname);
+            stmt.setString(3, email);
+            stmt.setString(4, phone);
+            stmt.setString(5, address);
+            stmt.setString(6, password);
+            stmt.setString(7, username);
             stmt.executeUpdate();
         }
         catch (SQLException ex){
@@ -83,13 +84,12 @@ public class Database {
         Account account = null;
 
         try {
-            String SQL = "SELECT * FROM user WHERE username= ?";
-            stmt = connection.prepareStatement(SQL);
-            stmt.setString(1,username);
+            String sql = "SELECT * FROM user WHERE username= ?";
+            stmt = connection.prepareStatement(sql);
+            stmt.setString(1, username);
             rs = stmt.executeQuery();
 
-            while (rs.next())
-            {
+            while (rs.next()) {
                 String username_ = rs.getString("username");
                 String firstName = rs.getString("fname");
                 String lastName = rs.getString("lname");
@@ -110,6 +110,32 @@ public class Database {
     }
 
     /**
+     * Obtain user Account from database
+     * @param username of user Account
+     * @return account of that username.
+     */
+    public static String getPassword(String username) {
+        String password = null;
+        try {
+            String sql = "SELECT * FROM user WHERE username= ?";
+            stmt = connection.prepareStatement(sql);
+            stmt.setString(1, username);
+            rs = stmt.executeQuery();
+
+            while (rs.next())
+            {
+                password = rs.getString("password");
+            }
+            stmt.close();
+
+        } catch (SQLException error) {
+            System.out.println(error.getMessage());
+        }
+
+        return password;
+    }
+
+    /**
      * Check if user name matches password in database.
      * @param username to log in
      * @param password of that user.
@@ -119,10 +145,10 @@ public class Database {
 
         try {
             if (username != null && password != null) {
-                String SQL = "SELECT * FROM user WHERE username= ? AND password= ?";
-                stmt = connection.prepareStatement(SQL);
-                stmt.setString(1,username);
-                stmt.setString(2,password);
+                String sql = "SELECT * FROM user WHERE username= ? AND password= ?";
+                stmt = connection.prepareStatement(sql);
+                stmt.setString(1, username);
+                stmt.setString(2, password);
                 rs = stmt.executeQuery();
                 if (rs.next()) {
                     return true;
@@ -143,9 +169,9 @@ public class Database {
     public static boolean validateUsername(String username) {
 
         try {
-            String SQL = "SELECT `username` FROM `schema`.user WHERE username = ?";
-            stmt = connection.prepareStatement(SQL);
-            stmt.setString(1,username);
+            String sql = "SELECT `username` FROM `schema`.user WHERE username = ?";
+            stmt = connection.prepareStatement(sql);
+            stmt.setString(1, username);
             rs = stmt.executeQuery();
 
             if (!rs.next()) {
@@ -158,7 +184,7 @@ public class Database {
         finally {
             if (rs != null) {
                 try {
-                  rs.close();
+                    rs.close();
                 } catch (SQLException sqlEx) { } // ignore
             }
             if (stmt != null) {
@@ -170,6 +196,8 @@ public class Database {
         return false;
     }
 
+
+
     /**
      * Added a user to user table in data base
      * @param username of user
@@ -179,8 +207,8 @@ public class Database {
      * @param email email address.
      * @param type type of user.
      */
-    public static void addUser(String username, String password, String fname
-            , String lname, String email, AccountType type) {
+    public static void addUser(String username, String password, String fname,
+                               String lname, String email, AccountType type) {
 
         try {
             String query = "INSERT INTO `schema`.`user` (`id`, `username`, `password`" +
@@ -188,12 +216,12 @@ public class Database {
                     + " VALUES (null, ?, ?, ?, ?, ?, ?)";
 
             stmt = connection.prepareStatement(query);
-            stmt.setString (1, username);
-            stmt.setString (2, password);
-            stmt.setString (3, fname);
-            stmt.setString (4, lname);
-            stmt.setString (5, email);
-            stmt.setString (6, type.toString());
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+            stmt.setString(3, fname);
+            stmt.setString(4, lname);
+            stmt.setString(5, email);
+            stmt.setString(6, type.toString());
             stmt.executeUpdate();
         }
         catch (SQLException ex){
@@ -222,8 +250,11 @@ public class Database {
      * @param waterCondition condition of water
      * @param date date of report
      */
-    public static void addWaterSourceReport(String username , String latitude
-            , String longitude, WaterType waterType, WaterCondition waterCondition, String date) {
+    public static void addWaterSourceReport(String username,
+                                            String latitude,
+                                            String longitude,
+                                            WaterType waterType,
+                                            WaterCondition waterCondition, String date) {
 
         try {
             String query = "INSERT INTO `schema`.`WaterSourceReport` (`ReportNumber`, `Username`, `Latitude`" +
@@ -231,13 +262,12 @@ public class Database {
                     + " VALUES (null, ?, ?, ?, ?, ?, ?)";
 
             stmt = connection.prepareStatement(query);
-            stmt.setString (1, username);
-            stmt.setString (2, latitude);
-            stmt.setString (3, longitude);
-            stmt.setString (4, waterType.toString());
-            stmt.setString (5, waterCondition.toString());
-            stmt.setString (6, date);
-
+            stmt.setString(1, username);
+            stmt.setString(2, latitude);
+            stmt.setString(3, longitude);
+            stmt.setString(4, waterType.toString());
+            stmt.setString(5, waterCondition.toString());
+            stmt.setString(6, date);
             stmt.executeUpdate();
         }
         catch (SQLException ex){
@@ -306,25 +336,27 @@ public class Database {
      * @param virus virusPPM of the water
      */
 
-    public static void addWaterPurityReport(String username , String latitude
-            , String longitude
-            , WaterType waterType
-            , WaterCondition waterCondition
-            , String date, String contaminant, String virus) {
+    public static void addWaterPurityReport(String username,
+                                            String latitude,
+                                            String longitude,
+                                            WaterType waterType,
+                                            WaterCondition waterCondition,
+                                            String date,
+                                            String contaminant, String virus) {
         try {
             String query = "INSERT INTO `schema`.`WaterPurityReport` (`ReportNumber`, `Username`, `Latitude`" +
                     ", `Longitude`, `WaterType`, `WaterCondition`, `Date`, `ContaminantPPM`, `VirusPPM`)"
                     + " VALUES (null, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             stmt = connection.prepareStatement(query);
-            stmt.setString (1, username);
-            stmt.setString (2, latitude);
-            stmt.setString (3, longitude);
-            stmt.setString (4, waterType.toString());
-            stmt.setString (5, waterCondition.toString());
-            stmt.setString (6, date);
-            stmt.setString (7, contaminant);
-            stmt.setString (8, virus);
+            stmt.setString(1, username);
+            stmt.setString(2, latitude);
+            stmt.setString(3, longitude);
+            stmt.setString(4, waterType.toString());
+            stmt.setString(5, waterCondition.toString());
+            stmt.setString(6, date);
+            stmt.setString(7, contaminant);
+            stmt.setString(8, virus);
 
             stmt.executeUpdate();
         }
@@ -374,8 +406,8 @@ public class Database {
                         WaterCondition.valueOf(condition),
                         date, contaminantPPM, virusPPM);
                 purityReportList.add(report);
-        }
-        stmt.close();
+            }
+            stmt.close();
 
         } catch (SQLException error) {
             System.out.println(error.getMessage());
@@ -392,7 +424,7 @@ public class Database {
         //load jdbc driver for mysql database
         try {
             Class.forName("com.mysql.jdbc.Driver");
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.out.println("Unable to load Driver");
         }
 
