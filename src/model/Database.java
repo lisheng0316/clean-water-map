@@ -169,7 +169,7 @@ public class Database {
     public static boolean validateUsername(String username) {
 
         try {
-            String sql = "SELECT `username` FROM `schema`.user WHERE username = ?";
+            String sql = "SELECT `username` FROM `cleanwatermap`.user WHERE username = ?";
             stmt = connection.prepareStatement(sql);
             stmt.setString(1, username);
             rs = stmt.executeQuery();
@@ -211,7 +211,7 @@ public class Database {
                                String lname, String email, AccountType type) {
 
         try {
-            String query = "INSERT INTO `schema`.`user` (`id`, `username`, `password`" +
+            String query = "INSERT INTO `cleanwatermap`.`user` (`id`, `username`, `password`" +
                     ", `fname`, `lname`, `email`, `type`)"
                     + " VALUES (null, ?, ?, ?, ?, ?, ?)";
 
@@ -257,7 +257,7 @@ public class Database {
                                             WaterCondition waterCondition, String date) {
 
         try {
-            String query = "INSERT INTO `schema`.`WaterSourceReport` (`ReportNumber`, `Username`, `Latitude`" +
+            String query = "INSERT INTO `cleanwatermap`.`WaterSourceReport` (`ReportNumber`, `Username`, `Latitude`" +
                     ", `Longitude`, `WaterType`, `WaterCondition`, `Date`)"
                     + " VALUES (null, ?, ?, ?, ?, ?, ?)";
 
@@ -344,7 +344,7 @@ public class Database {
                                             String date,
                                             String contaminant, String virus) {
         try {
-            String query = "INSERT INTO `schema`.`WaterPurityReport` (`ReportNumber`, `Username`, `Latitude`" +
+            String query = "INSERT INTO `cleanwatermap`.`WaterPurityReport` (`ReportNumber`, `Username`, `Latitude`" +
                     ", `Longitude`, `WaterType`, `WaterCondition`, `Date`, `ContaminantPPM`, `VirusPPM`)"
                     + " VALUES (null, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -429,9 +429,14 @@ public class Database {
         }
 
         //Establish connection using DriverManager
+
+//        "jdbc:mysql://watersource.c0udtjalvmmk.us-west-2.rds.amazonaws.com/WaterSource", "prateek", "Pen23haw"
+
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/schema?" +
-                    "user=root&password=pass");
+//            connection = DriverManager.getConnection("jdbc:mysql://cwc.ctpvc2pdo66b.us-east-1.rds.amazonaws.com:3306",
+//                    "awsuser", "mypassword");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/schema?"
+                    + "user=root&password=pass");
         } catch (SQLException e) {
             System.out.println("Unable to connect to database");
         }
