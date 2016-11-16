@@ -9,14 +9,15 @@ class User extends Account {
     /**
      * Create new user
      * @param id the id
-     * @param fname  first name
-     * @param lname last name
+     * @param fName  first name
+     * @param lName last name
      * @param email email
      * @param type account type
      *
      */
-    User(String id, String fname, String lname, String email, AccountType type) {
-        super(id, fname, lname, email, type);
+    User(String id, String fName, String lName,
+         String email, AccountType type) {
+        super(id, fName, lName, email, type);
     }
 
 

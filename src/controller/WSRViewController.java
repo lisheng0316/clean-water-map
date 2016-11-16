@@ -58,9 +58,9 @@ public class WSRViewController implements Initializable {
      * Sets up the up view
      * @param application the main application of th app view
      */
-    public void setApp(Main application){
+    public void setApp(Main application) {
         this.application = application;
-       // username.setText("" + application.getLoggedAccount());
+        // username.setText("" + application.getLoggedAccount());
     }
 
     /**

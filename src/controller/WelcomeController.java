@@ -20,7 +20,9 @@ public class WelcomeController extends AnchorPane implements Initializable {
      * sets the welcome page
      * @param application the main application of welcome page
      */
-    public void setApp(Main application){ this.application = application;}
+    public void setApp(Main application) {
+        this.application = application;
+    }
 
     /**
      * Initialize the location and resources
@@ -44,7 +46,7 @@ public class WelcomeController extends AnchorPane implements Initializable {
      */
     @FXML
     private void registrationPressed() {
-            application.gotoRegistration();
+        application.gotoRegistration();
     }
 
     /**
@@ -52,7 +54,7 @@ public class WelcomeController extends AnchorPane implements Initializable {
      */
     @FXML
     private void handleCloseMenu() {
-            System.exit(0);
-        }
+        System.exit(0);
+    }
 
 }
