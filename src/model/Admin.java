@@ -4,7 +4,7 @@ package model;
  * Created by Sheng on 9/27/16.
  * Admin to implement the required functionality
  */
-class Admin extends Account{
+class Admin extends Account {
 
 
     /**
@@ -18,5 +18,4 @@ class Admin extends Account{
     public Admin(String id, String fName, String lName, String email) {
         super(id, fName, lName, email, AccountType.Admin);
     }
-
 }

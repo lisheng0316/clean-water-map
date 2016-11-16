@@ -15,7 +15,8 @@ class Manager extends Worker {
      * @param type account type
      *
      */
-    public Manager(String id, String fname, String lname, String email, AccountType type) {
+    public Manager(String id, String fname, String lname, String email,
+                   AccountType type) {
         super(id, fname, lname, email, type);
     }
 }

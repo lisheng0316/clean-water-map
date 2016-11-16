@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 /**
  * Historical Report Controller
@@ -26,9 +27,8 @@ import java.util.ResourceBundle;
  */
 public class HistoricalReportController implements Initializable {
     private Main application;
-    private WaterPurityReport wpr;
     @FXML
-    LineChart<String, Double> lineChart;
+    private LineChart<String, Double> lineChart;
     @FXML
     private CategoryAxis x = new CategoryAxis();
 
@@ -44,9 +44,11 @@ public class HistoricalReportController implements Initializable {
     @FXML
     private Label longitude;
 
-    private ObservableList<String> monthNames = FXCollections.observableArrayList();
+    private final ObservableList<String> monthNames =
+            FXCollections.observableArrayList();
 
-    private List<WaterPurityReport> totalList = Database.getWaterPurityReports();
+    private final List<WaterPurityReport> totalList =
+            Database.getWaterPurityReports();
     private List<WaterPurityReport> waterPurityReportList;
 
     private XYChart.Series<String, Double> virusSeries;
@@ -60,11 +62,10 @@ public class HistoricalReportController implements Initializable {
      *
      * @param wpr the water purity report to show
      */
-    public void setApp(Main application, WaterPurityReport wpr){
+    public void setApp(Main application, WaterPurityReport wpr) {
         this.application = application;
-        this.wpr = wpr;
-        latitude.setText(wpr.getLatitude()+ "");
-        longitude.setText(wpr.getLongitude()+ "");
+        latitude.setText(wpr.getLatitude() + "");
+        longitude.setText(wpr.getLongitude() + "");
         reportBox.setText(wpr.getReportNumber() + "");
         yearBox.setText(getYear(wpr));
         graph(wpr);
@@ -80,15 +81,16 @@ public class HistoricalReportController implements Initializable {
         virusPPM();
         contaminantPPM();
         reportBox.setText(report.getReportNumber() + "");
-        latitude.setText(report.getLatitude()+ "");
-        longitude.setText(report.getLongitude()+ "");
+        latitude.setText(report.getLatitude() + "");
+        longitude.setText(report.getLongitude() + "");
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         x.setLabel("Month");
         y.setLabel("PPM");
-        //String[] months = DateFormatSymbols.getInstance(Locale.ENGLISH).getMonths();
+        //String[] months = DateFormatSymbols.getInstance(Locale.ENGLISH)
+        // .getMonths();
         String[] months = new String[12];
         for (int i = 0; i < 12; i++) {
             months[i] = (i + 1) + "";
@@ -99,8 +101,10 @@ public class HistoricalReportController implements Initializable {
     /**
      * Create the monthly data for chart
      * @param monthCounter month counter to be
+     * @return the chart series                    
      */
-    private XYChart.Series<String, Double> createMonthDataSeries(double[] monthCounter) {
+    private XYChart.Series<String, Double> createMonthDataSeries(
+            double[] monthCounter) {
         XYChart.Series<String, Double> series = new XYChart.Series<>();
 
         for (int i = 0; i < monthCounter.length; i++) {
@@ -113,22 +117,21 @@ public class HistoricalReportController implements Initializable {
     }
 
     /**
-     * Get all reports with the same location and add to instance waterPurityReportList;
+     * Get all reports with the same location and add to instance 
+     * waterPurityReportList;
      * @param report the water purity report to get data from
      */
     private void setWaterPurityData(WaterPurityReport report) {
-        float EPSILON = 0.00000000000001f;
+        float epsilon = 0.00000000000001f;
         waterPurityReportList = new ArrayList<>();
         System.out.println("Report " + report.getReportNumber()
                 + " " + report.getContaminantPPM());
-        for (WaterPurityReport e : totalList) {
-            if (Math.abs(report.getLatitude()
-                    - e.getLatitude()) < EPSILON
-                    && Math.abs(report.getLongitude() - e.getLongitude()) < EPSILON) {
-                waterPurityReportList.add(e);
-            }
-        }
-        System.out.println("Number of records: " + waterPurityReportList.size());
+        waterPurityReportList.addAll(totalList.stream().filter(e -> Math
+                .abs(report.getLatitude() - e.getLatitude()) < epsilon && Math
+                .abs(report.getLongitude() - e.getLongitude()) < epsilon)
+                .collect(Collectors.toList()));
+        System.out.println("Number of records: " + waterPurityReportList
+                .size());
     }
 
     /**
@@ -138,13 +141,12 @@ public class HistoricalReportController implements Initializable {
     private void virusPPM() {
         double[] monthCounter = new double[12];
         int[] eachMonthTotalReports = new int[12];
-        for (WaterPurityReport p : waterPurityReportList) {
-            if (yearBox.getText().equals(getYear(p))) {
-                int month = getMonth(p) - 1;
-                monthCounter[month] += p.getVirusPPM();
-                eachMonthTotalReports[month]++;
-            }
-        }
+        waterPurityReportList.stream().filter(p -> yearBox.getText().equals(
+                getYear(p))).forEach(p -> {
+                    int month = getMonth(p) - 1;
+                    monthCounter[month] += p.getVirusPPM();
+                    eachMonthTotalReports[month]++;
+                });
 
         double[] averages = new double[12];
         for (int i = 0; i < 12; i++) {
@@ -164,13 +166,12 @@ public class HistoricalReportController implements Initializable {
     private void contaminantPPM() {
         double[] monthCounter = new double[12];
         int[] eachMonthTotalReports = new int[12];
-        for (WaterPurityReport p : waterPurityReportList) {
-            if (yearBox.getText().equals(getYear(p))) {
-                int month = getMonth(p) - 1;
-                monthCounter[month] += p.getContaminantPPM();
-                eachMonthTotalReports[month]++;
-            }
-        }
+        waterPurityReportList.stream().filter(p -> yearBox.getText().equals(
+                getYear(p))).forEach(p -> {
+                    int month = getMonth(p) - 1;
+                    monthCounter[month] += p.getContaminantPPM();
+                    eachMonthTotalReports[month]++;
+                });
         double[] averages = new double[12];
         for (int i = 0; i < 12; i++) {
             if (eachMonthTotalReports[i] != 0) {
@@ -271,13 +272,15 @@ public class HistoricalReportController implements Initializable {
         int currentReportNumber = Integer.parseInt(reportBox.getText());
         graph(getReport(currentReportNumber));
     }
-    /**
-     * called when the user closes the app
-     */
-    @FXML
-    private void handleCloseMenu() {
-        System.exit(0);
-    }
+    // --Commented out by Inspection START (11/16/16, 12:07 AM):
+    //    /**
+    //     * called when the user closes the app
+    //     */
+    //    @FXML
+    //    private void handleCloseMenu() {
+    //        System.exit(0);
+    //    }
+    // --Commented out by Inspection STOP (11/16/16, 12:07 AM)
 
 
     /**
@@ -292,6 +295,7 @@ public class HistoricalReportController implements Initializable {
     /**
      * Get the purity report base on report number
      * @param reportNumber the report number in which the purity report to get
+     * @return the purity report 
      */
     private WaterPurityReport getReport(int reportNumber) {
         WaterPurityReport report = null;

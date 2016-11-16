@@ -15,7 +15,8 @@ class User extends Account {
      * @param type account type
      *
      */
-    User(String id, String fname, String lname, String email, AccountType type) {
+    User(String id, String fname, String lname, String email,
+         AccountType type) {
         super(id, fname, lname, email, type);
     }
 

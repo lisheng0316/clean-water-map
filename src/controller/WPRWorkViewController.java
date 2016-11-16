@@ -60,13 +60,14 @@ class WPRWorkViewController implements Initializable {
      * Sets up the up view
      * @param application the main application of th app view
      */
-    public void setApp(Main application){
+    public void setApp(Main application) {
         this.application = application;
-       // username.setText("" + application.getLoggedAccount());
+        // username.setText("" + application.getLoggedAccount());
     }
 
     /**
      * Setter of report numner
+     * @param number the number of the report
      */
     public void setReportNumber(int number) {
         reportNumber.setText("" + number);
@@ -74,6 +75,7 @@ class WPRWorkViewController implements Initializable {
 
     /**
      * Setter of reporter.
+     * @param name the name of the report
      */
     public void setReporter(String name) {
         reporter.setText(name);
@@ -81,6 +83,7 @@ class WPRWorkViewController implements Initializable {
 
     /**
      * Setter of date created.
+     * @param date  the date of the report
      */
     public void setDateCreated(String date) {
         dateCreated.setText(date);
@@ -88,6 +91,7 @@ class WPRWorkViewController implements Initializable {
 
     /**
      * Setter of report longitude location.
+     * @param longi the logitude on the report
      */
     public void setLongitude(double longi) {
         longitude.setText("" + longi);
@@ -96,6 +100,7 @@ class WPRWorkViewController implements Initializable {
 
     /**
      * Setter of latitude location.
+     * @param lati the latitude on the report
      */
     public void setLatitude(double lati) {
         latitude.setText("" + lati);
@@ -103,6 +108,7 @@ class WPRWorkViewController implements Initializable {
 
     /**
      * Setter of water type in report.
+     * @param type the water type
      */
     public void setWaterType(WaterType type) {
         waterType.setText("" + type);
@@ -110,12 +116,14 @@ class WPRWorkViewController implements Initializable {
 
     /**
      * Setter of report water condition in report.
+     * @param condition the water condition
      */
     public void setWaterCondition(WaterCondition condition) {
         waterCondition.setText("" + condition);
     }
     /**
      * Setter of report virus PPM in report.
+     * @param v the virus ppm
      */
     public void setVirusPPM(double v) {
         virusPPM.setText("" + v);
@@ -123,6 +131,7 @@ class WPRWorkViewController implements Initializable {
 
     /**
      * Setter of report contaminant PPM in report.
+     * @param c the contaminant ppm
      */
     public void setContaminantPPM(double c) {
         contaminantPPM.setText("" + c);

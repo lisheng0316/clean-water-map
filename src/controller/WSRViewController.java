@@ -6,8 +6,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import model.WaterCondition;
-import model.WaterType;
+//import model.WaterCondition;
+//import model.WaterType;
 
 import java.net.URL;
 import java.util.Locale;
@@ -45,80 +45,93 @@ public class WSRViewController implements Initializable {
     private Main application;
     private boolean reportExpand = true;
     private static boolean isSourceReport = false;
-    private static Alert alert;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Locale.setDefault(Locale.US);
 
-        alert = new Alert(Alert.AlertType.CONFIRMATION);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
     }
 
     /**
      * Sets up the up view
      * @param application the main application of th app view
      */
-    public void setApp(Main application){
+    public void setApp(Main application) {
         this.application = application;
-       // username.setText("" + application.getLoggedAccount());
+        // username.setText("" + application.getLoggedAccount());
     }
 
-    /**
-     * Setter of report number
-     * @param number report number to set
-     */
-    public void setReportNumber(int number) {
-        reportNumber.setText("" + number);
-    }
+// --Commented out by Inspection START (11/16/16, 12:15 AM):
+//    /**
+//     * Setter of report number
+//     * @param number report number to set
+//     */
+//    public void setReportNumber(int number) {
+//        reportNumber.setText("" + number);
+//    }
+// --Commented out by Inspection STOP (11/16/16, 12:15 AM)
 
-    /**
-     * Setter of reporter.
-     * @param name name to set
-     */
-    public void setReporter(String name) {
-        reporter.setText(name);
-    }
+// --Commented out by Inspection START (11/16/16, 12:15 AM):
+//    /**
+//     * Setter of reporter.
+//     * @param name name to set
+//     */
+//    public void setReporter(String name) {
+//        reporter.setText(name);
+//    }
+// --Commented out by Inspection STOP (11/16/16, 12:15 AM)
 
-    /**
-     * Setter of date created.
-     * @param date date to set
-     */
-    public void setDateCreated(String date) {
-        dateCreated.setText(date);
-    }
+// --Commented out by Inspection START (11/16/16, 12:15 AM):
+//    /**
+//     * Setter of date created.
+//     * @param date date to set
+//     */
+//    public void setDateCreated(String date) {
+//        dateCreated.setText(date);
+//    }
+// --Commented out by Inspection STOP (11/16/16, 12:15 AM)
 
-    /**
-     * Setter of report longitude location.
-     * @param longi longitude to set
-     */
-    public void setLongitude(double longi) {
-        longitude.setText("" + longi);
-    }
+// --Commented out by Inspection START (11/16/16, 12:16 AM):
+//    /**
+//     * Setter of report longitude location.
+//     * @param longi longitude to set
+//     */
+//    public void setLongitude(double longi) {
+//        longitude.setText("" + longi);
+//    }
+// --Commented out by Inspection STOP (11/16/16, 12:16 AM)
 
 
-    /**
-     * Setter of latitude location.
-     * @param lati latitude to set
-     */
-    public void setLatitude(double lati) {
-        latitude.setText("" + lati);
-    }
+// --Commented out by Inspection START (11/16/16, 12:16 AM):
+//    /**
+//     * Setter of latitude location.
+//     * @param lati latitude to set
+//     */
+//    public void setLatitude(double lati) {
+//        latitude.setText("" + lati);
+//    }
+// --Commented out by Inspection STOP (11/16/16, 12:16 AM)
 
-    /**
-     * Setter of water type in report.
-     * @param type type to set
-     */
-    public void setWaterType(WaterType type) {
-        waterType.setText("" + type);
-    }
+// --Commented out by Inspection START (11/16/16, 12:16 AM):
+//    /**
+//     * Setter of water type in report.
+//     * @param type type to set
+//     */
+//    public void setWaterType(WaterType type) {
+//        waterType.setText("" + type);
+//    }
+// --Commented out by Inspection STOP (11/16/16, 12:16 AM)
 
-    /**
-     * Setter of report water condition in report.
-     * @param condition condition to set
-     */
-    public void setWaterCondition(WaterCondition condition) {
-        waterCondition.setText("" + condition);
-    }
+// --Commented out by Inspection START (11/16/16, 12:17 AM):
+//    /**
+//     * Setter of report water condition in report.
+//     * @param condition condition to set
+//     */
+//    public void setWaterCondition(WaterCondition condition) {
+//        waterCondition.setText("" + condition);
+//    }
+//    --Commented out by Inspection STOP (11/16/16, 12:17 AM)
 
 
     /**

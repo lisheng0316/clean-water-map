@@ -1,7 +1,15 @@
 package fxapp;
 
 import model.Account;
-import controller.*;
+//import controller.*;
+import controller.HistoricalReportController;
+import controller.UserAppController;
+import controller.WorkerAppController;
+import controller.LoginController;
+import controller.ProfileController;
+import controller.RegistrationController;
+import controller.WelcomeController;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -31,8 +39,8 @@ public class Main extends Application {
     /** the main container for the application window */
     private Stage stage;
     private Account loggedAccount;
-    private final double MINIMUM_WINDOW_WIDTH = 800.0;
-    private final double MINIMUM_WINDOW_HEIGHT = 600.0;
+    private final double minimumWindowWidth = 800.0;
+    private final double minimumWindowHeight = 600.0;
 
     @Override
     public void start(Stage primaryStage) {
@@ -44,10 +52,10 @@ public class Main extends Application {
             stage = primaryStage;
             stage.setTitle("CWC");
             stage.getIcons().add(new Image("file:resources/menu.png"));
-            stage.setMinWidth(MINIMUM_WINDOW_WIDTH);
-            stage.setMinHeight(MINIMUM_WINDOW_HEIGHT);
-            stage.setMaxWidth(MINIMUM_WINDOW_WIDTH);
-            stage.setMaxHeight(MINIMUM_WINDOW_HEIGHT);
+            stage.setMinWidth(minimumWindowWidth);
+            stage.setMinHeight(minimumWindowHeight);
+            stage.setMaxWidth(minimumWindowWidth);
+            stage.setMaxHeight(minimumWindowHeight);
             gotoWelcome();
             primaryStage.show();
         } catch (Exception ex) {
@@ -60,14 +68,17 @@ public class Main extends Application {
      * A method to get the account of the user who logged in
      * @return the account of the user who logged in
      */
-    public Account getLoggedAccount() { return loggedAccount;}
+    public Account getLoggedAccount() {
+        return loggedAccount;
+    }
 
     /**
      * a method to send the app to the welcome screen
      */
     private void gotoWelcome() {
         try {
-            WelcomeController welcome = (WelcomeController) replaceSceneContent("/view/WelcomePage.fxml");
+            WelcomeController welcome = (WelcomeController)
+                    replaceSceneContent("/view/WelcomePage.fxml");
             welcome.setApp(this);
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -80,7 +91,8 @@ public class Main extends Application {
      */
     public void gotoHistoricalReport(WaterPurityReport wpr) {
         try {
-            HistoricalReportController controller = (HistoricalReportController) replaceSceneContent("/view/HistoricalReport.fxml");
+            HistoricalReportController controller = (HistoricalReportController)
+                    replaceSceneContent("/view/HistoricalReport.fxml");
             controller.setApp(this, wpr);
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -92,7 +104,8 @@ public class Main extends Application {
      */
     public void gotoRegistration() {
         try {
-            RegistrationController registration = (RegistrationController) replaceSceneContent("/view/RegisterPage.fxml");
+            RegistrationController registration = (RegistrationController)
+                    replaceSceneContent("/view/RegisterPage.fxml");
             registration.setApp(this);
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -104,7 +117,8 @@ public class Main extends Application {
      */
     public void gotoProfile() {
         try {
-            ProfileController profile = (ProfileController) replaceSceneContent("/view/ProfilePage.fxml");
+            ProfileController profile = (ProfileController)
+                    replaceSceneContent("/view/ProfilePage.fxml");
             profile.setApp(this);
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -116,7 +130,8 @@ public class Main extends Application {
      */
     public void gotoManagerApp() {
         try {
-            UserAppController appView = (UserAppController) replaceSceneContent("/view/ManagerAppView.fxml");
+            UserAppController appView = (UserAppController)
+                    replaceSceneContent("/view/ManagerAppView.fxml");
             appView.setApp(this);
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -131,7 +146,8 @@ public class Main extends Application {
      */
     private void gotoWorkerApp() {
         try {
-            WorkerAppController appView = (WorkerAppController) replaceSceneContent("/view/WorkerAppView.fxml");
+            WorkerAppController appView = (WorkerAppController)
+                    replaceSceneContent("/view/WorkerAppView.fxml");
             appView.setApp(this);
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -143,7 +159,8 @@ public class Main extends Application {
      */
     private void gotoUserApp() {
         try {
-            UserAppController appView = (UserAppController) replaceSceneContent("/view/UserAppView.fxml");
+            UserAppController appView = (UserAppController)
+                    replaceSceneContent("/view/UserAppView.fxml");
             appView.setApp(this);
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -208,20 +225,18 @@ public class Main extends Application {
      */
     private Initializable replaceSceneContent(String fxml) throws Exception {
         FXMLLoader loader = new FXMLLoader();
-        InputStream in = Main.class.getResourceAsStream(fxml);
         loader.setBuilderFactory(new JavaFXBuilderFactory());
         loader.setLocation(Main.class.getResource(fxml));
         AnchorPane page;
-        try {
+        try (InputStream in = Main.class.getResourceAsStream(fxml)) {
             //redundant error?
             page = loader.load(in);
 
-        } finally {
-            in.close();
         }
-        Scene scene = new Scene(page, MINIMUM_WINDOW_WIDTH, MINIMUM_WINDOW_HEIGHT);
-    //    String css = AppViewController.class.getResource("/fxapp/stylesheet.css").toExternalForm();
-    //    scene.getStylesheets().add(css);
+        Scene scene = new Scene(page, minimumWindowWidth, minimumWindowHeight);
+        //  String css = AppViewController.class
+        // .getResource("/fxapp/stylesheet.css").toExternalForm();
+        //  scene.getStylesheets().add(css);
         stage.setScene(scene);
         stage.sizeToScene();
         return (Initializable) loader.getController();

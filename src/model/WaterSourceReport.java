@@ -8,13 +8,13 @@ import java.io.Serializable;
  */
 public class WaterSourceReport implements Serializable {
 
-    private double longitude;
-    private double latitude;
+    private final double longitude;
+    private final double latitude;
     private WaterType type;
-    private String user;
+    private final String user;
     private WaterCondition condition;
-    private String date;
-    private int reportNumber;
+    private final String date;
+    private final int reportNumber;
     /**
      * Create water report with type and condition
      *
@@ -26,7 +26,8 @@ public class WaterSourceReport implements Serializable {
      * @param condition water condition
      * @param date create date
      */
-    public WaterSourceReport(int reportNumber, String user, double latitude, double longitude, WaterType type,
+    public WaterSourceReport(int reportNumber, String user, double latitude,
+                             double longitude, WaterType type,
                              WaterCondition condition, String date) {
 
         this(reportNumber, user, latitude, longitude, date);
@@ -44,7 +45,8 @@ public class WaterSourceReport implements Serializable {
      * @param longitude longitude
      * @param date create date
      */
-    private WaterSourceReport(int reportNumber, String user, double latitude, double longitude, String date) {
+    private WaterSourceReport(int reportNumber, String user, double latitude,
+                              double longitude, String date) {
 
         this.reportNumber = reportNumber;
         this.user = user;
@@ -66,7 +68,9 @@ public class WaterSourceReport implements Serializable {
      * a method to get the user who made the report
      * @return the creator of the report
      */
-    public String getUser() { return user;}
+    public String getUser() {
+        return user;
+    }
 
 
     /**
@@ -114,8 +118,8 @@ public class WaterSourceReport implements Serializable {
      * a method to get string representation of report title
      * @return the report title
      */
-    public String toString(){
-        return ""+ this.getReportNumber();
+    public String toString() {
+        return "" + this.getReportNumber();
 
     }
 }

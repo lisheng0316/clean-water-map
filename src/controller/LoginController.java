@@ -36,7 +36,9 @@ public class LoginController extends AnchorPane implements Initializable {
      * Sets up the login page
      * @param application the main application of the login page
      */
-    public void setApp(Main application) { this.application = application;}
+    public void setApp(Main application) {
+        this.application = application;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -77,7 +79,7 @@ public class LoginController extends AnchorPane implements Initializable {
     @FXML
     public void enterPressed(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
-            OKPressed();
+            okPressed();
         }
     }
 
@@ -86,7 +88,7 @@ public class LoginController extends AnchorPane implements Initializable {
      * if user cannot log in, error message will be displayed.
      */
     @FXML
-    private void OKPressed() {
+    private void okPressed() {
 
         if (Database.login(accountId.getText(), password.getText())) {
             application.accountLogging(accountId.getText());
