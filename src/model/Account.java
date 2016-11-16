@@ -23,7 +23,8 @@ public class Account {
     private final StringProperty _email = new SimpleStringProperty();
     private final StringProperty _phone = new SimpleStringProperty();
     private final StringProperty _address = new SimpleStringProperty();
-    private final ObjectProperty<AccountType> _type = new SimpleObjectProperty<>();
+    private final ObjectProperty<AccountType> _type =
+            new SimpleObjectProperty<>();
 
     private static final Map<String, Account> accountList = new HashMap<>();
 
@@ -32,49 +33,65 @@ public class Account {
      * a method to get the ID of the user
      * @return the ID of the user
      */
-    public String getId() {return _id.get();}
+    public String getId() {
+        return _id.get();
+    }
 
     /**
      * a method to set the user ID
      * @param id the String to be set as the ID
      */
-    public void setId(String id) { _id.set(id); }
+    public void setId(String id) {
+        _id.set(id);
+    }
 
     /**
      * a method to get the first name of the user
      * @return the first name of the user
      */
-    public String getFName() {return _fName.get();}
+    public String getFName() {
+        return _fName.get();
+    }
 
     /**
      * a method to set the first name of the user
      * @param fName the first name of the user
      */
-    public void setFName(String fName) { _fName.set(fName); }
+    public void setFName(String fName) {
+        _fName.set(fName);
+    }
 
     /**
      * a method to get the last name of the User
      * @return the last name of the user
      */
-    public String getLName() {return _lName.get(); }
+    public String getLName() {
+        return _lName.get();
+    }
 
     /**
      * a method to set the last name of the User
      * @param lName the last name of the user
      */
-    public void setLName(String lName) { _lName.set(lName); }
+    public void setLName(String lName) {
+        _lName.set(lName);
+    }
 
     /**
      * a method to get the e-mail address of the user
      * @return the user's e-mail address
      */
-    public String getEmail() {return _email.get();}
+    public String getEmail() {
+        return _email.get();
+    }
 
     /**
      * a method to set the e-mail address of the User
      * @param email the e-mail to be set
      */
-    public void setEmail(String email) { _email.set(email); }
+    public void setEmail(String email) {
+        _email.set(email);
+    }
 
 
     /**
@@ -82,13 +99,17 @@ public class Account {
      * types include: User, Worker, Manager, Admin
      * @return the type of User
      */
-    public AccountType getType() {return _type.get();}
+    public AccountType getType() {
+        return _type.get();
+    }
 
     /**
      * a method to set the user account type
      * @param type the Enum of the account type
      */
-    public void setType(AccountType type) { _type.set(type); }
+    public void setType(AccountType type) {
+        _type.set(type);
+    }
 
     /**
      * @return the address
@@ -107,7 +128,9 @@ public class Account {
      * a method to we haven't used yet
      * @return the type from the combo box in M3
      */
-    public ObjectProperty getAccountTypeProperty() { return _type; }
+    public ObjectProperty getAccountTypeProperty() {
+        return _type;
+    }
 
     /**
      * A  the default constructor of the user
@@ -118,7 +141,8 @@ public class Account {
      * @param type account type
      *
      */
-    Account(String id, String fName, String lName, String email, AccountType type) {
+    Account(String id, String fName, String lName,
+            String email, AccountType type) {
 
         this(id, fName, lName, email, type, "", "");
 
@@ -137,7 +161,8 @@ public class Account {
      * @param address address
      *
      */
-    public Account(String id, String fName, String lName, String email, AccountType type, String phone, String address) {
+    public Account(String id, String fName, String lName, String email,
+                   AccountType type, String phone, String address) {
 
         _id.set(id);
         _fName.set(fName);

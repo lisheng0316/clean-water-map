@@ -36,7 +36,9 @@ public class LoginController extends AnchorPane implements Initializable {
      * Sets up the login page
      * @param application the main application of the login page
      */
-    public void setApp(Main application) { this.application = application;}
+    public void setApp(Main application) {
+        this.application = application;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

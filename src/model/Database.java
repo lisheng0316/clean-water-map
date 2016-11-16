@@ -44,10 +44,13 @@ public class Database {
     public static void updateAccount(String fname,
                                      String lname,
                                      String email,
-                                     String phone, String address, String username, String password) {
+                                     String phone, String address,
+                                     String username, String password) {
         PreparedStatement stmt = null;
         try {
-            String sql = "UPDATE user SET fname = ?, lname = ?, email = ? , phone = ?, address = ?, password = ? where username = ?";
+            String sql = "UPDATE user SET fname = ?, lname = ?,"
+                    + "email = ? , phone = ?, address = ?,"
+                    + "password = ? where username = ?";
             stmt = connection.prepareStatement(sql);
             stmt.setString(1, fname);
             stmt.setString(2, lname);
@@ -57,11 +60,9 @@ public class Database {
             stmt.setString(6, password);
             stmt.setString(7, username);
             stmt.executeUpdate();
-        }
-        catch (SQLException ex){
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-        }
-        finally {
+        } finally {
             if (rs != null) {
                 try {
                     rs.close();
@@ -98,7 +99,9 @@ public class Database {
                 String phone = rs.getString("phone") + "";
                 String address = rs.getString("address");
 
-                account = new Account(username, firstName, lastName, email, AccountType.valueOf(type), phone, address);
+                account = new Account(username, firstName,
+                        lastName, email, AccountType.valueOf(type),
+                        phone, address);
             }
             stmt.close();
 
@@ -122,8 +125,7 @@ public class Database {
             stmt.setString(1, username);
             rs = stmt.executeQuery();
 
-            while (rs.next())
-            {
+            while (rs.next()) {
                 password = rs.getString("password");
             }
             stmt.close();
@@ -145,7 +147,8 @@ public class Database {
 
         try {
             if (username != null && password != null) {
-                String sql = "SELECT * FROM user WHERE username= ? AND password= ?";
+                String sql = "SELECT * FROM user WHERE username= ?"
+                        + "AND password= ?";
                 stmt = connection.prepareStatement(sql);
                 stmt.setString(1, username);
                 stmt.setString(2, password);
@@ -169,7 +172,8 @@ public class Database {
     public static boolean validateUsername(String username) {
 
         try {
-            String sql = "SELECT `username` FROM `schema`.user WHERE username = ?";
+            String sql = "SELECT `username` FROM `schema`.user WHERE"
+                    + "username = ?";
             stmt = connection.prepareStatement(sql);
             stmt.setString(1, username);
             rs = stmt.executeQuery();
@@ -177,11 +181,9 @@ public class Database {
             if (!rs.next()) {
                 return true;
             }
-        }
-        catch (SQLException ex){
+        } catch (SQLException ex) {
             System.out.println(ex.getErrorCode());
-        }
-        finally {
+        } finally {
             if (rs != null) {
                 try {
                     rs.close();
@@ -211,8 +213,9 @@ public class Database {
                                String lname, String email, AccountType type) {
 
         try {
-            String query = "INSERT INTO `schema`.`user` (`id`, `username`, `password`" +
-                    ", `fname`, `lname`, `email`, `type`)"
+            String query = "INSERT INTO `schema`.`user` (`id`,"
+                    + "`username`, `password`"
+                    + ", `fname`, `lname`, `email`, `type`)"
                     + " VALUES (null, ?, ?, ?, ?, ?, ?)";
 
             stmt = connection.prepareStatement(query);
@@ -223,11 +226,9 @@ public class Database {
             stmt.setString(5, email);
             stmt.setString(6, type.toString());
             stmt.executeUpdate();
-        }
-        catch (SQLException ex){
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-        }
-        finally {
+        } finally {
             if (rs != null) {
                 try {
                     rs.close();
@@ -254,11 +255,14 @@ public class Database {
                                             String latitude,
                                             String longitude,
                                             WaterType waterType,
-                                            WaterCondition waterCondition, String date) {
+                                            WaterCondition waterCondition,
+                                            String date) {
 
         try {
-            String query = "INSERT INTO `schema`.`WaterSourceReport` (`ReportNumber`, `Username`, `Latitude`" +
-                    ", `Longitude`, `WaterType`, `WaterCondition`, `Date`)"
+            String query = "INSERT INTO `schema`.`WaterSourceReport`"
+                    + "(`ReportNumber`,"
+                    + "`Username`, `Latitude`"
+                    + ", `Longitude`, `WaterType`, `WaterCondition`, `Date`)"
                     + " VALUES (null, ?, ?, ?, ?, ?, ?)";
 
             stmt = connection.prepareStatement(query);
@@ -269,11 +273,9 @@ public class Database {
             stmt.setString(5, waterCondition.toString());
             stmt.setString(6, date);
             stmt.executeUpdate();
-        }
-        catch (SQLException ex){
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-        }
-        finally {
+        } finally {
             if (rs != null) {
                 try {
                     rs.close();
@@ -299,8 +301,7 @@ public class Database {
             stmt = connection.prepareStatement(query);
             rs = stmt.executeQuery();
 
-            while (rs.next())
-            {
+            while (rs.next()) {
                 int reportNumber = rs.getInt("ReportNumber");
                 String username = rs.getString("Username");
                 Double latitude = rs.getDouble("Latitude");
@@ -344,8 +345,11 @@ public class Database {
                                             String date,
                                             String contaminant, String virus) {
         try {
-            String query = "INSERT INTO `schema`.`WaterPurityReport` (`ReportNumber`, `Username`, `Latitude`" +
-                    ", `Longitude`, `WaterType`, `WaterCondition`, `Date`, `ContaminantPPM`, `VirusPPM`)"
+            String query = "INSERT INTO `schema`.`WaterPurityReport`"
+                    + "(`ReportNumber`,"
+                    + "`Username`, `Latitude`"
+                    + ", `Longitude`, `WaterType`, `WaterCondition`,"
+                    + "`Date`, `ContaminantPPM`, `VirusPPM`)"
                     + " VALUES (null, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             stmt = connection.prepareStatement(query);
@@ -359,11 +363,9 @@ public class Database {
             stmt.setString(8, virus);
 
             stmt.executeUpdate();
-        }
-        catch (SQLException ex){
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-        }
-        finally {
+        } finally {
             if (rs != null) {
                 try {
                     rs.close();
@@ -430,8 +432,9 @@ public class Database {
 
         //Establish connection using DriverManager
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/schema?" +
-                    "user=root&password=pass");
+            connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost/schema?"
+                            + "user=root&password=pass");
         } catch (SQLException e) {
             System.out.println("Unable to connect to database");
         }

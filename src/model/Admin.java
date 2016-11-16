@@ -4,7 +4,7 @@ package model;
  * Created by Sheng on 9/27/16.
  * Admin to implement the required functionality
  */
-class Admin extends Account{
+class Admin extends Account {
 
 
     /**

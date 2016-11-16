@@ -44,9 +44,11 @@ public class HistoricalReportController implements Initializable {
     @FXML
     private Label longitude;
 
-    private ObservableList<String> monthNames = FXCollections.observableArrayList();
+    private ObservableList<String> monthNames = FXCollections.
+            observableArrayList();
 
-    private List<WaterPurityReport> totalList = Database.getWaterPurityReports();
+    private List<WaterPurityReport> totalList = Database.
+            getWaterPurityReports();
     private List<WaterPurityReport> waterPurityReportList;
 
     private XYChart.Series<String, Double> virusSeries;
@@ -60,11 +62,11 @@ public class HistoricalReportController implements Initializable {
      *
      * @param wpr the water purity report to show
      */
-    public void setApp(Main application, WaterPurityReport wpr){
+    public void setApp(Main application, WaterPurityReport wpr) {
         this.application = application;
         this.wpr = wpr;
-        latitude.setText(wpr.getLatitude()+ "");
-        longitude.setText(wpr.getLongitude()+ "");
+        latitude.setText(wpr.getLatitude() + "");
+        longitude.setText(wpr.getLongitude() + "");
         reportBox.setText(wpr.getReportNumber() + "");
         yearBox.setText(getYear(wpr));
         graph(wpr);
@@ -80,15 +82,16 @@ public class HistoricalReportController implements Initializable {
         virusPPM();
         contaminantPPM();
         reportBox.setText(report.getReportNumber() + "");
-        latitude.setText(report.getLatitude()+ "");
-        longitude.setText(report.getLongitude()+ "");
+        latitude.setText(report.getLatitude() + "");
+        longitude.setText(report.getLongitude() + "");
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         x.setLabel("Month");
         y.setLabel("PPM");
-        //String[] months = DateFormatSymbols.getInstance(Locale.ENGLISH).getMonths();
+        //String[] months = DateFormatSymbols.
+        // getInstance(Locale.ENGLISH).getMonths();
         String[] months = new String[12];
         for (int i = 0; i < 12; i++) {
             months[i] = (i + 1) + "";
@@ -99,8 +102,11 @@ public class HistoricalReportController implements Initializable {
     /**
      * Create the monthly data for chart
      * @param monthCounter month counter to be
+     * @return the line chart showing trend of virus ppm /
+     * contaminant ppm
      */
-    private XYChart.Series<String, Double> createMonthDataSeries(double[] monthCounter) {
+    private XYChart.Series<String, Double> createMonthDataSeries(
+            double[] monthCounter) {
         XYChart.Series<String, Double> series = new XYChart.Series<>();
 
         for (int i = 0; i < monthCounter.length; i++) {
@@ -113,7 +119,8 @@ public class HistoricalReportController implements Initializable {
     }
 
     /**
-     * Get all reports with the same location and add to instance waterPurityReportList;
+     * Get all reports with the same location and
+     * add to instance waterPurityReportList;
      * @param report the water purity report to get data from
      */
     private void setWaterPurityData(WaterPurityReport report) {
@@ -124,11 +131,13 @@ public class HistoricalReportController implements Initializable {
         for (WaterPurityReport e : totalList) {
             if (Math.abs(report.getLatitude()
                     - e.getLatitude()) < EPSILON
-                    && Math.abs(report.getLongitude() - e.getLongitude()) < EPSILON) {
+                    && Math.abs(report.getLongitude()
+                    - e.getLongitude()) < EPSILON) {
                 waterPurityReportList.add(e);
             }
         }
-        System.out.println("Number of records: " + waterPurityReportList.size());
+        System.out.println("Number of records: "
+                + waterPurityReportList.size());
     }
 
     /**
@@ -292,6 +301,7 @@ public class HistoricalReportController implements Initializable {
     /**
      * Get the purity report base on report number
      * @param reportNumber the report number in which the purity report to get
+     * @return return the purity report
      */
     private WaterPurityReport getReport(int reportNumber) {
         WaterPurityReport report = null;

@@ -60,14 +60,17 @@ public class Main extends Application {
      * A method to get the account of the user who logged in
      * @return the account of the user who logged in
      */
-    public Account getLoggedAccount() { return loggedAccount;}
+    public Account getLoggedAccount() {
+        return loggedAccount;
+    }
 
     /**
      * a method to send the app to the welcome screen
      */
     private void gotoWelcome() {
         try {
-            WelcomeController welcome = (WelcomeController) replaceSceneContent("/view/WelcomePage.fxml");
+            WelcomeController welcome = (WelcomeController)
+                    replaceSceneContent("/view/WelcomePage.fxml");
             welcome.setApp(this);
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -80,7 +83,9 @@ public class Main extends Application {
      */
     public void gotoHistoricalReport(WaterPurityReport wpr) {
         try {
-            HistoricalReportController controller = (HistoricalReportController) replaceSceneContent("/view/HistoricalReport.fxml");
+            HistoricalReportController controller =
+                    (HistoricalReportController)
+                            replaceSceneContent("/view/HistoricalReport.fxml");
             controller.setApp(this, wpr);
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -92,7 +97,9 @@ public class Main extends Application {
      */
     public void gotoRegistration() {
         try {
-            RegistrationController registration = (RegistrationController) replaceSceneContent("/view/RegisterPage.fxml");
+            RegistrationController registration =
+                    (RegistrationController)
+                            replaceSceneContent("/view/RegisterPage.fxml");
             registration.setApp(this);
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -104,7 +111,8 @@ public class Main extends Application {
      */
     public void gotoProfile() {
         try {
-            ProfileController profile = (ProfileController) replaceSceneContent("/view/ProfilePage.fxml");
+            ProfileController profile = (ProfileController)
+                    replaceSceneContent("/view/ProfilePage.fxml");
             profile.setApp(this);
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -116,7 +124,8 @@ public class Main extends Application {
      */
     public void gotoManagerApp() {
         try {
-            UserAppController appView = (UserAppController) replaceSceneContent("/view/ManagerAppView.fxml");
+            UserAppController appView = (UserAppController)
+                    replaceSceneContent("/view/ManagerAppView.fxml");
             appView.setApp(this);
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -131,7 +140,8 @@ public class Main extends Application {
      */
     private void gotoWorkerApp() {
         try {
-            WorkerAppController appView = (WorkerAppController) replaceSceneContent("/view/WorkerAppView.fxml");
+            WorkerAppController appView = (WorkerAppController)
+                    replaceSceneContent("/view/WorkerAppView.fxml");
             appView.setApp(this);
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -143,7 +153,8 @@ public class Main extends Application {
      */
     private void gotoUserApp() {
         try {
-            UserAppController appView = (UserAppController) replaceSceneContent("/view/UserAppView.fxml");
+            UserAppController appView = (UserAppController)
+                    replaceSceneContent("/view/UserAppView.fxml");
             appView.setApp(this);
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -219,9 +230,11 @@ public class Main extends Application {
         } finally {
             in.close();
         }
-        Scene scene = new Scene(page, MINIMUM_WINDOW_WIDTH, MINIMUM_WINDOW_HEIGHT);
-    //    String css = AppViewController.class.getResource("/fxapp/stylesheet.css").toExternalForm();
-    //    scene.getStylesheets().add(css);
+        Scene scene = new Scene(page, MINIMUM_WINDOW_WIDTH,
+                MINIMUM_WINDOW_HEIGHT);
+        //    String css = AppViewController.class.getResource
+        // ("/fxapp/stylesheet.css").toExternalForm();
+        //    scene.getStylesheets().add(css);
         stage.setScene(scene);
         stage.sizeToScene();
         return (Initializable) loader.getController();

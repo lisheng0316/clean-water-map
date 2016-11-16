@@ -92,7 +92,8 @@ public class ManagerAppController extends UserAppController implements
             = FXCollections.observableArrayList(WaterCondition.values());
 
     private final ObservableList<String> reportTypeList
-            = FXCollections.observableArrayList("Source report", "Purity report");
+            = FXCollections.observableArrayList("Source report",
+            "Purity report");
 
     private DatePicker reportDate;
 
@@ -133,17 +134,23 @@ public class ManagerAppController extends UserAppController implements
         pullReport();
 
         //listener for Listview, check if item selected;
-        sourceReportListView.getSelectionModel().selectedItemProperty().addListener(
-                (ObservableValue<? extends WaterSourceReport> ov, WaterSourceReport oldSelectedItem,
+        sourceReportListView.getSelectionModel().selectedItemProperty()
+                .addListener((ObservableValue<? extends WaterSourceReport> ov,
+                 WaterSourceReport oldSelectedItem,
                  WaterSourceReport selectedItem) -> {
                     if (selectedItem != null) {
                         if (mapView.isDisable()) {
-                            mainReportNumber.setText(selectedItem.getReportNumber() + "");
+                            mainReportNumber.setText(selectedItem.
+                                    getReportNumber() + "");
                             mainReporter.setText(selectedItem.getUser());
-                            mainLongitude.setText(selectedItem.getLongitude() + "");
-                            mainLatitude.setText(selectedItem.getLatitude() + "");
-                            mainWaterType.setText(selectedItem.getType() + "");
-                            mainWaterCondition.setText(selectedItem.getCondition() + "");
+                            mainLongitude.setText(selectedItem.
+                                    getLongitude() + "");
+                            mainLatitude.setText(selectedItem.
+                                    getLatitude() + "");
+                            mainWaterType.setText(selectedItem.
+                                    getType() + "");
+                            mainWaterCondition.setText(selectedItem.
+                                    getCondition() + "");
                             mainContaminant.setText("N/A (Purity report only)");
                             mainVirus.setText("N/A (Purity report only)");
                             mainDate.setText(selectedItem.getDate());
@@ -154,25 +161,34 @@ public class ManagerAppController extends UserAppController implements
                 });
 
 
-        purityReportListView.getSelectionModel().selectedItemProperty().addListener(
-                (ObservableValue<? extends WaterPurityReport> ov, WaterPurityReport oldSelectedItem,
+        purityReportListView.getSelectionModel().
+                selectedItemProperty().addListener(
+                    (ObservableValue<? extends WaterPurityReport> ov,
+                 WaterPurityReport oldSelectedItem,
                  WaterPurityReport selectedItem) -> {
-                    if (selectedItem != null) {
-                        if (mapView.isDisable()) {
-                            mainReportNumber.setText(selectedItem.getReportNumber() + "");
-                            mainReporter.setText(selectedItem.getUser());
-                            mainLongitude.setText(selectedItem.getLongitude() + "");
-                            mainLatitude.setText(selectedItem.getLatitude() + "");
-                            mainWaterType.setText(selectedItem.getType() + "");
-                            mainWaterCondition.setText(selectedItem.getCondition() + "");
-                            mainContaminant.setText(selectedItem.getContaminantPPM() + "");
-                            mainVirus.setText(selectedItem.getVirusPPM() + "");
-                            mainDate.setText(selectedItem.getDate());
-                        } else {
-                            displayPinFromList(selectedItem);
+                        if (selectedItem != null) {
+                            if (mapView.isDisable()) {
+                                mainReportNumber.setText(selectedItem.
+                                        getReportNumber() + "");
+                                mainReporter.setText(selectedItem.getUser());
+                                mainLongitude.setText(selectedItem.
+                                        getLongitude() + "");
+                                mainLatitude.setText(selectedItem.
+                                        getLatitude() + "");
+                                mainWaterType.setText(selectedItem.
+                                        getType() + "");
+                                mainWaterCondition.setText(selectedItem.
+                                        getCondition() + "");
+                                mainContaminant.setText(selectedItem.
+                                        getContaminantPPM() + "");
+                                mainVirus.setText(selectedItem.
+                                        getVirusPPM() + "");
+                                mainDate.setText(selectedItem.getDate());
+                            } else {
+                                displayPinFromList(selectedItem);
+                            }
                         }
-                    }
-                });
+                    });
         alert = new Alert(Alert.AlertType.CONFIRMATION);
     }
 
@@ -206,7 +222,8 @@ public class ManagerAppController extends UserAppController implements
 
     /**
      * Helper method to display pin on map.
-     * If a pin is clicked, an info window with location information will pop up.
+     * If a pin is clicked, an info window
+     * with location information will pop up.
      */
     private void displayPins() {
         for (WaterSourceReport w: wsrArrayList) {
@@ -221,23 +238,26 @@ public class ManagerAppController extends UserAppController implements
 
             map.addUIEventHandler(marker,
                     UIEventType.click,
-                    (JSObject obj) -> {
-                        InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
-                        infoWindowOptions.content("<h2>Source report #" + w.getReportNumber() + "</h2>"
+                (JSObject obj) -> {
+                    InfoWindowOptions infoWindowOptions =
+                                new InfoWindowOptions();
+                    infoWindowOptions.content("<h2>Source report #"
+                                + w.getReportNumber() + "</h2>"
                                 + "Reporter: " + w.getUser()
-                                + "<br>Location: " + w.getLatitude() + ", " + w.getLongitude()
+                                + "<br>Location: " + w.getLatitude()
+                                + ", " + w.getLongitude()
                                 + "<br>Type: " + w.getType()
                                 + "<br>Condition: " + w.getCondition()
                                 + "<br>Date: " + w.getDate());
 
-                        InfoWindow window = new InfoWindow(infoWindowOptions);
-                        window.open(map, marker);
-                        latitude.setText("" + w.getLatitude());
-                        longitude.setText("" + w.getLongitude());
-                        waterType.setValue(w.getType());
-                        waterCondition.setValue(w.getCondition());
+                    InfoWindow window = new InfoWindow(infoWindowOptions);
+                    window.open(map, marker);
+                    latitude.setText("" + w.getLatitude());
+                    longitude.setText("" + w.getLongitude());
+                    waterType.setValue(w.getType());
+                    waterCondition.setValue(w.getCondition());
 
-                    });
+                });
 
             map.addMarker(marker);
 
@@ -253,27 +273,26 @@ public class ManagerAppController extends UserAppController implements
 
             Marker marker = new Marker(markerOptions);
 
-            map.addUIEventHandler(marker,
-                    UIEventType.click,
-                    (JSObject obj) -> {
-                        InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
-                        infoWindowOptions.content("<h2>Purity report #" + wpr.getReportNumber() + "</h2> "
-                                + "Reporter: " + wpr.getUser()
-                                + "<br>Location: " + wpr.getLatitude() + ", " + wpr.getLongitude()
-                                + "<br>Type: " + wpr.getType()
-                                + "<br>Condition: " + wpr.getCondition()
-                                + "<br>Date: " + wpr.getDate()
-                                + "<br>VirusPPM: " + wpr.getVirusPPM()
-                                + "<br>ContaminantPPM: " + wpr.getContaminantPPM());
+            map.addUIEventHandler(marker, UIEventType.click, (JSObject obj) -> {
+                InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
+                infoWindowOptions.content("<h2>Purity report #"
+                        + wpr.getReportNumber() + "</h2> "
+                        + "Reporter: " + wpr.getUser()
+                        + "<br>Location: " + wpr.getLatitude()
+                        + ", " + wpr.getLongitude()
+                        + "<br>Type: " + wpr.getType()
+                        + "<br>Condition: " + wpr.getCondition()
+                        + "<br>Date: " + wpr.getDate()
+                        + "<br>VirusPPM: " + wpr.getVirusPPM()
+                        + "<br>ContaminantPPM: " + wpr.getContaminantPPM());
 
-                        InfoWindow window = new InfoWindow(infoWindowOptions);
-                        window.open(map, marker);
-                        latitude.setText("" + wpr.getLatitude());
-                        longitude.setText("" + wpr.getLongitude());
-                        waterType.setValue(wpr.getType());
-                        waterCondition.setValue(wpr.getCondition());
-
-                    });
+                InfoWindow window = new InfoWindow(infoWindowOptions);
+                window.open(map, marker);
+                latitude.setText("" + wpr.getLatitude());
+                longitude.setText("" + wpr.getLongitude());
+                waterType.setValue(wpr.getType());
+                waterCondition.setValue(wpr.getCondition());
+            });
 
             map.addMarker(marker);
         }
@@ -288,7 +307,8 @@ public class ManagerAppController extends UserAppController implements
      */
     private void displayPinFromList(WaterSourceReport report) {
         MarkerOptions markerOption = new MarkerOptions();
-        LatLong location = new LatLong(report.getLatitude(), report.getLongitude());
+        LatLong location = new LatLong(report.getLatitude(),
+                report.getLongitude());
 
         markerOption.position(location)
                 .visible(Boolean.TRUE)
@@ -296,7 +316,8 @@ public class ManagerAppController extends UserAppController implements
         Marker marker = new Marker(markerOption);
 
         InfoWindowOptions infoWindow = new InfoWindowOptions();
-        infoWindow.content("<h2>Source report #" + report.getReportNumber() + "</h2>"
+        infoWindow.content("<h2>Source report #"
+                + report.getReportNumber() + "</h2>"
                 + "Reporter: " + report.getUser()
                 + "<br>Location: " + report.getLatitude()
                 + ", " + report.getLongitude()
@@ -317,7 +338,8 @@ public class ManagerAppController extends UserAppController implements
      */
     private void displayPinFromList(WaterPurityReport report) {
         MarkerOptions markerOption = new MarkerOptions();
-        LatLong location = new LatLong(report.getLatitude(), report.getLongitude());
+        LatLong location = new LatLong(report.getLatitude(),
+                report.getLongitude());
 
         markerOption.position(location)
                 .visible(Boolean.TRUE)
@@ -325,7 +347,8 @@ public class ManagerAppController extends UserAppController implements
         Marker marker = new Marker(markerOption);
 
         InfoWindowOptions infoWindow = new InfoWindowOptions();
-        infoWindow.content("<h2>Purity report #" + report.getReportNumber() + "</h2>"
+        infoWindow.content("<h2>Purity report #"
+                + report.getReportNumber() + "</h2>"
                 + "Reporter: " + report.getUser()
                 + "<br>Location: " + report.getLatitude()
                 + ", " + report.getLongitude()
@@ -383,7 +406,7 @@ public class ManagerAppController extends UserAppController implements
      * Sets up the up view
      * @param application the main application of th app view
      */
-    public void setApp(Main application){
+    public void setApp(Main application) {
         this.application = application;
         username.setText("" + application.getLoggedAccount());
     }
@@ -407,7 +430,7 @@ public class ManagerAppController extends UserAppController implements
         alert.setContentText("Hit OK to void your submission");
         Optional<ButtonType> result = alert.showAndWait();
 
-        if (result.isPresent() && result.get() == ButtonType.OK){
+        if (result.isPresent() && result.get() == ButtonType.OK) {
             resetForm();
         }
     }
@@ -425,7 +448,8 @@ public class ManagerAppController extends UserAppController implements
     }
 
     /**
-     * Disable options between source and purity report when one of both is clicked.
+     * Disable options between source and
+     * purity report when one of both is clicked.
      */
     @FXML
     private void reportTypeSelected() {
@@ -453,7 +477,8 @@ public class ManagerAppController extends UserAppController implements
 
             alert.setTitle("Form Submission");
             alert.setHeaderText("Report is has missing information");
-            alert.setContentText("Please fill out all required field before submitting");
+            alert.setContentText("Please fill out"
+                    + "all required field before submitting");
             Optional<ButtonType> result = alert.showAndWait();
 
         } else {
@@ -467,9 +492,11 @@ public class ManagerAppController extends UserAppController implements
                 Account loggedAccount = application.getLoggedAccount();
 
                 Date tempDate = new Date();
-                SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy");
+                SimpleDateFormat dateFormatter =
+                        new SimpleDateFormat("MM/dd/yyyy");
                 SimpleDateFormat timeFormatter = new SimpleDateFormat("h:mm a");
-                String date = timeFormatter.format(tempDate) + " on " + dateFormatter.format(tempDate);
+                String date = timeFormatter.format(tempDate)
+                        + " on " + dateFormatter.format(tempDate);
 
                 if (reportType.getValue().equals("Source report")) {
                     Database.addWaterSourceReport(loggedAccount.getId(),
@@ -500,7 +527,7 @@ public class ManagerAppController extends UserAppController implements
      * toggle menu when pressed.
      */
     @FXML
-    private void menuPressed(){
+    private void menuPressed() {
         toggleMenu();
     }
 
@@ -530,8 +557,7 @@ public class ManagerAppController extends UserAppController implements
             reportPane.setMinWidth(0);
             reportPane.setMaxWidth(0);
             reportExpand = true;
-        }
-        else {
+        } else {
             mapView.setMinWidth(600);
             mapView.setMaxWidth(600);
             reportPane.setMinWidth(200);
