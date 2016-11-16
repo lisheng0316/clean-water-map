@@ -14,7 +14,8 @@ class Worker extends User {
      * @param type account type
      *
      */
-    Worker(String id, String fname, String lname, String email, AccountType type) {
+    Worker(String id, String fname, String lname,
+           String email, AccountType type) {
         super(id, fname, lname, email, type);
     }
 }

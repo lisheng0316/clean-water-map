@@ -27,7 +27,7 @@ public class WaterPurityReport extends WaterSourceReport {
                              WaterCondition condition,
                              String date,
                              double contaminantPPM,
-                             double virusPPM ) {
+                             double virusPPM) {
         super(reportNumber, user, latitude, longitude, type, condition, date);
         this.virusPPM = virusPPM;
         this.contaminantPPM = contaminantPPM;
@@ -54,7 +54,7 @@ public class WaterPurityReport extends WaterSourceReport {
      * @return the report title
      */
     @Override
-    public String toString(){
+    public String toString() {
         return "" + this.getReportNumber();
 
     }
