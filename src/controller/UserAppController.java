@@ -18,13 +18,34 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+//import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+
+
 import java.text.SimpleDateFormat;
-import java.util.*;
+//import java.util.*;
+import java.util.ResourceBundle;
+import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
+import java.util.Date;
 
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import model.*;
+//import model.*;
+import model.WaterType;
+import model.WaterCondition;
+import model.WaterSourceReport;
+import model.Database;
+import model.Account;
+
 import netscape.javascript.JSObject;
 
 import java.net.URL;
@@ -34,7 +55,8 @@ import java.net.URL;
  * Created by Sheng on 9/19/16.
  * A controller for the app view
  */
-public class UserAppController implements Initializable, MapComponentInitializedListener  {
+public class UserAppController implements Initializable,
+        MapComponentInitializedListener  {
     @FXML
     private GoogleMapView mapView;
 
@@ -83,7 +105,8 @@ public class UserAppController implements Initializable, MapComponentInitialized
             = FXCollections.observableArrayList(WaterCondition.values());
 
     private final ObservableList<String> reportTypeList
-            = FXCollections.observableArrayList("Source report", "Purity report");
+            = FXCollections.observableArrayList("Source report",
+            "Purity report");
 
     private DatePicker reportDate;
 
@@ -130,17 +153,22 @@ public class UserAppController implements Initializable, MapComponentInitialized
         pullReport();
 
         //listener for Listview, check if item selected;
-        sourceReportListView.getSelectionModel().selectedItemProperty().addListener(
-                (ObservableValue<? extends WaterSourceReport> ov, WaterSourceReport oldSelectedItem,
-                 WaterSourceReport selectedItem) -> {
+        sourceReportListView.getSelectionModel().selectedItemProperty()
+                .addListener((ObservableValue<? extends WaterSourceReport> ov,
+                              WaterSourceReport oldSelectedItem,
+                              WaterSourceReport selectedItem) -> {
                     if (selectedItem != null) {
                         if (mapView.isDisable()) {
-                            mainReportNumber.setText(selectedItem.getReportNumber() + "");
+                            mainReportNumber.setText(selectedItem
+                                    .getReportNumber() + "");
                             mainReporter.setText(selectedItem.getUser());
-                            mainLongitude.setText(selectedItem.getLongitude() + "");
-                            mainLatitude.setText(selectedItem.getLatitude() + "");
+                            mainLongitude.setText(selectedItem.getLongitude()
+                                    + "");
+                            mainLatitude.setText(selectedItem.getLatitude()
+                                    + "");
                             mainWaterType.setText(selectedItem.getType() + "");
-                            mainWaterCondition.setText(selectedItem.getCondition() + "");
+                            mainWaterCondition.setText(selectedItem
+                                    .getCondition() + "");
                             mainContaminant.setText("N/A (Purity report only)");
                             mainVirus.setText("N/A (Purity report only)");
                             mainDate.setText(selectedItem.getDate());
@@ -182,7 +210,7 @@ public class UserAppController implements Initializable, MapComponentInitialized
 
     /**
      * Helper method to display pin on map.
-     * If a pin is clicked, an info window with location information will pop up.
+     * If a pin is clicked, an info window with location information will pop
      */
     private void displayPins() {
         for (WaterSourceReport w: dataArrayList) {
@@ -195,20 +223,18 @@ public class UserAppController implements Initializable, MapComponentInitialized
 
             Marker marker = new Marker(markerOptions);
 
-            map.addUIEventHandler(marker,
-                    UIEventType.click,
-                    (JSObject obj) -> {
-                        InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
-                        infoWindowOptions.content("<h2> Source report #" + w.getReportNumber() + "</h2>"
-                                + "Reporter: " + w.getUser()
-                                + "<br>Location: " + w.getLatitude() + ", " + w.getLongitude()
-                                + "<br>Type: " + w.getType()
-                                + "<br>Condition: " + w.getCondition()
-                                + "<br>Date: " + w.getDate());
+            map.addUIEventHandler(marker, UIEventType.click, (JSObject obj) -> {
+                InfoWindowOptions infoWindowOptions = new InfoWindowOptions();
+                infoWindowOptions.content("<h2> Source report #"
+                        + w.getReportNumber() + "</h2>" + "Reporter: "
+                        + w.getUser() + "<br>Location: " + w.getLatitude()
+                        + ", " + w.getLongitude() + "<br>Type: " + w.getType()
+                        + "<br>Condition: " + w.getCondition() + "<br>Date: "
+                        + w.getDate());
 
-                        InfoWindow window = new InfoWindow(infoWindowOptions);
-                        window.open(map, marker);
-                    });
+                InfoWindow window = new InfoWindow(infoWindowOptions);
+                window.open(map, marker);
+            });
 
             map.addMarker(marker);
 
@@ -222,7 +248,8 @@ public class UserAppController implements Initializable, MapComponentInitialized
      */
     private void displayPinFromList(WaterSourceReport report) {
         MarkerOptions markerOption = new MarkerOptions();
-        LatLong location = new LatLong(report.getLatitude(), report.getLongitude());
+        LatLong location = new LatLong(report.getLatitude(),
+                report.getLongitude());
 
         markerOption.position(location)
                 .visible(Boolean.TRUE)
@@ -230,7 +257,8 @@ public class UserAppController implements Initializable, MapComponentInitialized
         Marker marker = new Marker(markerOption);
 
         InfoWindowOptions infoWindow = new InfoWindowOptions();
-        infoWindow.content("<h2>Source report #" + report.getReportNumber() + "</h2>"
+        infoWindow.content("<h2>Source report #" + report.getReportNumber()
+                + "</h2>"
                 + "Reporter: " + report.getUser()
                 + "<br>Location: " + report.getLatitude()
                 + ", " + report.getLongitude()
@@ -260,9 +288,7 @@ public class UserAppController implements Initializable, MapComponentInitialized
     private void pullReport() {
         waterReportList = FXCollections.observableArrayList();
         dataArrayList = Database.getWaterSourceReports();
-        for (WaterSourceReport e : dataArrayList) {
-            waterReportList.add(e);
-        }
+        waterReportList.addAll(dataArrayList);
         sourceReportListView.setItems(waterReportList);
         focusItem();
     }
@@ -270,7 +296,7 @@ public class UserAppController implements Initializable, MapComponentInitialized
      * Sets up the up view
      * @param application the main application of th app view
      */
-    public void setApp(Main application){
+    public void setApp(Main application) {
         this.application = application;
         username.setText("" + application.getLoggedAccount());
     }
@@ -295,7 +321,7 @@ public class UserAppController implements Initializable, MapComponentInitialized
         alert.setContentText("Hit OK to void your submission");
         Optional<ButtonType> result = alert.showAndWait();
 
-        if (result.get() == ButtonType.OK){
+        if (result.get() == ButtonType.OK) {
             resetForm();
         }
     }
@@ -323,7 +349,8 @@ public class UserAppController implements Initializable, MapComponentInitialized
 
             alert.setTitle("Form Submission");
             alert.setHeaderText("Report is has missing information");
-            alert.setContentText("Please fill out all required field before submitting");
+            alert.setContentText("Please fill out all required field "
+                    + "before submitting");
             Optional<ButtonType> result = alert.showAndWait();
 
         } else {
@@ -337,9 +364,11 @@ public class UserAppController implements Initializable, MapComponentInitialized
                 Account loggedAccount = application.getLoggedAccount();
 
                 Date tempDate = new Date();
-                SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy");
+                SimpleDateFormat dateFormatter = new
+                        SimpleDateFormat("MM/dd/yyyy");
                 SimpleDateFormat timeFormatter = new SimpleDateFormat("h:mm a");
-                String date = timeFormatter.format(tempDate) + " on " + dateFormatter.format(tempDate);
+                String date = timeFormatter.format(tempDate) + " on "
+                        + dateFormatter.format(tempDate);
 
                 Database.addWaterSourceReport(loggedAccount.getId(),
                         latitude.getText(),
@@ -361,7 +390,7 @@ public class UserAppController implements Initializable, MapComponentInitialized
      * toggle menu when pressed.
      */
     @FXML
-    private void menuPressed(){
+    private void menuPressed() {
         toggleMenu();
     }
 
@@ -401,7 +430,8 @@ public class UserAppController implements Initializable, MapComponentInitialized
     }
 
     /**
-     * Disable options between source and purity report when one of both is clicked.
+     * Disable options between source and purity report when one of both
+     * is clicked.
      */
     @FXML
     private void reportTypeSelected() {

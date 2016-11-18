@@ -14,8 +14,6 @@ import java.util.List;
  * Created by Bang on 10/6/16.
  */
 public class Database {
-    private static List<WaterSourceReport> sourceReportList;
-    private static List<WaterPurityReport> purityReportList;
     //declare connection, statement and resultSet objects
     private static Connection connection = null;
     private static PreparedStatement stmt = null;
@@ -41,13 +39,14 @@ public class Database {
      * @param username username of user.
      * @param password password of user.
      */
-    public static void updateAccount(String fname,
-                                     String lname,
-                                     String email,
-                                     String phone, String address, String username, String password) {
+    public static void updateAccount(String fname, String lname,
+                                     String email, String phone,
+                                     String address, String username,
+                                     String password) {
         PreparedStatement stmt = null;
         try {
-            String sql = "UPDATE user SET fname = ?, lname = ?, email = ? , phone = ?, address = ?, password = ? where username = ?";
+            String sql = "UPDATE user SET fname = ?, lname = ?, email = ? , " 
+                    + "phone = ?, address = ?, password = ? where username = ?";
             stmt = connection.prepareStatement(sql);
             stmt.setString(1, fname);
             stmt.setString(2, lname);
@@ -57,11 +56,9 @@ public class Database {
             stmt.setString(6, password);
             stmt.setString(7, username);
             stmt.executeUpdate();
-        }
-        catch (SQLException ex){
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-        }
-        finally {
+        } finally {
             if (rs != null) {
                 try {
                     rs.close();
@@ -90,7 +87,7 @@ public class Database {
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                String username_ = rs.getString("username");
+                String userName = rs.getString("username");
                 String firstName = rs.getString("fname");
                 String lastName = rs.getString("lname");
                 String email = rs.getString("email");
@@ -98,7 +95,8 @@ public class Database {
                 String phone = rs.getString("phone") + "";
                 String address = rs.getString("address");
 
-                account = new Account(username, firstName, lastName, email, AccountType.valueOf(type), phone, address);
+                account = new Account(username, firstName, lastName, email,
+                        AccountType.valueOf(type), phone, address);
             }
             stmt.close();
 
@@ -122,8 +120,7 @@ public class Database {
             stmt.setString(1, username);
             rs = stmt.executeQuery();
 
-            while (rs.next())
-            {
+            while (rs.next()) {
                 password = rs.getString("password");
             }
             stmt.close();
@@ -145,7 +142,8 @@ public class Database {
 
         try {
             if (username != null && password != null) {
-                String sql = "SELECT * FROM user WHERE username= ? AND password= ?";
+                String sql = "SELECT * FROM user WHERE username= ? AND "
+                        + "password= ?";
                 stmt = connection.prepareStatement(sql);
                 stmt.setString(1, username);
                 stmt.setString(2, password);
@@ -169,7 +167,8 @@ public class Database {
     public static boolean validateUsername(String username) {
 
         try {
-            String sql = "SELECT `username` FROM `cleanwatermap`.user WHERE username = ?";
+            String sql = "SELECT `username` FROM `schema`.user WHERE "
+                    + "username = ?";
             stmt = connection.prepareStatement(sql);
             stmt.setString(1, username);
             rs = stmt.executeQuery();
@@ -177,11 +176,9 @@ public class Database {
             if (!rs.next()) {
                 return true;
             }
-        }
-        catch (SQLException ex){
+        } catch (SQLException ex) {
             System.out.println(ex.getErrorCode());
-        }
-        finally {
+        } finally {
             if (rs != null) {
                 try {
                     rs.close();
@@ -211,8 +208,8 @@ public class Database {
                                String lname, String email, AccountType type) {
 
         try {
-            String query = "INSERT INTO `cleanwatermap`.`user` (`id`, `username`, `password`" +
-                    ", `fname`, `lname`, `email`, `type`)"
+            String query = "INSERT INTO `schema`.`user` (`id`, `username`, "
+                    + "`password`" + ", `fname`, `lname`, `email`, `type`)"
                     + " VALUES (null, ?, ?, ?, ?, ?, ?)";
 
             stmt = connection.prepareStatement(query);
@@ -223,11 +220,9 @@ public class Database {
             stmt.setString(5, email);
             stmt.setString(6, type.toString());
             stmt.executeUpdate();
-        }
-        catch (SQLException ex){
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-        }
-        finally {
+        } finally {
             if (rs != null) {
                 try {
                     rs.close();
@@ -254,11 +249,13 @@ public class Database {
                                             String latitude,
                                             String longitude,
                                             WaterType waterType,
-                                            WaterCondition waterCondition, String date) {
+                                            WaterCondition waterCondition,
+                                            String date) {
 
         try {
-            String query = "INSERT INTO `cleanwatermap`.`WaterSourceReport` (`ReportNumber`, `Username`, `Latitude`" +
-                    ", `Longitude`, `WaterType`, `WaterCondition`, `Date`)"
+            String query = "INSERT INTO `schema`.`WaterSourceReport` "
+                    + "(`ReportNumber`, `Username`, `Latitude`"
+                    + ", `Longitude`, `WaterType`, `WaterCondition`, `Date`)"
                     + " VALUES (null, ?, ?, ?, ?, ?, ?)";
 
             stmt = connection.prepareStatement(query);
@@ -269,11 +266,9 @@ public class Database {
             stmt.setString(5, waterCondition.toString());
             stmt.setString(6, date);
             stmt.executeUpdate();
-        }
-        catch (SQLException ex){
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-        }
-        finally {
+        } finally {
             if (rs != null) {
                 try {
                     rs.close();
@@ -293,14 +288,13 @@ public class Database {
      */
     public static List<WaterSourceReport> getWaterSourceReports() {
         String query = "SELECT * FROM WaterSourceReport";
-        sourceReportList = new ArrayList<>();
+        List<WaterSourceReport> sourceReportList = new ArrayList<>();
 
         try {
             stmt = connection.prepareStatement(query);
             rs = stmt.executeQuery();
 
-            while (rs.next())
-            {
+            while (rs.next()) {
                 int reportNumber = rs.getInt("ReportNumber");
                 String username = rs.getString("Username");
                 Double latitude = rs.getDouble("Latitude");
@@ -344,8 +338,10 @@ public class Database {
                                             String date,
                                             String contaminant, String virus) {
         try {
-            String query = "INSERT INTO `cleanwatermap`.`WaterPurityReport` (`ReportNumber`, `Username`, `Latitude`" +
-                    ", `Longitude`, `WaterType`, `WaterCondition`, `Date`, `ContaminantPPM`, `VirusPPM`)"
+            String query = "INSERT INTO `schema`.`WaterPurityReport` "
+                    + "(`ReportNumber`, `Username`, `Latitude`"
+                    + ", `Longitude`, `WaterType`, `WaterCondition`, `Date`, "
+                    + "`ContaminantPPM`, `VirusPPM`)"
                     + " VALUES (null, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             stmt = connection.prepareStatement(query);
@@ -359,11 +355,9 @@ public class Database {
             stmt.setString(8, virus);
 
             stmt.executeUpdate();
-        }
-        catch (SQLException ex){
+        } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-        }
-        finally {
+        } finally {
             if (rs != null) {
                 try {
                     rs.close();
@@ -383,7 +377,7 @@ public class Database {
      */
     public static List<WaterPurityReport> getWaterPurityReports() {
         String query = "SELECT * FROM WaterPurityReport";
-        purityReportList = new ArrayList<>();
+        List<WaterPurityReport> purityReportList = new ArrayList<>();
 
         try {
             stmt = connection.prepareStatement(query);
@@ -415,6 +409,7 @@ public class Database {
 
         return purityReportList;
     }
+
     /**
      * Connect to database.
      * @return null
@@ -429,14 +424,9 @@ public class Database {
         }
 
         //Establish connection using DriverManager
-
-//        "jdbc:mysql://watersource.c0udtjalvmmk.us-west-2.rds.amazonaws.com/WaterSource", "prateek", "Pen23haw"
-
         try {
-//            connection = DriverManager.getConnection("jdbc:mysql://cwc.ctpvc2pdo66b.us-east-1.rds.amazonaws.com:3306",
-//                    "awsuser", "mypassword");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/schema?"
-                    + "user=root&password=pass");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/"
+                    + "schema?user=root&password=pass");
         } catch (SQLException e) {
             System.out.println("Unable to connect to database");
         }

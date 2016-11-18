@@ -5,8 +5,8 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-import java.util.HashMap;
-import java.util.Map;
+//import java.util.HashMap;
+//import java.util.Map;
 
 /**
  * Created by Sheng on 9/27/16.
@@ -17,64 +17,79 @@ import java.util.Map;
  */
 public class Account {
 
-    private final StringProperty _id = new SimpleStringProperty();
-    private final StringProperty _fName = new SimpleStringProperty();
-    private final StringProperty _lName = new SimpleStringProperty();
-    private final StringProperty _email = new SimpleStringProperty();
-    private final StringProperty _phone = new SimpleStringProperty();
-    private final StringProperty _address = new SimpleStringProperty();
-    private final ObjectProperty<AccountType> _type = new SimpleObjectProperty<>();
+    private final StringProperty strId = new SimpleStringProperty();
+    private final StringProperty strFname = new SimpleStringProperty();
+    private final StringProperty strLname = new SimpleStringProperty();
+    private final StringProperty strEmail = new SimpleStringProperty();
+    private final StringProperty strPhone = new SimpleStringProperty();
+    private final StringProperty strAddress = new SimpleStringProperty();
+    private final ObjectProperty<AccountType> strType =
+            new SimpleObjectProperty<>();
 
-    private static final Map<String, Account> accountList = new HashMap<>();
+    // --Commented out by Inspection (11/16/16, 12:07 AM):private static final
+    // Map<String, Account> accountList = new HashMap<>();
 
 
     /**
      * a method to get the ID of the user
      * @return the ID of the user
      */
-    public String getId() {return _id.get();}
+    public String getId() { 
+        return strId.get(); }
 
-    /**
-     * a method to set the user ID
-     * @param id the String to be set as the ID
-     */
-    public void setId(String id) { _id.set(id); }
-
+    // --Commented out by Inspection START (11/16/16, 12:04 AM):
+    //    /**
+    //     * a method to set the user ID
+    //     * @param id the String to be set as the ID
+    //     */
+    //    public void setId(String id) {
+    //    strId.set(id); }
+    // --Commented out by Inspection STOP (11/16/16, 12:04 AM)
     /**
      * a method to get the first name of the user
      * @return the first name of the user
      */
-    public String getFName() {return _fName.get();}
+    public String getFName() { 
+        return strFname.get(); }
 
-    /**
-     * a method to set the first name of the user
-     * @param fName the first name of the user
-     */
-    public void setFName(String fName) { _fName.set(fName); }
+    // --Commented out by Inspection START (11/16/16, 12:04 AM):
+    //    /**
+    //     * a method to set the first name of the user
+    //     * @param fName the first name of the user
+    //     */
+    //    public void setFName(String fName) {
+    //    strFname.set(fName); }
+    // --Commented out by Inspection STOP (11/16/16, 12:04 AM)
 
     /**
      * a method to get the last name of the User
      * @return the last name of the user
      */
-    public String getLName() {return _lName.get(); }
+    public String getLName() { 
+        return strLname.get(); }
 
-    /**
-     * a method to set the last name of the User
-     * @param lName the last name of the user
-     */
-    public void setLName(String lName) { _lName.set(lName); }
+    // --Commented out by Inspection START (11/16/16, 12:05 AM):
+    //    /**
+    //     * a method to set the last name of the User
+    //     * @param lName the last name of the user
+    //     */
+    //    public void setLName(String lName) {
+    //    strLname.set(lName); }
+    // --Commented out by Inspection STOP (11/16/16, 12:05 AM)
 
     /**
      * a method to get the e-mail address of the user
      * @return the user's e-mail address
      */
-    public String getEmail() {return _email.get();}
+    public String getEmail() { 
+        return strEmail.get(); }
 
     /**
      * a method to set the e-mail address of the User
      * @param email the e-mail to be set
      */
-    public void setEmail(String email) { _email.set(email); }
+    public void setEmail(String email) { 
+        strEmail.set(email); }
 
 
     /**
@@ -82,32 +97,39 @@ public class Account {
      * types include: User, Worker, Manager, Admin
      * @return the type of User
      */
-    public AccountType getType() {return _type.get();}
+    public AccountType getType() { 
+        return strType.get(); }
 
-    /**
-     * a method to set the user account type
-     * @param type the Enum of the account type
-     */
-    public void setType(AccountType type) { _type.set(type); }
+    // --Commented out by Inspection START (11/16/16, 12:05 AM):
+    //    /**
+    //     * a method to set the user account type
+    //     * @param type the Enum of the account type
+    //     */
+    //    public void setType(AccountType type) {
+    //    strType.set(type); }
+    // --Commented out by Inspection STOP (11/16/16, 12:05 AM)
 
     /**
      * @return the address
      */
     public String getAddress() {
-        return _address.get();
+        return strAddress.get();
     }
 
     /**
      * @return the phone number
      */
     public String getPhone() {
-        return _phone.get();
+        return strPhone.get();
     }
-    /**
-     * a method to we haven't used yet
-     * @return the type from the combo box in M3
-     */
-    public ObjectProperty getAccountTypeProperty() { return _type; }
+    // --Commented out by Inspection START (11/16/16, 12:05 AM):
+    //    /**
+    //     * a method to we haven't used yet
+    //     * @return the type from the combo box in M3
+    //     */
+    //    public ObjectProperty getAccountTypeProperty() {
+    //      return strType; }
+    // --Commented out by Inspection STOP (11/16/16, 12:05 AM)
 
     /**
      * A  the default constructor of the user
@@ -118,7 +140,8 @@ public class Account {
      * @param type account type
      *
      */
-    Account(String id, String fName, String lName, String email, AccountType type) {
+    Account(String id, String fName, String lName, String email, 
+            AccountType type) {
 
         this(id, fName, lName, email, type, "", "");
 
@@ -137,72 +160,77 @@ public class Account {
      * @param address address
      *
      */
-    public Account(String id, String fName, String lName, String email, AccountType type, String phone, String address) {
+    public Account(String id, String fName, String lName, String email,
+                   AccountType type, String phone, String address) {
 
-        _id.set(id);
-        _fName.set(fName);
-        _lName.set(lName);
-        _email.set(email);
-        _type.set(type);
-        _phone.set(phone);
-        _address.set(address);
+        strId.set(id);
+        strFname.set(fName);
+        strLname.set(lName);
+        strEmail.set(email);
+        strType.set(type);
+        strPhone.set(phone);
+        strAddress.set(address);
     }
 
-    /**
-     * a method to create the account of the user
-     * @param id the ID of the user
-     * @return the newly created account
-     */
-    public static Account of(String id) {
-        Account account = accountList.get(id);
-        if (account == null) {
-            account = new Account(id);
-            accountList.put(id, account);
-        }
-        return account;
-    }
+    // --Commented out by Inspection START (11/16/16, 12:05 AM):
+    //    /**
+    //     * a method to create the account of the user
+    //     * @param id the ID of the user
+    //     * @return the newly created account
+    //     */
+    //    public static Account of(String id) {
+    //        Account account = accountList.get(id);
+    //        if (account == null) {
+    //            account = new Account(id);
+    //            accountList.put(id, account);
+    //        }
+    //        return account;
+    //    }
+    // --Commented out by Inspection STOP (11/16/16, 12:05 AM)
 
-    /**
-     * a method to set the ID of the account
-     * @param id the new ID of the user
-     */
-    private Account(String id) {
-        _id.set(id);
-    }
+    // --Commented out by Inspection START (11/16/16, 12:07 AM):
+    //    /**
+    //     * a method to set the ID of the account
+    //     * @param id the new ID of the user
+    //     */
+    //    private Account(String id) {
+    //        strId.set(id);
+    //    }
+    // --Commented out by Inspection STOP (11/16/16, 12:07 AM)
 
-    /**
-     * a method to get the map that holds the users
-     * @return the map of the users
-     */
-    public Map<String, Account> getAccountList() {
-        return accountList;
-    }
+    // --Commented out by Inspection START (11/16/16, 12:05 AM):
+    //    /**
+    //     * a method to get the map that holds the users
+    //     * @return the map of the users
+    //     */
+    //    public Map<String, Account> getaccountList() {
+    //        return accountList;
+    //    }
+    // --Commented out by Inspection STOP (11/16/16, 12:05 AM)
 
     /**
      * a method to easily toString the account
      * @return the String created from the account
      */
     public String toString() {
-        return _id.get();
+        return strId.get();
     }
 
-
+    /*
     /**
      * a method to set phone number of the account
      * @param phone the phone to set
-     */
+
     public void setPhone(String phone) {
-        String phone1 = phone;
     }
 
 
     /**
      * a method to set address of the account
      * @param address the address to set
-     */
-    public void setAddress(String address) {
-        String address1 = address;
-    }
 
+    public void setAddress(String address) {
+    }
+    */
 
 }
