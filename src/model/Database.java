@@ -422,7 +422,7 @@ public class Database {
         } catch (Exception e) {
             System.out.println("Unable to load Driver");
         }
-        //return DriverManager.getConnection("jdbc:mysql://watersource.c0udtjalvmmk.us-west-2.rds.amazonaws.com/WaterSource", "prateek", "Pen23haw");
+
         //Establish connection using DriverManager
         try {
             connection = DriverManager.getConnection("jdbc:mysql://cleanwatermap.ci13wa0hgqap.us-west-1.rds.amazonaws.com/cwc", "master", "mypassword");
