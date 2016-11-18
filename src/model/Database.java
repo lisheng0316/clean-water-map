@@ -167,7 +167,7 @@ public class Database {
     public static boolean validateUsername(String username) {
 
         try {
-            String sql = "SELECT `username` FROM `schema`.user WHERE "
+            String sql = "SELECT `username` FROM `cwc`.user WHERE "
                     + "username = ?";
             stmt = connection.prepareStatement(sql);
             stmt.setString(1, username);
@@ -208,7 +208,7 @@ public class Database {
                                String lname, String email, AccountType type) {
 
         try {
-            String query = "INSERT INTO `schema`.`user` (`id`, `username`, "
+            String query = "INSERT INTO `cwc`.`user` (`id`, `username`, "
                     + "`password`" + ", `fname`, `lname`, `email`, `type`)"
                     + " VALUES (null, ?, ?, ?, ?, ?, ?)";
 
@@ -253,7 +253,7 @@ public class Database {
                                             String date) {
 
         try {
-            String query = "INSERT INTO `schema`.`WaterSourceReport` "
+            String query = "INSERT INTO watersourcereport "
                     + "(`ReportNumber`, `Username`, `Latitude`"
                     + ", `Longitude`, `WaterType`, `WaterCondition`, `Date`)"
                     + " VALUES (null, ?, ?, ?, ?, ?, ?)";
@@ -287,7 +287,7 @@ public class Database {
      * @return list of water source report
      */
     public static List<WaterSourceReport> getWaterSourceReports() {
-        String query = "SELECT * FROM WaterSourceReport";
+        String query = "SELECT * FROM watersourcereport";
         List<WaterSourceReport> sourceReportList = new ArrayList<>();
 
         try {
@@ -338,7 +338,7 @@ public class Database {
                                             String date,
                                             String contaminant, String virus) {
         try {
-            String query = "INSERT INTO `schema`.`WaterPurityReport` "
+            String query = "INSERT INTO waterpurityreport "
                     + "(`ReportNumber`, `Username`, `Latitude`"
                     + ", `Longitude`, `WaterType`, `WaterCondition`, `Date`, "
                     + "`ContaminantPPM`, `VirusPPM`)"
@@ -376,7 +376,7 @@ public class Database {
      * @return list of water source report
      */
     public static List<WaterPurityReport> getWaterPurityReports() {
-        String query = "SELECT * FROM WaterPurityReport";
+        String query = "SELECT * FROM waterpurityreport";
         List<WaterPurityReport> purityReportList = new ArrayList<>();
 
         try {
@@ -422,11 +422,10 @@ public class Database {
         } catch (Exception e) {
             System.out.println("Unable to load Driver");
         }
-
+        //return DriverManager.getConnection("jdbc:mysql://watersource.c0udtjalvmmk.us-west-2.rds.amazonaws.com/WaterSource", "prateek", "Pen23haw");
         //Establish connection using DriverManager
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/"
-                    + "schema?user=root&password=pass");
+            connection = DriverManager.getConnection("jdbc:mysql://cleanwatermap.ci13wa0hgqap.us-west-1.rds.amazonaws.com/cwc", "master", "mypassword");
         } catch (SQLException e) {
             System.out.println("Unable to connect to database");
         }
